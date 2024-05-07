@@ -1,1 +1,1 @@
-# OddFabricCVA
+# Garment Recognition API
