@@ -1,6 +1,6 @@
 # VENV Installation Instructions
+Start from ```root``` directory.
 1. Install VENV
-    - ```cd server```
     - ```python3 -m venv .venv```
     - ```cd .venv```
 2. Activate VENV Instance:
@@ -13,6 +13,7 @@
     Your interpreter should now be set to the Virtual Environment instance of python.
     - ```cd ..```
 3. Install Packages:
+    - ```cd server```
     - Installation command: ```pip install -r requirement.txt```
     - Update command: ```pip freeze > requirement.txt```
 4. Test: 
