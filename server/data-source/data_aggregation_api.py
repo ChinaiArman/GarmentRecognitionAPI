@@ -1,5 +1,5 @@
 """
-API access file used for aggregating data from multiple API sources.
+API data aggregation module used for aggregating data from multiple API sources.
 """
 
 import aiohttp
@@ -69,7 +69,7 @@ async def get_hm_data(page, session):
 
     if response.status == HTTP_SUCCESS_CODE:
         json_dict = await response.json()
-        print(json.dumps(json_dict, indent=2))
+        # print(json.dumps(json_dict, indent=2))
         return json_dict
     else:
         print(f"Request failed with status code: {response.status}")
@@ -83,6 +83,7 @@ def write_asos_data(responses):
     df_list = []
     for response in responses:
         df = pd.json_normalize(response["products"])
+        df = df[["id", "name", "colour", "brandName", "imageUrl"]]
         df_list.append(df)
 
     df_merged = pd.concat(df_list)
@@ -96,6 +97,8 @@ def write_hm_data(responses):
     df_list = []
     for response in responses:
         df = pd.json_normalize(response["results"])
+        df["images"] = df["images"].apply(lambda x: x[0]["baseUrl"])
+        df = df[["code", "name", "defaultArticle.color.text", "images"]]
         df_list.append(df)
 
     df_merged = pd.concat(df_list)
@@ -124,11 +127,11 @@ async def main():
     Drives the program.
     """
     # Get data from ASOS
-    asos_offset = ["0", "48", "96"]
+    asos_offset = [str(num) for num in range(0, 48 * 3, 48)]
     await process_requests(asos_offset, get_asos_data, write_asos_data)
 
     # Get data from H&M
-    hm_pages = ["0", "1", "2", "3"]
+    hm_pages = [str(num) for num in range(1, 5)]
     await process_requests(hm_pages, get_hm_data, write_hm_data)
 
 
