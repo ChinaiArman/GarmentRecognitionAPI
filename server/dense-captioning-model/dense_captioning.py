@@ -3,13 +3,14 @@
 
 import os
 import argparse
+import requests
 from dotenv import load_dotenv
 from azure.ai.vision.imageanalysis import ImageAnalysisClient
 from azure.ai.vision.imageanalysis.models import VisualFeatures, ImageAnalysisResult
 from azure.core.credentials import AzureKeyCredential
 
 
-def create_dense_captions(filename: str) -> ImageAnalysisResult:
+def create_dense_captions(filepath: str) -> ImageAnalysisResult:
     """
     """
     # Load environment variables.
@@ -28,8 +29,14 @@ def create_dense_captions(filename: str) -> ImageAnalysisResult:
     )
 
     # Load image and convert to 'bytes' object.
-    with open(filename, "rb") as f:
-        image_data = f.read()
+    try: 
+        with open(filepath, "rb") as f:
+            image_data = f.read()
+    except FileNotFoundError:
+        print("Invalid file path.")
+        exit()
+    except OSError:
+        image_data = requests.get(filepath).content
 
     # Call dense captioning model to create keyword captions.
     response = client.analyze(
@@ -45,11 +52,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generates keyword captions of images using Azure's dense captioning technology.")
     parser.add_argument("file", action="store", help="An image file")
     args = parser.parse_args()
-
-    # Validate file path existence.
-    if not os.path.exists(args.file):
-        print("Invalid filepath, the image does not exist.")
-        exit()
 
     # Call azure dense captioning model.
     response = create_dense_captions(args.file)
