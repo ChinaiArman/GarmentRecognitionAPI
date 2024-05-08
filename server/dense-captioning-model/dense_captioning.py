@@ -39,13 +39,13 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
             image_data = f.read()
     except FileNotFoundError:
         print("Invalid file path.")
-        exit()
+        exit(1)
     except OSError:
         try:
             image_data = requests.get(filepath_or_url).content
         except requests.exceptions.RequestException:
             print(f"Invalid URL. Error")
-            exit()
+            exit(1)
 
     # Call dense captioning model to create keyword captions.
     response = client.analyze(
