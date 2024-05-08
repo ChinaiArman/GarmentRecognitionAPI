@@ -12,20 +12,19 @@ from azure.core.credentials import AzureKeyCredential
 
 def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
     """
-    Generate dense captions for an image given a local file path or a URL.
     """
     # Load environment variables.
     load_dotenv()
     endpoint = os.getenv('AZURE_VISION_ENDPOINT')
-    key = os.getenv('AZURE_VISION_KEY')
+    key = os.getenv('AZURE_VISION_KEY_1')
     if not endpoint:
         print("Missing environment variable 'AZURE_VISION_ENDPOINT'.")
         print("Please ensure the .env file is present and this variable is declared.")
-        exit(1)
+        return
     if not key:
         print("Missing environment variable 'AZURE_VISION_KEY'.")
         print("Please ensure the .env file is present and this variable is declared.")
-        exit(1)
+        return
 
     # Create an Image Analysis client.
     client = ImageAnalysisClient(
@@ -39,13 +38,13 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
             image_data = f.read()
     except FileNotFoundError:
         print("Invalid file path.")
-        exit(1)
+        return
     except OSError:
         try:
             image_data = requests.get(filepath_or_url).content
         except requests.exceptions.RequestException:
             print(f"Invalid URL. Error")
-            exit(1)
+            return
 
     # Call dense captioning model to create keyword captions.
     response = client.analyze(
@@ -68,9 +67,12 @@ if __name__ == "__main__":
     # Print dense caption results to the console.
     print("Image analysis results:")
     print("\tDense Captions:")
-    if response.dense_captions is not None and response.dense_captions.list:
-        for caption in response.dense_captions.list:
-            print(f"   '{caption.text}', {caption.bounding_box}, Confidence: {caption.confidence:.4f}")
-    print(f"\tImage height: {response.metadata.height}")
-    print(f"\tImage width: {response.metadata.width}")
-    print(f"\tModel version: {response.model_version}")
+    if response is not None:
+        if response.dense_captions is not None and response.dense_captions.list:
+            for caption in response.dense_captions.list:
+                print(f"   '{caption.text}', {caption.bounding_box}, Confidence: {caption.confidence:.4f}")
+        print(f"\tImage height: {response.metadata.height}")
+        print(f"\tImage width: {response.metadata.width}")
+        print(f"\tModel version: {response.model_version}")
+    else:
+        print("\tNo captions generated.")
