@@ -14,7 +14,7 @@ Start from ```root``` directory.
     - ```cd ..```
 3. Install Packages:
     - ```cd server```
-    - Installation command: ```pip install -r requirement.txt```
-    - Update command: ```pip freeze > requirement.txt```
+    - Installation command: ```pip install -r requirements.txt```
+    - Update command: ```pip freeze > requirements.txt```
 4. Test: 
     - ```python app.py``` > Visit port 5000
