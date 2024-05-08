@@ -40,12 +40,6 @@ def create_dense_captions(filename: str) -> ImageAnalysisResult:
     return response
 
 
-def normalize_dense_caption_response(response: ImageAnalysisResult) -> list:
-    """
-    """
-    pass
-
-
 if __name__ == "__main__":
     # Define console parser and add arguments.
     parser = argparse.ArgumentParser(description="Generates keyword captions of images using Azure's dense captioning technology.")
