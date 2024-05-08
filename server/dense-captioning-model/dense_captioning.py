@@ -9,7 +9,7 @@ from azure.ai.vision.imageanalysis.models import VisualFeatures, ImageAnalysisRe
 from azure.core.credentials import AzureKeyCredential
 
 
-def sample_dense_captions_image_file(filename: str) -> ImageAnalysisResult:
+def create_dense_captions(filename: str) -> ImageAnalysisResult:
     """
     """
     # Load environment variables.
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         exit()
 
     # Call dense captioning API.
-    response = sample_dense_captions_image_file(args.file)
+    response = create_dense_captions(args.file)
 
     # Print dense caption results to the console.
     print("Image analysis results:")
