@@ -18,11 +18,11 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
     endpoint = os.getenv('AZURE_VISION_ENDPOINT')
     key = os.getenv('AZURE_VISION_KEY_1')
     if not endpoint:
-        print("Missing environment variable 'AZURE_VISION_ENDPOINT'.")
+        print("Error: Missing environment variable 'AZURE_VISION_ENDPOINT'.")
         print("Please ensure the .env file is present and this variable is declared.")
         return
     if not key:
-        print("Missing environment variable 'AZURE_VISION_KEY'.")
+        print("Error: Missing environment variable 'AZURE_VISION_KEY'.")
         print("Please ensure the .env file is present and this variable is declared.")
         return
 
@@ -37,13 +37,13 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
         with open(filepath_or_url, "rb") as f:
             image_data = f.read()
     except FileNotFoundError:
-        print("Invalid file path.")
+        print("Error: Invalid file path.")
         return
     except OSError:
         try:
             image_data = requests.get(filepath_or_url).content
         except requests.exceptions.RequestException:
-            print(f"Invalid URL. Error")
+            print(f"Error: Invalid URL")
             return
 
     # Call dense captioning model to create keyword captions.
