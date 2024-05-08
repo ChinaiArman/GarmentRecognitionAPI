@@ -33,22 +33,18 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
         credential=AzureKeyCredential(key)
     )
 
-    # Determine if the input is a URL or a local file path and load the image data.
-    if filepath_or_url.startswith('http://') or filepath_or_url.startswith('https://'):
+    # Load image and convert to 'bytes' object.
+    try: 
+        with open(filepath_or_url, "rb") as f:
+            image_data = f.read()
+    except FileNotFoundError:
+        print("Invalid file path.")
+        exit()
+    except OSError:
         try:
             image_data = requests.get(filepath_or_url).content
-        except requests.exceptions.RequestException as e:
-            print(f"Failed to retrieve image from URL: {e}")
-            exit()
-    else:
-        try:
-            with open(filepath_or_url, "rb") as f:
-                image_data = f.read()
-        except FileNotFoundError:
-            print("Invalid file path.")
-            exit()
-        except OSError as e:
-            print(f"Error reading the file: {e}")
+        except requests.exceptions.RequestException:
+            print(f"Invalid URL. Error")
             exit()
 
     # Call dense captioning model to create keyword captions.
