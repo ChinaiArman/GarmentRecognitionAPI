@@ -83,6 +83,7 @@ def write_asos_data(responses):
     df_list = []
     for response in responses:
         df = pd.json_normalize(response["products"])
+        df["imageUrl"] = df["imageUrl"].apply(lambda x: f"https://{x}")
         df = df[["id", "name", "colour", "brandName", "imageUrl"]]
         df_list.append(df)
 
