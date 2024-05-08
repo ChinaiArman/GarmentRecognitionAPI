@@ -51,7 +51,7 @@ if __name__ == "__main__":
         print("Invalid filepath, the image does not exist.")
         exit()
 
-    # Call dense captioning API.
+    # Call azure dense captioning model.
     response = create_dense_captions(args.file)
 
     # Print dense caption results to the console.
