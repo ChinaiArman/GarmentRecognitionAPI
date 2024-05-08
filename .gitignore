@@ -7,3 +7,7 @@ Lib
 Scripts
 pyvenv.cfg
 .venv
+
+# Pictures
+*.jpg
+*.png
