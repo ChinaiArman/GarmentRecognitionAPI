@@ -12,6 +12,22 @@ from azure.core.credentials import AzureKeyCredential
 
 def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
     """
+    Generates keyword captions of images using Azure's dense captioning technology.
+
+    Args:
+        filepath_or_url (str): The file path or URL of the image.
+
+    Returns:
+        ImageAnalysisResult: The result of the image analysis.
+
+    Notes:
+        - The function requires the following environment variables to be set:
+            - AZURE_VISION_ENDPOINT: The endpoint of the Azure Vision service.
+            - AZURE_VISION_KEY_1: The key for the Azure Vision service.
+        - The function uses the Azure Cognitive Services SDK to interact with the Azure Vision service.
+        - The function returns the result of the image analysis, which includes the dense captions and metadata.
+        
+    Author: ``@ChinaiArman``
     """
     # Load environment variables.
     load_dotenv()
