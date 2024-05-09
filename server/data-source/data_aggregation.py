@@ -1,57 +1,140 @@
+"""
+API data aggregation module used for aggregating data from multiple API sources.
+"""
+
+import aiohttp
+import asyncio
 import pandas as pd
 import os
+import json
 
-def load_data(file_path):
+HTTP_SUCCESS_CODE = 200
+
+
+async def get_asos_data(page, session):
     """
-    Loads data from a file into a pandas DataFrame.
-    The function automatically detects if the file is CSV or JSON and loads it accordingly.
+    Gets JSON data from api source with single HTTP request.
     """
-    if not os.path.exists(file_path):
-        print(f"Error: File not found at {file_path}")
+    api_url = "https://asos2.p.rapidapi.com/products/v2/list"
+    api_params = {
+        "store": "US",
+        "offset": page,
+        "categoryId": "2623",
+        "limit": "48",
+        "country": "US",
+        "sort": "freshness",
+        "currency": "USD",
+        "sizeSchema": "US",
+        "lang": "en-US",
+    }
+    api_headers = {
+        "X-RapidAPI-Key": os.getenv("RAPID_API_KEY", ""),
+        "X-RapidAPI-Host": "asos2.p.rapidapi.com",
+    }
+
+    response = await session.request(
+        method="GET", url=api_url, params=api_params, headers=api_headers, ssl=False
+    )
+
+    if response.status == HTTP_SUCCESS_CODE:
+        json_dict = await response.json()
+        # print(json.dumps(json_dict, indent=2))
+        return json_dict
+    else:
+        print(f"Request failed with status code: {response.status}")
         return None
 
-    # Determine file type from the extension
-    file_extension = file_path.split('.')[-1].lower()
-    
-    try:
-        if file_extension == 'csv':
-            data_df = pd.read_csv(file_path)
-            print("Loaded data from CSV file.")
-        elif file_extension == 'json':
-            data_df = pd.read_json(file_path)
-            print("Loaded data from JSON file.")
-        else:
-            print("Unsupported file format.")
-            return None
 
-        # Basic data validation
-        if data_df.empty:
-            print("Warning: The data frame is empty.")
-        else:
-            print("Data frame loaded successfully with", len(data_df), "records.")
+async def get_hm_data(page, session):
+    """
+    Gets JSON data from api source with single HTTP request.
+    """
+    api_url = "https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list"
+    api_params = {
+        "country": "us",
+        "lang": "en",
+        "currentpage": page,
+        "pagesize": "30",
+        "categories": "men_all",
+        "concepts": "H&M MAN",
+    }
+    api_headers = {
+        "X-RapidAPI-Key": os.getenv("RAPID_API_KEY", ""),
+        "X-RapidAPI-Host": "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com",
+    }
 
-        return data_df
+    response = await session.request(
+        method="GET", url=api_url, params=api_params, headers=api_headers, ssl=False
+    )
 
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    if response.status == HTTP_SUCCESS_CODE:
+        json_dict = await response.json()
+        # print(json.dumps(json_dict, indent=2))
+        return json_dict
+    else:
+        print(f"Request failed with status code: {response.status}")
         return None
-    
 
-def save_data(data_df, output_file_path):
+
+def write_asos_data(responses):
     """
-    Saves the DataFrame to a CSV file.
+    Writes data from API calls to CSV file.
     """
-    try:
-        data_df.to_csv(output_file_path, index=False)
-        print(f"Data saved to {output_file_path}")
-    except Exception as e:
-        print(f"An error occurred while saving the data: {e}")
+    df_list = []
+    for response in responses:
+        df = pd.json_normalize(response["products"])
+        df["imageUrl"] = df["imageUrl"].apply(lambda x: f"https://{x}")
+        df = df[["id", "name", "colour", "brandName", "imageUrl"]]
+        df_list.append(df)
+
+    df_merged = pd.concat(df_list)
+    df_merged.to_csv("server/data-source/data-files/asos.csv", index=False)
+
+
+def write_hm_data(responses):
+    """
+    Writes data from API calls to CSV file.
+    """
+    df_list = []
+    for response in responses:
+        df = pd.json_normalize(response["results"])
+        df["images"] = df["images"].apply(lambda x: x[0]["baseUrl"])
+        df = df[["code", "name", "defaultArticle.color.text", "images"]]
+        df_list.append(df)
+
+    df_merged = pd.concat(df_list)
+    df_merged.to_csv("server/data-source/data-files/hm.csv", index=False)
+
+
+async def process_requests(pages, async_get_request, write_to_csv):
+    """
+    Executes multiple asynchronous HTTP requests.
+    """
+    # Use following line for handling rate limiting on certain APIs by setting connection limit
+    # connector = aiohttp.TCPConnector(limit_per_host=1)
+    async with aiohttp.ClientSession() as session:
+        async_coroutines = [async_get_request(page, session) for page in pages]
+
+        responses = await asyncio.gather(*async_coroutines)
+        responses_filtered = [
+            response for response in responses if response is not None
+        ]
+
+    write_to_csv(responses_filtered)
+
+
+async def main():
+    """
+    Drives the program.
+    """
+    # Get data from ASOS
+    asos_offset = [str(num) for num in range(0, 48 * 3, 48)]
+    await process_requests(asos_offset, get_asos_data, write_asos_data)
+
+    # Get data from H&M
+    hm_pages = [str(num) for num in range(1, 5)]
+    await process_requests(hm_pages, get_hm_data, write_hm_data)
 
 
 if __name__ == "__main__":
-    # Load our initial_data.csv file and save the processed data to processed_data.csv
-    # Paths to your CSV files (please change this to your own absolute paths if needed to run again)
-    csv_data = load_data('./data-files/initial_data.csv')
-    if csv_data is not None:
-        print(csv_data.head())
-        save_data(csv_data, './data-files/processed_data.csv')
+    asyncio.run(main())
