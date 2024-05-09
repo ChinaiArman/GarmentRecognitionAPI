@@ -111,8 +111,8 @@ async def process_requests(pages, async_get_request, write_to_csv):
     Executes multiple asynchronous HTTP requests.
     """
     # Use following line for handling rate limiting on certain APIs by setting connection limit
-    # connector = aiohttp.TCPConnector(limit_per_host=1)
-    async with aiohttp.ClientSession() as session:
+    connector = aiohttp.TCPConnector(limit_per_host=1)
+    async with aiohttp.ClientSession(connector=connector) as session:
         async_coroutines = [async_get_request(page, session) for page in pages]
 
         responses = await asyncio.gather(*async_coroutines)
@@ -128,11 +128,11 @@ async def main():
     Drives the program.
     """
     # Get data from ASOS
-    asos_offset = [str(num) for num in range(0, 48 * 3, 48)]
+    asos_offset = [str(num) for num in range(0, 48 * 8, 48)]
     await process_requests(asos_offset, get_asos_data, write_asos_data)
 
     # Get data from H&M
-    hm_pages = [str(num) for num in range(1, 5)]
+    hm_pages = [str(num) for num in range(1, 6)]
     await process_requests(hm_pages, get_hm_data, write_hm_data)
 
 
