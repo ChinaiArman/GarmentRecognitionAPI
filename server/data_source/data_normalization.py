@@ -2,16 +2,13 @@
 Author: ``@ChinaiArman``
 Version: ``1.0.0``
 
-Description
-------
+Description:
 Normalizes data from different sources to a common format for further processing.
 
-Requirements
-------
+Requirements:
 This script requires the installation of the pandas library.
 
-Usage
-------
+Usage:
 To execute this module, run the following command:
     ``python server/data_source/data_normalization.py``
 """
@@ -54,23 +51,23 @@ def merge_description_columns(df: pd.DataFrame, column_list: list) -> pd.DataFra
     Merges multiple columns into a single 'description' column.
 
     Args:
-    ------
+    -----
     df : ``pd.DataFrame``
         The input DataFrame containing the columns to be merged.
     column_list : ``list``
         A list of column names to be merged into a single 'description' column.
 
     Returns:
-    ------
+    --------
     ``pd.DataFrame``
         The DataFrame with the specified columns merged into a single 'description' column.
 
-    Notes
+    Notes:
     ------
     1. The function concatenates the values of the specified columns into a single 'description' column and drops the original columns.
 
     Example:
-    ------
+    --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
     ...        random       column      names    to     be     normalized
@@ -92,14 +89,14 @@ def rename_columns(df: pd.DataFrame, column_key: dict) -> pd.DataFrame:
     Renames the columns of a DataFrame based on a specified mapping.
 
     Args:
-    ------
+    -----
     df : ``pd.DataFrame``
         The input DataFrame to be processed.
     column_key : ``dict``
         A dictionary mapping the original column names to the new column names.
 
     Returns:
-    ------
+    --------
     ``pd.DataFrame``
         The DataFrame with the columns renamed according to the specified mapping.
 
@@ -108,7 +105,7 @@ def rename_columns(df: pd.DataFrame, column_key: dict) -> pd.DataFrame:
     1. The function renames the columns of the DataFrame based on the mapping provided in the column_key dictionary.
 
     Example:
-    ------
+    --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
     ...        random       column      names    to     be     normalized
@@ -130,14 +127,14 @@ def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     Drops columns from a DataFrame based on a specified list of column names.
 
     Args:
-    ------
+    -----
     df : ``pd.DataFrame``
         The input DataFrame to be processed.
     columns : ``list``
         A list of column names to be dropped from the DataFrame.
 
     Returns:
-    ------
+    --------
     ``pd.DataFrame``
         The DataFrame with the specified columns dropped.
 
@@ -146,7 +143,7 @@ def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     1. The function drops the columns from the DataFrame that are not present in the specified list of columns.
     
     Example:
-    ------
+    --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
     ...        random   column      names    to     be     normalized
@@ -169,21 +166,21 @@ def normalize_dataframe(df: pd.DataFrame, column_key: dict, description_column_l
     Normalizes the columns of a DataFrame based on a specified mapping.
 
     Args:
-    ------
+    -----
     df : ``pd.DataFrame``
         The input DataFrame to be normalized.
     column_key : ``dict``
         A dictionary mapping the original column names to the new column names.
     
     Keyword Args:
-    ------
+    -------------
     description_column_list : ``list``
         A list of column names to be merged into a single 'description' column.
     sample : ``int``
         The number of rows to sample from the DataFrame.
 
     Returns:
-    ------
+    --------
         pd.DataFrame: The normalized DataFrame with the columns renamed, merged, and dropped as specified.
     
     Notes:
@@ -192,7 +189,7 @@ def normalize_dataframe(df: pd.DataFrame, column_key: dict, description_column_l
     2.  If the 'sample' parameter is provided, the function samples the specified number of rows from the DataFrame.
 
     Example:
-    ------
+    --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
     ...        random   column      names    to     be     normalized
@@ -219,12 +216,12 @@ def merge_dataframes(df_list: list) -> pd.DataFrame:
     Merges multiple DataFrames into a single DataFrame.
 
     Args:
-    ------
+    -----
     df_list : ``list``
         A list of DataFrames to be merged.
     
     Returns:
-    ------
+    --------
     ``pd.DataFrame``
         The merged DataFrame containing the data from all the input DataFrames.
 
@@ -256,12 +253,12 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     Generates keyword descriptions for a DataFrame containing image URLs.
 
     Args:
-    ------
+    -----
     df : ``pd.DataFrame``
         The input DataFrame to be normalized.
 
     Returns:
-    ------
+    --------
     ``pd.DataFrame``
         The normalized DataFrame with the new column 'keyword_descriptions' containing the generated keyword descriptions.
     

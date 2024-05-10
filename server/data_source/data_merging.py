@@ -1,6 +1,6 @@
 """
 Author: ``@Ehsan138``
-Version: 1.0.0
+Version: ``1.0.0``
 
 Description:
 Merges two datasets: one containing image URLs and another containing styles information.
@@ -25,16 +25,31 @@ def merge_datasets(images_csv_path, styles_csv_path, output_csv_path):
     Merges two datasets: one containing image URLs and another containing styles information.
 
     Args:
-        images_csv_path (str): The file path for the CSV file containing image URLs.
-        styles_csv_path (str): The file path for the CSV file containing styles information.
-        output_csv_path (str): The output file path for the merged dataset.
+    -----
+    images_csv_path : ``str``
+        The file path for the CSV file containing image URLs.
+    styles_csv_path : ``str``
+        The file path for the CSV file containing styles information.
+    output_csv_path : ``str``
+        The output file path for the merged dataset.
 
     Returns:
-        None: The function saves the merged dataset to a CSV file specified by output_csv_path.
+    -------
+    ``None``
+        The function saves the merged dataset to a CSV file specified by output_csv_path.
 
     Notes:
-        The function modifies the 'filename' field in the images dataset by removing the '.jpg' extension and converts
-        the 'id' in the styles dataset from integer to string to facilitate the merging based on these modified fields.
+    -----
+    1. The function modifies the 'filename' field in the images dataset by removing the '.jpg' extension and converts the 'id' in the styles dataset from integer to string to facilitate the merging based on these modified fields.
+
+    Example:
+    --------
+    >>> images_csv_path = './data-files/images.csv'
+    >>> styles_csv_path = './data-files/styles.csv'
+    >>> output_csv_path = './data-files/initial_data.csv'
+    >>> merge_datasets(images_csv_path, styles_csv_path, output_csv_path)
+    
+    Merged dataset saved to ``./data-files/initial_data.csv``
 
     Author: ``@Ehsan138``
     """
