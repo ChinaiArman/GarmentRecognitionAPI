@@ -9,7 +9,6 @@ The merged dataset is then saved as a new CSV file.
 
 Requirements:
 This script requires the installation of the pandas library.
-Ensure pandas is installed using the following command: ``pip install pandas``
 
 Usage:
 To execute this module, run the following command:
