@@ -144,9 +144,27 @@ def merge_dataframes(df_list: list) -> pd.DataFrame:
 
 def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     """
-    """
-    pass
+    Generates keyword descriptions for a DataFrame containing image URLs.
 
+    Args:
+        df (pd.DataFrame): The input DataFrame to be normalized.
+
+    Returns:
+        pd.DataFrame: The normalized DataFrame with the new column 'keyword_descriptions' containing the generated keyword descriptions.
+    
+    Notes:
+        The function generates keyword descriptions for the images in the DataFrame using Azure's dense captioning technology.
+        The generated descriptions are stored in a new column 'keyword_descriptions' in the DataFrame.
+
+    Author: ``@nataliecly``
+    """
+    descriptions = []
+    for index, row in df.iterrows():
+        imageUrl = row['imageUrl']
+        description = dc.create_dense_captions(imageUrl)
+        descriptions.append(description)
+    df['keyword_descriptions'] = descriptions
+    return df
 
 if __name__ == "__main__":
     # Normalize data sources
@@ -160,3 +178,7 @@ if __name__ == "__main__":
     # Merge data sources
     merged_df = merge_dataframes([df, df2, df3])
     print(merged_df.head())
+
+    # Generate keyword descriptions
+    keyword_df = generate_keywords(merged_df)
+    print(keyword_df.head())
