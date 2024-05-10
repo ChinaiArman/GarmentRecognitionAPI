@@ -8,7 +8,8 @@ Aggregates data from multiple API sources and writes the data to CSV files.
 Requirements:
 This module requires the installation of the pandas library.
 This module requires the installation of the aiohttp library.
-API keys should be passed in as environment variables and set appropriately.
+This module requires the following environment variables to be set:
+    - RAPID_API_KEY: API key for Rapid API service.
 
 Usage:
 In the command line, execute the module using the command:
@@ -24,7 +25,9 @@ import os
 HTTP_SUCCESS_CODE = 200
 
 
-async def get_json_data(session: aiohttp.ClientSession, http_variables: dict, offset: dict, category: dict) -> dict:
+async def get_json_data(
+    session: aiohttp.ClientSession, http_variables: dict, offset: dict, category: dict
+) -> dict:
     """
     Gets JSON data from api source with a single HTTP request.
 
@@ -120,7 +123,6 @@ def write_asos_data(responses: list) -> None:
     Author: ``@cc-dev-65535``
     """
     df_list = []
-
     for response in responses:
         df = pd.json_normalize(response["products"])
         try:
@@ -165,7 +167,6 @@ def write_hm_data(responses: list) -> None:
     Author: ``@cc-dev-65535``
     """
     df_list = []
-
     for response in responses:
         df = pd.json_normalize(response["results"])
         try:
@@ -234,7 +235,13 @@ async def process_requests(write_to_csv, http_variables: dict) -> None:
     write_to_csv(responses_filtered)
 
 
-def create_http_variables(api_url: str, api_params: dict=None, api_headers: dict=None, offset: dict=None, categories: dict=None):
+def create_http_variables(
+    api_url: str,
+    api_params: dict = None,
+    api_headers: dict = None,
+    offset: dict = None,
+    categories: dict = None,
+):
     """
     Creates a dictionary of HTTP variables for HTTP requests.
 
@@ -313,7 +320,8 @@ async def main() -> None:
     3. It calls the process_requests function to get data from ASOS API.
     4. It defines the HTTP variables for H&M API.
     5. It calls the process_requests function to get data from H&M API.
-    6. API keys should be passed in as environment variables.
+    6. This function requires the following environment variables to be set:
+            - RAPID_API_KEY: API key for Rapid API service.
     7. This function can be expanded to get data from additional desired APIs.
 
     Example:
