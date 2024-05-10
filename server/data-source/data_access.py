@@ -3,13 +3,16 @@ Author: ``@levxxvi``
 Version: 1.0.0
 
 Description:
-Retrieves data frame from the data source.
+A class to interact with the data source stored in a CSV file.
 
 Requirements:
-The data source must be present.
+This class requires the installation of the pandas library.
+The data source file must be located at "server/data-source/data.csv".
 
 Usage:
 To use this class, create an instance of the Database class and call the desired method.
+In the command line, you can run the following commands to interact with the data source:
+    ``python data_access.py``
 """
 
 import pandas as pd
@@ -84,5 +87,14 @@ class Database:
         return item
     
     def get_id_by_keyword_description(self, description):
+        """
+        """
         pass
 
+
+if __name__ == "__main__":
+    db = Database()
+    data = db.get_data_frame()
+    print(data.head())
+    item = db.get_item_by_id(1)
+    print(item)
