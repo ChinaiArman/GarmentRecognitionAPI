@@ -93,12 +93,12 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
             return
 
     # Call dense captioning model to create keyword captions.
-    response = client.analyze(
-        image_data=image_data,
-        visual_features=[VisualFeatures.DENSE_CAPTIONS],
-        gender_neutral_caption=True,
-    )
-    return response
+    # response = client.analyze(
+    #     image_data=image_data,
+    #     visual_features=[VisualFeatures.DENSE_CAPTIONS],
+    #     gender_neutral_caption=True,
+    # )
+    # return response
 
 
 if __name__ == "__main__":
