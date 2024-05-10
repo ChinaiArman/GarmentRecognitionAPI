@@ -11,3 +11,6 @@ pyvenv.cfg
 # Pictures
 *.jpg
 *.png
+
+# __pycache__
+__pycache__/
