@@ -19,6 +19,7 @@ To execute this module, run the following command:
 where <filepath_or_url> is the file path or URL of the image.
 """
 
+
 import os
 import argparse
 import requests
