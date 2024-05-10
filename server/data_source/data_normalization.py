@@ -1,9 +1,9 @@
 """
 Author: ``@ChinaiArman``
-Version: ``1.0.0``
+Version: ``2.0.0``
 
 Description:
-Normalizes data from different sources to a common format for further processing.
+Normalizes data from different sources to a common format and writes to a CSV file.
 
 Requirements:
 This script requires the installation of the pandas library.
@@ -304,10 +304,39 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def main():
-    # TODO: Fix documentation later
+def write_dataframe_to_csv(df):
     """
-    Normalizes data from different sources, merges them, and generates keyword descriptions.
+    Writes a DataFrame to a CSV file.
+
+    Args:
+    -----
+    df : ``pd.DataFrame``
+        The DataFrame to be written to a CSV file.
+
+    Returns:
+    --------
+    None
+
+    Notes:
+    ------
+    1. This function writes the DataFrame to a CSV file named 'data.csv' in the 'server/data_source' directory.
+    2. The id column of the DataFrame is converted to unique sequential integers for all rows before writing.
+
+    Example:
+    --------
+    >>> df = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+    >>> write_dataframe_to_csv(df)
+    ... # Dataframe saved as CSV file to server/data_source/data.csv.
+
+    Author: ``@cc-dev-65535``
+    """
+    df.loc[:, "id"] = df.index
+    df.to_csv("server/data_source/data.csv", index=False)
+
+
+def main():
+    """
+    Normalizes and generates a modified CSV file.
 
     Args:
     -----
@@ -319,9 +348,17 @@ def main():
 
     Notes:
     ------
-    1. This function serves as the entry point of the script.
-    2. It reads data from different sources, normalizes them, merges them into a single DataFrame, and generates keyword descriptions for the images.
-    3. The normalized and merged DataFrame is saved to data.csv.
+    1. The function normalizes the data sources by reading CSV files and applying data normalization.
+    2. The normalized data sources are merged into a single DataFrame.
+    3. Keyword descriptions are generated for the merged DataFrame and added as a column.
+    4. The merged DataFrame is written to a CSV file.
+
+    Example:
+    --------
+    >>> main()
+    ... # Normalizes multiple CSV files and writes them to a new CSV file.
+
+    Author: ``@cc-dev-65535``
     """
     # Normalize data sources
     df = pd.read_csv("server/data_source/data_files/hm.csv")
@@ -338,11 +375,13 @@ def main():
 
     # Merge data sources
     merged_df = merge_dataframes([df, df2, df3])
-    print(merged_df.head())
+    # print(merged_df.head())
 
     # Generate keyword descriptions
     # keyword_df = generate_keywords(merged_df)
     # print(keyword_df.head())
+
+    write_dataframe_to_csv(merged_df)
 
 
 if __name__ == "__main__":
