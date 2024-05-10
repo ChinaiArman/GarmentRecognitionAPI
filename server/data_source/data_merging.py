@@ -48,8 +48,7 @@ def merge_datasets(images_csv_path, styles_csv_path, output_csv_path):
     >>> styles_csv_path = './data-files/styles.csv'
     >>> output_csv_path = './data-files/initial_data.csv'
     >>> merge_datasets(images_csv_path, styles_csv_path, output_csv_path)
-    
-    Merged dataset saved to ``./data-files/initial_data.csv``
+    ... # Merged dataset saved to ``./data-files/initial_data.csv``
 
     Author: ``@Ehsan138``
     """

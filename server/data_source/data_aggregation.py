@@ -1,6 +1,6 @@
 """
 Author: ``@cc-dev-65535``
-Version: 1.0.0
+Version: ``1.0.0``
 
 Description: 
 Aggregates data from multiple API sources and writes the data to CSV files. 
@@ -29,19 +29,40 @@ async def get_json_data(session, http_variables, offset, category):
     Gets JSON data from api source with a single HTTP request.
 
     Args:
-        session (aiohttp.ClientSession): The aiohttp client session.
-        http_variables (dict): The HTTP variables for the HTTP request.
-        offset (str): The offset query parameter for the request.
-        category (str): The category query parameter for the request.
+    -----
+    session : ``aiohttp.ClientSession``
+        The aiohttp client session.
+    http_variables : ``dict``
+        The HTTP variables for the HTTP request.
+    offset : ``str``
+        The offset query parameter for the request.
+    category : ``str``
+        The category query parameter for the request.
 
     Returns:
-        dict: The JSON data returned from the API.
+    --------
+    ``dict``
+        The JSON data returned from the API.
 
     Notes:
-        - This function makes an HTTP GET request to the specified API URL.
-        - It uses the provided session, HTTP variables, offset, and category.
-        - If the response status is 200, it returns the JSON data.
-        - Otherwise, it prints an error message and returns None.
+    ------
+    1. This function makes an HTTP GET request to the specified API URL.
+    2. It uses the provided session, HTTP variables, offset, and category.
+    3. If the response status is 200, it returns the JSON data.
+    4. Otherwise, it prints an error message and returns None.
+
+    Example:
+    --------
+    >>> session = aiohttp.ClientSession()
+    >>> http_variables = {
+    ...     "api_url": "https://api.example.com",
+    ...     "api_params": {"param1": "value1"},
+    ...     "api_headers": {"header1": "value1"},
+    ... }
+    >>> offset = "0"
+    >>> category = "category1"
+    >>> get_json_data(session, http_variables, offset, category)
+    ... # Returns JSON data from the API
 
     Author: ``@cc-dev-65535``
     """
@@ -72,18 +93,29 @@ def write_asos_data(responses):
     Writes data from ASOS API calls to CSV file.
 
     Args:
-        responses (list): List of JSON responses from ASOS API.
+    -----
+    responses : ``list``
+        List of JSON responses from ASOS API.
 
     Returns:
-        None
+    --------
+    ``None``
+        The function writes the data to a CSV file.
 
     Notes:
-        - This function takes a list of JSON responses from ASOS API calls.
-        - It normalizes the JSON data into a pandas DataFrame.
-        - It modifies the "imageUrl" column to include the "https://" prefix.
-        - It selects specific columns from the DataFrame.
-        - It concatenates the DataFrames into a single DataFrame.
-        - It writes the merged DataFrame to a CSV file in specified file location.
+    ------
+    1. This function takes a list of JSON responses from ASOS API calls.
+    2. It normalizes the JSON data into a pandas DataFrame.
+    3. It modifies the "imageUrl" column to include the "https://" prefix.
+    4. It selects specific columns from the DataFrame.
+    5. It concatenates the DataFrames into a single DataFrame.
+    6. It writes the merged DataFrame to a CSV file in specified file location.
+
+    Example:
+    --------
+    >>> responses = [json_response1, json_response2]
+    >>> write_asos_data(responses)
+    ... # Writes data to a CSV file
 
     Author: ``@cc-dev-65535``
     """
@@ -106,18 +138,29 @@ def write_hm_data(responses):
     Writes data from H&M API calls to CSV file.
 
     Args:
-        responses (list): List of JSON responses from H&M API.
+    -----
+    responses : ``list``
+        List of JSON responses from H&M API.
 
     Returns:
-        None
+    --------
+    ``None``
+        The function writes the data to a CSV file.
 
     Notes:
-        - This function takes a list of JSON responses from H&M API calls.
-        - It normalizes the JSON data into a pandas DataFrame.
-        - It modifies the "images" column to extract the base URL.
-        - It selects specific columns from the DataFrame.
-        - It concatenates the DataFrames into a single DataFrame.
-        - It writes the merged DataFrame to a CSV file in specified file location.
+    ------
+    1. This function takes a list of JSON responses from H&M API calls.
+    2. It normalizes the JSON data into a pandas DataFrame.
+    3. It modifies the "images" column to extract the base URL.
+    4. It selects specific columns from the DataFrame.
+    5. It concatenates the DataFrames into a single DataFrame.
+    6. It writes the merged DataFrame to a CSV file in specified file location.
+
+    Example:
+    --------
+    >>> responses = [json_response1, json_response2]
+    >>> write_hm_data(responses)
+    ... # Writes data to a CSV file
 
     Author: ``@cc-dev-65535``
     """
@@ -140,19 +183,38 @@ async def process_requests(write_to_csv, http_variables):
     Executes multiple asynchronous HTTP requests and writes the returned data to a CSV file.
 
     Args:
-        write_to_csv (function): The function to write returned API data to CSV file.
-        http_variables (dict): The HTTP request variables for the HTTP requests.
+    -----
+    write_to_csv : ``function``
+        The function to write returned API data to CSV file.
+    http_variables : ``dict``
+        The HTTP request variables for the HTTP requests.
 
     Returns:
-        None
+    --------
+    ``None``
+        The function writes the data to a CSV file.
 
     Notes:
-        - This function takes a write_to_csv function and HTTP variables.
-        - It creates an aiohttp client session.
-        - It creates a list of async coroutines for each combination of offset and category.
-        - It gathers the responses from the async coroutines.
-        - It filters out any invalid HTTP responses.
-        - It calls the write_to_csv function with the valid responses.
+    ------
+    1. This function takes a write_to_csv function and HTTP variables.
+    2. It creates an aiohttp client session.
+    3. It creates a list of async coroutines for each combination of offset and category.
+    4. It gathers the responses from the async coroutines.
+    5. It filters out any invalid HTTP responses.
+    6. It calls the write_to_csv function with the valid responses.
+
+    Example:
+    --------
+    >>> write_to_csv = write_asos_data
+    >>> http_variables = {
+    ...     "api_url": "https://api.example.com",
+    ...     "api_params": {"param1": "value1"},
+    ...     "api_headers": {"header1": "value1"},
+    ...     "offset": {"param_name": "offset", "param_list": ["0", "1"]},
+    ...     "categories": {"param_name": "category", "param_list": ["cat1", "cat2"]},
+    ... }
+    >>> process_requests(write_to_csv, http_variables)
+    ... # Writes data to a CSV file
 
     Author: ``@cc-dev-65535``
     """
@@ -172,21 +234,46 @@ async def process_requests(write_to_csv, http_variables):
     write_to_csv(responses_filtered)
 
 
-def create_http_variables(
-    api_url, api_params=None, api_headers=None, offset=None, categories=None
-):
+def create_http_variables(api_url, api_params=None, api_headers=None, offset=None, categories=None):
     """
     Creates a dictionary of HTTP variables for HTTP requests.
 
     Args:
-        api_url (str): The URL of the API.
-        api_params (dict, optional): The HTTP query parameters. Defaults to None.
-        api_headers (dict, optional): The HTTP headers. Defaults to None.
-        offset (dict, optional): The offset query parameter name and values. Defaults to None.
-        categories (dict, optional): The categories query parameter name and values. Defaults to None.
+    -----
+    api_url : ``str``
+        The URL of the API.
+
+    Keyword Args:
+    -------------
+    api_params : ``dict``
+        The HTTP query parameters. Defaults to None.
+    api_headers : ``dict``
+        The HTTP headers. Defaults to None.
+    offset : ``dict``
+        The offset query parameter name and values. Defaults to None.
+    categories : ``dict``
+        The categories query parameter name and values. Defaults to None.
 
     Returns:
-        dict: The dictionary of HTTP variables (headers, query parameters, etc.).
+    --------
+    ``dict``
+        The dictionary of HTTP variables (headers, query parameters, etc.).
+
+    Notes:
+    ------
+    1. This function creates a dictionary of HTTP variables for HTTP requests.
+    2. It includes the API URL, query parameters, headers, offset, and categories.
+    3. It sets default values for query parameters, headers, offset, and categories.
+
+    Example:
+    --------
+    >>> api_url = "https://api.example.com"
+    >>> api_params = {"param1": "value1"}
+    >>> api_headers = {"header1": "value1"}
+    >>> offset = {"param_name": "offset", "param_list": ["0", "1"]}
+    >>> categories = {"param_name": "category", "param_list": ["cat1", "cat2"]}
+    >>> create_http_variables(api_url, api_params, api_headers, offset, categories)
+    ... # Returns a dictionary of HTTP variables
 
     Author: ``@cc-dev-65535``
     """
@@ -211,17 +298,28 @@ async def main():
     """
     Gets JSON data from multiple API sources.
 
+    Args:
+    -----
+    None
+
     Returns:
-        None
+    --------
+    None
 
     Notes:
-        - This function is the entry point of the program.
-        - It defines the HTTP variables for ASOS API.
-        - It calls the process_requests function to get data from ASOS API.
-        - It defines the HTTP variables for H&M API.
-        - It calls the process_requests function to get data from H&M API.
-        - API keys should be passed in as environment variables.
-        - This function can be expanded to get data from additional desired APIs.
+    ------
+    1. This function is the entry point of the program.
+    2. It defines the HTTP variables for ASOS API.
+    3. It calls the process_requests function to get data from ASOS API.
+    4. It defines the HTTP variables for H&M API.
+    5. It calls the process_requests function to get data from H&M API.
+    6. API keys should be passed in as environment variables.
+    7. This function can be expanded to get data from additional desired APIs.
+
+    Example:
+    --------
+    >>> asyncio.run(main())
+    ... # Gets data from multiple APIs and writes to CSV files
 
     Author: ``@cc-dev-65535``
     """
