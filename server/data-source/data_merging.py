@@ -17,7 +17,9 @@ To execute this module, run the following command:
 This script assumes that the file paths for the images and styles CSV files are correctly set in the main section of the script.
 """
 
+
 import pandas as pd
+
 
 def merge_datasets(images_csv_path, styles_csv_path, output_csv_path):
     """
@@ -53,6 +55,7 @@ def merge_datasets(images_csv_path, styles_csv_path, output_csv_path):
     # Save the merged dataframe to a new CSV file
     merged_df.to_csv(output_csv_path, index=False)
     print(f"Merged dataset saved to {output_csv_path}")
+
 
 if __name__ == "__main__":
     # Paths to your CSV files (please change this to your own absolute paths if needed to run again)

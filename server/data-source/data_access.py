@@ -15,8 +15,10 @@ In the command line, you can run the following commands to interact with the dat
     ``python data_access.py``
 """
 
+
 import pandas as pd
 import os.path
+
 
 class Database:
     """
