@@ -15,8 +15,14 @@ To execute this module, run the following command:
 
 
 import pandas as pd
-# import dense captioning model script
-from server.dense_captioning_model import dense_captioning 
+from dotenv import load_dotenv
+import os
+import sys
+
+load_dotenv()
+sys.path.insert(0, os.getenv("PYTHONPATH"))
+
+from dense_captioning_model import dense_captioning as dc
 
 
 HM_COLUMN_KEY = {
@@ -144,11 +150,11 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
 
 if __name__ == "__main__":
     # Normalize data sources
-    df = pd.read_csv("server/data-source/data-files/hm.csv")
+    df = pd.read_csv("server/data_source/data_files/hm.csv")
     df = normalize_dataframe(df, HM_COLUMN_KEY)
-    df2 = pd.read_csv("server/data-source/data-files/asos.csv")
+    df2 = pd.read_csv("server/data_source/data_files/asos.csv")
     df2 = normalize_dataframe(df2, ASOS_COLUMN_KEY)
-    df3 = pd.read_csv("server/data-source/data-files/free_clothes.csv")
+    df3 = pd.read_csv("server/data_source/data_files/free_clothes.csv")
     df3 = normalize_dataframe(df3, FREE_CLOTHES, description_column_list=FREE_CLOTHES_DESCRIPTION_COLUMNS)
 
     # Merge data sources
