@@ -10,7 +10,7 @@ This script requires the installation of the pandas library.
 
 Usage:
 To execute this module, run the following command:
-    ``python data_normalization.py``
+    ``python server/data_source/data_normalization.py``
 """
 
 
@@ -110,7 +110,7 @@ def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     return df.reset_index(drop=True)
     
 
-def normalize_dataframe(df: pd.DataFrame, column_key, description_column_list=None) -> pd.DataFrame:
+def normalize_dataframe(df: pd.DataFrame, column_key: dict, description_column_list: list=None, sample: int=None) -> pd.DataFrame:
     """
     Normalizes the columns of a DataFrame based on a specified mapping.
 
@@ -118,6 +118,7 @@ def normalize_dataframe(df: pd.DataFrame, column_key, description_column_list=No
         df (pd.DataFrame): The input DataFrame to be normalized.
         column_key (dict): A dictionary mapping the original column names to the new column names.
         description_column_list (list): A list of column names to be merged into a single 'description' column.
+        sample (int): The number of rows to sample from the DataFrame.
 
     Returns:
         pd.DataFrame: The normalized DataFrame with the columns renamed, merged, and dropped as specified.
@@ -125,11 +126,14 @@ def normalize_dataframe(df: pd.DataFrame, column_key, description_column_list=No
     Notes:
         The function normalizes the DataFrame by renaming columns, merging specified columns into a single 'description' column,
         and dropping columns that are not present in the specified mapping.
+        If the 'sample' parameter is provided, the function samples the specified number of rows from the DataFrame.
 
     Author: ``@ChinaiArman``
     """
     if description_column_list:
         df = merge_description_columns(df, description_column_list)
+    if sample:
+        df = df.sample(n=sample)
     df = rename_columns(df, column_key)
     df = drop_columns(df, list(column_key.keys()))
     return df.reset_index(drop=True)
@@ -137,6 +141,19 @@ def normalize_dataframe(df: pd.DataFrame, column_key, description_column_list=No
 
 def merge_dataframes(df_list: list) -> pd.DataFrame:
     """
+    Merges multiple DataFrames into a single DataFrame.
+
+    Args:
+        df_list (list): A list of DataFrames to be merged.
+    
+    Returns:
+        pd.DataFrame: The merged DataFrame containing the data from all the input DataFrames.
+
+    Notes:
+        The function concatenates the DataFrames in the list along the row axis and ignores the original index.
+        All the DataFrames in the list must have the same columns for the merge to be successful.
+
+    Author: ``@ChinaiArman``
     """
     merged_df = pd.concat(df_list, axis=0, ignore_index=True)
     return merged_df
@@ -159,7 +176,7 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     Author: ``@nataliecly``
     """
     descriptions = []
-    for index, row in df.iterrows():
+    for _, row in df.iterrows():
         imageUrl = row['imageUrl']
         description = dc.create_dense_captions(imageUrl)
         descriptions.append(description)
@@ -173,12 +190,12 @@ if __name__ == "__main__":
     df2 = pd.read_csv("server/data_source/data_files/asos.csv")
     df2 = normalize_dataframe(df2, ASOS_COLUMN_KEY)
     df3 = pd.read_csv("server/data_source/data_files/free_clothes.csv")
-    df3 = normalize_dataframe(df3, FREE_CLOTHES, description_column_list=FREE_CLOTHES_DESCRIPTION_COLUMNS)
+    df3 = normalize_dataframe(df3, FREE_CLOTHES, description_column_list=FREE_CLOTHES_DESCRIPTION_COLUMNS, sample=2000)
 
     # Merge data sources
     merged_df = merge_dataframes([df, df2, df3])
     print(merged_df.head())
 
     # Generate keyword descriptions
-    keyword_df = generate_keywords(merged_df)
-    print(keyword_df.head())
+    # keyword_df = generate_keywords(merged_df)
+    # print(keyword_df.head())
