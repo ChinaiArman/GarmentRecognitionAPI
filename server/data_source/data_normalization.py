@@ -175,9 +175,9 @@ def normalize_dataframe(df: pd.DataFrame, column_key: dict, description_column_l
     Keyword Args:
     -------------
     description_column_list : ``list``
-        A list of column names to be merged into a single 'description' column.
+        A list of column names to be merged into a single 'description' column. Default is None.
     sample : ``int``
-        The number of rows to sample from the DataFrame.
+        The number of rows to sample from the DataFrame. Default is None.
 
     Returns:
     --------
@@ -192,13 +192,13 @@ def normalize_dataframe(df: pd.DataFrame, column_key: dict, description_column_l
     --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
-    ...        random   column      names    to     be     normalized
-    ...        1            abc     xyz     def   gef       url1
-    ...        2            hij     klm     nop   qrs       url2
+    ...        random    |  column    |   names   |   to    |   be    |   normalized
+    ...        1         |    abc     |   xyz     |   def   |   gef   |   url1
+    ...        2         |    hij     |   klm     |   nop   |   qrs   |   url2
     >>> normalized_df = normalize_dataframe(df, column_key, description_column_list=["names", "to", "be"], sample=1)
     >>> print(normalized_df.head())
-    ...        id   name    description     imageUrl
-    ...        2    hij     klm, nop, qrs   url2
+    ...        id  |  name    |  description    |  imageUrl
+    ...        1   |  abc     |  xyz, def, gef  |  url1
 
     Author: ``@ChinaiArman``
     """
@@ -236,11 +236,11 @@ def merge_dataframes(df_list: list) -> pd.DataFrame:
     >>> df2 = pd.DataFrame({'A': [5, 6], 'B': [7, 8]})
     >>> merged_df = merge_dataframes([df1, df2])
     >>> print(merged_df)
-    ...    A  B
-    ... 0  1  3
-    ... 1  2  4
-    ... 2  5  7
-    ... 3  6  8
+    ...    A  |  B
+    ... 0  1  |  3
+    ... 1  2  |  4
+    ... 2  5  |  7
+    ... 3  6  |  8
 
     Author: ``@ChinaiArman``
     """
@@ -260,23 +260,23 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
     --------
     ``pd.DataFrame``
-        The normalized DataFrame with the new column 'keyword_descriptions' containing the generated keyword descriptions.
+        The normalized DataFrame with the new column 'keywordDescriptions' containing the generated keyword descriptions.
     
     Notes:
     ------
     1. The function generates keyword descriptions for the images in the DataFrame using Azure's dense captioning technology.
-    2. The generated descriptions are stored in a new column 'keyword_descriptions' in the DataFrame.
+    2. The generated descriptions are stored in a new column 'keywordDescriptions' in the DataFrame.
 
     Example:
     --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
-    ...        id  name  description  imageUrl
-    ...        1   abc   xyz          url1
+    ...        id |  name |  description |  imageUrl
+    ...        1  |  abc  |  xyz         |  url1
     >>> keyword_df = generate_keywords(df)
     >>> print(keyword_df.head())
-    ...        id  name  description  imageUrl  keyword_descriptions
-    ...        1   abc   xyz          url1      "description1"
+    ...        id  |  name |  description  |  imageUrl  |  keywordDescriptions
+    ...        1   |   abc |      xyz      |    url1    |  "description1"
 
     Author: ``@nataliecly``
     """
@@ -285,7 +285,7 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
         imageUrl = row['imageUrl']
         description = dc.create_dense_captions(imageUrl)
         descriptions.append(description)
-    df['keyword_descriptions'] = descriptions
+    df['keywordDescriptions'] = descriptions
     return df
 
 if __name__ == "__main__":

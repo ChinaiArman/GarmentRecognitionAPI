@@ -300,11 +300,11 @@ async def main():
 
     Args:
     -----
-    None
+    None.
 
     Returns:
     --------
-    None
+    ``None``
 
     Notes:
     ------
