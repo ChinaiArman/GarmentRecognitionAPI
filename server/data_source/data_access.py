@@ -95,7 +95,7 @@ class Database:
         df = pd.read_csv(self.file_path)
         return df
 
-    def get_item_by_id(self, id) -> pd.DataFrame:
+    def get_item_by_id(self, id: str) -> pd.DataFrame:
         """
         Retreives Panadas DataFrame of an item by its id.
 
@@ -128,7 +128,7 @@ class Database:
         item = df.loc[df['id'] == id]
         return item
     
-    def get_id_by_keyword_description(self, description):
+    def get_id_by_keyword_description(self, description: str):
         """
         """
         pass

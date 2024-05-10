@@ -20,7 +20,7 @@ This script assumes that the file paths for the images and styles CSV files are 
 import pandas as pd
 
 
-def merge_datasets(images_csv_path, styles_csv_path, output_csv_path):
+def merge_datasets(images_csv_path: str, styles_csv_path: str, output_csv_path: str):
     """
     Merges two datasets: one containing image URLs and another containing styles information.
 

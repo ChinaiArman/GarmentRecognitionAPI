@@ -24,7 +24,7 @@ import os
 HTTP_SUCCESS_CODE = 200
 
 
-async def get_json_data(session, http_variables, offset, category):
+async def get_json_data(session: aiohttp.ClientSession, http_variables: dict, offset: dict, category: dict) -> dict:
     """
     Gets JSON data from api source with a single HTTP request.
 
@@ -34,9 +34,9 @@ async def get_json_data(session, http_variables, offset, category):
         The aiohttp client session.
     http_variables : ``dict``
         The HTTP variables for the HTTP request.
-    offset : ``str``
+    offset : ``dict``
         The offset query parameter for the request.
-    category : ``str``
+    category : ``dict``
         The category query parameter for the request.
 
     Returns:
@@ -59,8 +59,8 @@ async def get_json_data(session, http_variables, offset, category):
     ...     "api_params": {"param1": "value1"},
     ...     "api_headers": {"header1": "value1"},
     ... }
-    >>> offset = "0"
-    >>> category = "category1"
+    >>> offset = {"param_name": "offset", "param_list": ["0", "1"]}
+    >>> category = {"param_name": "category", "param_list": ["cat1", "cat2"]}
     >>> get_json_data(session, http_variables, offset, category)
     ... # Returns JSON data from the API
 
@@ -88,7 +88,7 @@ async def get_json_data(session, http_variables, offset, category):
         return None
 
 
-def write_asos_data(responses):
+def write_asos_data(responses: list) -> None:
     """
     Writes data from ASOS API calls to CSV file.
 
@@ -133,7 +133,7 @@ def write_asos_data(responses):
     df_merged.to_csv("server/data-source/data-files/asos.csv", index=False)
 
 
-def write_hm_data(responses):
+def write_hm_data(responses: list) -> None:
     """
     Writes data from H&M API calls to CSV file.
 
@@ -178,7 +178,7 @@ def write_hm_data(responses):
     df_merged.to_csv("server/data-source/data-files/hm.csv", index=False)
 
 
-async def process_requests(write_to_csv, http_variables):
+async def process_requests(write_to_csv, http_variables: dict) -> None:
     """
     Executes multiple asynchronous HTTP requests and writes the returned data to a CSV file.
 
@@ -234,7 +234,7 @@ async def process_requests(write_to_csv, http_variables):
     write_to_csv(responses_filtered)
 
 
-def create_http_variables(api_url, api_params=None, api_headers=None, offset=None, categories=None):
+def create_http_variables(api_url: str, api_params: dict=None, api_headers: dict=None, offset: dict=None, categories: dict=None):
     """
     Creates a dictionary of HTTP variables for HTTP requests.
 
@@ -294,7 +294,7 @@ def create_http_variables(api_url, api_params=None, api_headers=None, offset=Non
     }
 
 
-async def main():
+async def main() -> None:
     """
     Gets JSON data from multiple API sources.
 
