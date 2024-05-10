@@ -1,14 +1,17 @@
 """
 Author: ``@ChinaiArman``
-Version: 1.0.0
+Version: ``1.0.0``
 
-Description:
+Description
+------
 Normalizes data from different sources to a common format for further processing.
 
-Requirements:
+Requirements
+------
 This script requires the installation of the pandas library.
 
-Usage:
+Usage
+------
 To execute this module, run the following command:
     ``python server/data_source/data_normalization.py``
 """
@@ -51,14 +54,31 @@ def merge_description_columns(df: pd.DataFrame, column_list: list) -> pd.DataFra
     Merges multiple columns into a single 'description' column.
 
     Args:
-        df (pd.DataFrame): The input DataFrame containing the columns to be merged.
-        column_list (list): A list of column names to be merged into a single 'description' column.
+    ------
+    df : ``pd.DataFrame``
+        The input DataFrame containing the columns to be merged.
+    column_list : ``list``
+        A list of column names to be merged into a single 'description' column.
 
     Returns:
-        pd.DataFrame: The DataFrame with the specified columns merged into a single 'description' column.
+    ------
+    ``pd.DataFrame``
+        The DataFrame with the specified columns merged into a single 'description' column.
 
-    Notes:
-        The function concatenates the values of the specified columns into a single 'description' column and drops the original columns.
+    Notes
+    ------
+    1. The function concatenates the values of the specified columns into a single 'description' column and drops the original columns.
+
+    Example:
+    ------
+    >>> df = pd.read_csv("data.csv")
+    >>> print(df.head())
+    ...        random       column      names    to     be     normalized
+    ...        1            abc     xyz     def   gef       url1
+    >>> df = merge_description_columns(df, ["column", "names", "to", "be"])
+    >>> print(df.head())
+    ...        random     normalized     description
+    ...        1          url1          abc, xyz, def, gef
 
     Author: ``@ChinaiArman``
     """
@@ -72,14 +92,31 @@ def rename_columns(df: pd.DataFrame, column_key: dict) -> pd.DataFrame:
     Renames the columns of a DataFrame based on a specified mapping.
 
     Args:
-        df (pd.DataFrame): The input DataFrame to be processed.
-        column_key (dict): A dictionary mapping the original column names to the new column names.
+    ------
+    df : ``pd.DataFrame``
+        The input DataFrame to be processed.
+    column_key : ``dict``
+        A dictionary mapping the original column names to the new column names.
 
     Returns:
-        pd.DataFrame: The DataFrame with the columns renamed according to the specified mapping.
+    ------
+    ``pd.DataFrame``
+        The DataFrame with the columns renamed according to the specified mapping.
 
     Notes:
-        The function renames the columns of the DataFrame based on the mapping provided in the column_key dictionary.
+    ------
+    1. The function renames the columns of the DataFrame based on the mapping provided in the column_key dictionary.
+
+    Example:
+    ------
+    >>> df = pd.read_csv("data.csv")
+    >>> print(df.head())
+    ...        random       column      names    to     be     normalized
+    ...        1            abc     xyz     def   gef       url1
+    >>> df = rename_columns(df, {"id": "random", "name": "column"})
+    >>> print(df.head())
+    ...        id       name        names     to     be     normalized
+    ...        1        abc         xyz     def     gef       url1
 
     Author: ``@ChinaiArman``
     """
@@ -93,15 +130,32 @@ def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     Drops columns from a DataFrame based on a specified list of column names.
 
     Args:
-        df (pd.DataFrame): The input DataFrame to be processed.
-        columns (list): A list of column names to be dropped from the DataFrame.
+    ------
+    df : ``pd.DataFrame``
+        The input DataFrame to be processed.
+    columns : ``list``
+        A list of column names to be dropped from the DataFrame.
 
     Returns:
-        pd.DataFrame: The DataFrame with the specified columns dropped.
+    ------
+    ``pd.DataFrame``
+        The DataFrame with the specified columns dropped.
 
     Notes:
-        The function drops the columns from the DataFrame that are not present in the specified list of columns.
+    ------
+    1. The function drops the columns from the DataFrame that are not present in the specified list of columns.
     
+    Example:
+    ------
+    >>> df = pd.read_csv("data.csv")
+    >>> print(df.head())
+    ...        random   column      names    to     be     normalized
+    ...        1            abc     xyz     def   gef       url1
+    >>> df = drop_columns(df, ["random", "names"])
+    >>> print(df.head())
+    ...        column     to     be     normalized
+    ...        abc        def   gef       url1
+
     Author: ``@ChinaiArman``
     """
     for column in df.columns:
@@ -115,18 +169,39 @@ def normalize_dataframe(df: pd.DataFrame, column_key: dict, description_column_l
     Normalizes the columns of a DataFrame based on a specified mapping.
 
     Args:
-        df (pd.DataFrame): The input DataFrame to be normalized.
-        column_key (dict): A dictionary mapping the original column names to the new column names.
-        description_column_list (list): A list of column names to be merged into a single 'description' column.
-        sample (int): The number of rows to sample from the DataFrame.
+    ------
+    df : ``pd.DataFrame``
+        The input DataFrame to be normalized.
+    column_key : ``dict``
+        A dictionary mapping the original column names to the new column names.
+    
+    Keyword Args:
+    ------
+    description_column_list : ``list``
+        A list of column names to be merged into a single 'description' column.
+    sample : ``int``
+        The number of rows to sample from the DataFrame.
 
     Returns:
+    ------
         pd.DataFrame: The normalized DataFrame with the columns renamed, merged, and dropped as specified.
     
     Notes:
-        The function normalizes the DataFrame by renaming columns, merging specified columns into a single 'description' column,
-        and dropping columns that are not present in the specified mapping.
-        If the 'sample' parameter is provided, the function samples the specified number of rows from the DataFrame.
+    ------
+    1.  The function normalizes the DataFrame by renaming columns, merging specified columns into a single 'description' column, and dropping columns that are not present in the specified mapping.
+    2.  If the 'sample' parameter is provided, the function samples the specified number of rows from the DataFrame.
+
+    Example:
+    ------
+    >>> df = pd.read_csv("data.csv")
+    >>> print(df.head())
+    ...        random   column      names    to     be     normalized
+    ...        1            abc     xyz     def   gef       url1
+    ...        2            hij     klm     nop   qrs       url2
+    >>> normalized_df = normalize_dataframe(df, column_key, description_column_list=["names", "to", "be"], sample=1)
+    >>> print(normalized_df.head())
+    ...        id   name    description     imageUrl
+    ...        2    hij     klm, nop, qrs   url2
 
     Author: ``@ChinaiArman``
     """
@@ -144,14 +219,31 @@ def merge_dataframes(df_list: list) -> pd.DataFrame:
     Merges multiple DataFrames into a single DataFrame.
 
     Args:
-        df_list (list): A list of DataFrames to be merged.
+    ------
+    df_list : ``list``
+        A list of DataFrames to be merged.
     
     Returns:
-        pd.DataFrame: The merged DataFrame containing the data from all the input DataFrames.
+    ------
+    ``pd.DataFrame``
+        The merged DataFrame containing the data from all the input DataFrames.
 
     Notes:
-        The function concatenates the DataFrames in the list along the row axis and ignores the original index.
-        All the DataFrames in the list must have the same columns for the merge to be successful.
+    ------
+    1. The function concatenates the DataFrames in the list along the row axis and ignores the original index.
+    2. All the DataFrames in the list must have the same columns for the merge to be successful.
+
+    Example:
+    --------
+    >>> df1 = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+    >>> df2 = pd.DataFrame({'A': [5, 6], 'B': [7, 8]})
+    >>> merged_df = merge_dataframes([df1, df2])
+    >>> print(merged_df)
+    ...    A  B
+    ... 0  1  3
+    ... 1  2  4
+    ... 2  5  7
+    ... 3  6  8
 
     Author: ``@ChinaiArman``
     """
@@ -164,14 +256,30 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     Generates keyword descriptions for a DataFrame containing image URLs.
 
     Args:
-        df (pd.DataFrame): The input DataFrame to be normalized.
+    ------
+    df : ``pd.DataFrame``
+        The input DataFrame to be normalized.
 
     Returns:
-        pd.DataFrame: The normalized DataFrame with the new column 'keyword_descriptions' containing the generated keyword descriptions.
+    ------
+    ``pd.DataFrame``
+        The normalized DataFrame with the new column 'keyword_descriptions' containing the generated keyword descriptions.
     
     Notes:
-        The function generates keyword descriptions for the images in the DataFrame using Azure's dense captioning technology.
-        The generated descriptions are stored in a new column 'keyword_descriptions' in the DataFrame.
+    ------
+    1. The function generates keyword descriptions for the images in the DataFrame using Azure's dense captioning technology.
+    2. The generated descriptions are stored in a new column 'keyword_descriptions' in the DataFrame.
+
+    Example:
+    --------
+    >>> df = pd.read_csv("data.csv")
+    >>> print(df.head())
+    ...        id  name  description  imageUrl
+    ...        1   abc   xyz          url1
+    >>> keyword_df = generate_keywords(df)
+    >>> print(keyword_df.head())
+    ...        id  name  description  imageUrl  keyword_descriptions
+    ...        1   abc   xyz          url1      "description1"
 
     Author: ``@nataliecly``
     """
