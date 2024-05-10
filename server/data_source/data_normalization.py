@@ -15,6 +15,8 @@ To execute this module, run the following command:
 
 
 import pandas as pd
+# import dense captioning model script
+from server.dense_captioning_model import dense_captioning 
 
 
 HM_COLUMN_KEY = {
@@ -132,6 +134,12 @@ def merge_dataframes(df_list: list) -> pd.DataFrame:
     """
     merged_df = pd.concat(df_list, axis=0, ignore_index=True)
     return merged_df
+
+
+def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    """
+    pass
 
 
 if __name__ == "__main__":
