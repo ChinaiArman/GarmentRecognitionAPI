@@ -1,4 +1,19 @@
 """
+Author: ``@ChinaiArman``
+Version: 1.0.0
+
+Generates keyword captions of images using Azure's dense captioning technology.
+This module requires the following environment variables to be set:
+    - AZURE_VISION_ENDPOINT: The endpoint of the Azure Vision service.
+    - AZURE_VISION_KEY_1: The key for the Azure Vision service.
+
+The module uses the Azure Cognitive Services SDK to interact with the Azure Vision service.
+To execute this module, run the following command:
+    ``python dense_captioning.py <filepath_or_url>``
+where <filepath_or_url> is the file path or URL of the image.
+
+The module returns the result of the image analysis, which includes the dense captions and metadata.
+The dense captions are printed to the console, along with the image height, width, and model version.
 """
 
 import os
@@ -26,7 +41,7 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
             - AZURE_VISION_KEY_1: The key for the Azure Vision service.
         - The function uses the Azure Cognitive Services SDK to interact with the Azure Vision service.
         - The function returns the result of the image analysis, which includes the dense captions and metadata.
-        
+
     Author: ``@ChinaiArman``
     """
     # Load environment variables.
