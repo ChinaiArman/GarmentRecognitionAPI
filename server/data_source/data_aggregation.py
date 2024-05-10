@@ -132,7 +132,7 @@ def write_asos_data(responses: list) -> None:
         df = df[["id", "name", "colour", "brandName", "imageUrl"]]
         df_list.append(df)
     df_merged = pd.concat(df_list)
-    df_merged.to_csv("server/data-source/data-files/asos.csv", index=False)
+    df_merged.to_csv("server/data_source/data_files/asos.csv", index=False)
 
 
 def write_hm_data(responses: list) -> None:
@@ -176,7 +176,7 @@ def write_hm_data(responses: list) -> None:
         df = df[["code", "name", "defaultArticle.color.text", "images"]]
         df_list.append(df)
     df_merged = pd.concat(df_list)
-    df_merged.to_csv("server/data-source/data-files/hm.csv", index=False)
+    df_merged.to_csv("server/data_source/data_files/hm.csv", index=False)
 
 
 async def process_requests(write_to_csv, http_variables: dict) -> None:

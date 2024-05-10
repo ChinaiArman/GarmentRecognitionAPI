@@ -13,7 +13,6 @@ To execute this module, run the following command:
     ``python server/data_source/data_normalization.py``
 """
 
-
 import pandas as pd
 from dotenv import load_dotenv
 import os
@@ -29,21 +28,30 @@ HM_COLUMN_KEY = {
     "id": "code",
     "name": "name",
     "description": "defaultArticle.color.text",
-    "imageUrl": "images" 
+    "imageUrl": "images",
 }
 ASOS_COLUMN_KEY = {
     "id": "id",
     "name": "name",
     "description": "",
-    "imageUrl": "imageUrl"
+    "imageUrl": "imageUrl",
 }
 FREE_CLOTHES = {
     "id": "id",
     "name": "productDisplayName",
     "description": "description",
-    "imageUrl": "link"
+    "imageUrl": "link",
 }
-FREE_CLOTHES_DESCRIPTION_COLUMNS = ["gender", "masterCategory", "subCategory", "articleType", "baseColour", "season", "year", "usage"]
+FREE_CLOTHES_DESCRIPTION_COLUMNS = [
+    "gender",
+    "masterCategory",
+    "subCategory",
+    "articleType",
+    "baseColour",
+    "season",
+    "year",
+    "usage",
+]
 
 
 def merge_description_columns(df: pd.DataFrame, column_list: list) -> pd.DataFrame:
@@ -79,7 +87,9 @@ def merge_description_columns(df: pd.DataFrame, column_list: list) -> pd.DataFra
 
     Author: ``@ChinaiArman``
     """
-    df['description'] = df[column_list].apply(lambda x: ', '.join(x.dropna().astype(str)), axis=1)
+    df["description"] = df[column_list].apply(
+        lambda x: ", ".join(x.dropna().astype(str)), axis=1
+    )
     df.drop(columns=column_list, inplace=True)
     return df.reset_index(drop=True)
 
@@ -141,7 +151,7 @@ def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     Notes:
     ------
     1. The function drops the columns from the DataFrame that are not present in the specified list of columns.
-    
+
     Example:
     --------
     >>> df = pd.read_csv("data.csv")
@@ -159,9 +169,14 @@ def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
         if column not in columns:
             df.drop(column, axis=1, inplace=True)
     return df.reset_index(drop=True)
-    
 
-def normalize_dataframe(df: pd.DataFrame, column_key: dict, description_column_list: list=None, sample: int=None) -> pd.DataFrame:
+
+def normalize_dataframe(
+    df: pd.DataFrame,
+    column_key: dict,
+    description_column_list: list = None,
+    sample: int = None,
+) -> pd.DataFrame:
     """
     Normalizes the columns of a DataFrame based on a specified mapping.
 
@@ -171,7 +186,7 @@ def normalize_dataframe(df: pd.DataFrame, column_key: dict, description_column_l
         The input DataFrame to be normalized.
     column_key : ``dict``
         A dictionary mapping the original column names to the new column names.
-    
+
     Keyword Args:
     -------------
     description_column_list : ``list``
@@ -182,7 +197,7 @@ def normalize_dataframe(df: pd.DataFrame, column_key: dict, description_column_l
     Returns:
     --------
         pd.DataFrame: The normalized DataFrame with the columns renamed, merged, and dropped as specified.
-    
+
     Notes:
     ------
     1.  The function normalizes the DataFrame by renaming columns, merging specified columns into a single 'description' column, and dropping columns that are not present in the specified mapping.
@@ -219,7 +234,7 @@ def merge_dataframes(df_list: list) -> pd.DataFrame:
     -----
     df_list : ``list``
         A list of DataFrames to be merged.
-    
+
     Returns:
     --------
     ``pd.DataFrame``
@@ -261,7 +276,7 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     --------
     ``pd.DataFrame``
         The normalized DataFrame with the new column 'keywordDescriptions' containing the generated keyword descriptions.
-    
+
     Notes:
     ------
     1. The function generates keyword descriptions for the images in the DataFrame using Azure's dense captioning technology.
@@ -282,20 +297,44 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     """
     descriptions = []
     for _, row in df.iterrows():
-        imageUrl = row['imageUrl']
+        imageUrl = row["imageUrl"]
         description = dc.create_dense_captions(imageUrl)
         descriptions.append(description)
-    df['keywordDescriptions'] = descriptions
+    df["keywordDescriptions"] = descriptions
     return df
 
-if __name__ == "__main__":
+
+def main():
+    # TODO: Fix documentation later
+    """
+    Normalizes data from different sources, merges them, and generates keyword descriptions.
+
+    Args:
+    -----
+    None
+
+    Returns:
+    --------
+    None
+
+    Notes:
+    ------
+    1. This function serves as the entry point of the script.
+    2. It reads data from different sources, normalizes them, merges them into a single DataFrame, and generates keyword descriptions for the images.
+    3. The normalized and merged DataFrame is saved to data.csv.
+    """
     # Normalize data sources
     df = pd.read_csv("server/data_source/data_files/hm.csv")
     df = normalize_dataframe(df, HM_COLUMN_KEY)
     df2 = pd.read_csv("server/data_source/data_files/asos.csv")
     df2 = normalize_dataframe(df2, ASOS_COLUMN_KEY)
     df3 = pd.read_csv("server/data_source/data_files/free_clothes.csv")
-    df3 = normalize_dataframe(df3, FREE_CLOTHES, description_column_list=FREE_CLOTHES_DESCRIPTION_COLUMNS, sample=2000)
+    df3 = normalize_dataframe(
+        df3,
+        FREE_CLOTHES,
+        description_column_list=FREE_CLOTHES_DESCRIPTION_COLUMNS,
+        sample=2000,
+    )
 
     # Merge data sources
     merged_df = merge_dataframes([df, df2, df3])
@@ -304,3 +343,7 @@ if __name__ == "__main__":
     # Generate keyword descriptions
     # keyword_df = generate_keywords(merged_df)
     # print(keyword_df.head())
+
+
+if __name__ == "__main__":
+    main()
