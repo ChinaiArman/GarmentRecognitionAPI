@@ -101,7 +101,29 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
     # return response
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """
+    Main function to run the dense captioning model.
+
+    Args:
+    -----
+    None.
+
+    Returns:
+    --------
+    None.
+
+    Notes:
+    ------
+    1. The function defines a console parser and adds arguments.
+    2. The function calls the Azure dense captioning model with the provided image file path or URL.
+    3. The function prints the dense caption results to the console.
+
+    Example:
+    --------
+    >>> python dense_captioning.py "image.jpg"
+    ... # Prints the dense captions of the image.
+    """
     # Define console parser and add arguments.
     parser = argparse.ArgumentParser(description="Generates keyword captions of images using Azure's dense captioning technology.")
     parser.add_argument("filepath_or_url", action="store", help="An image file path or URL")
@@ -122,3 +144,6 @@ if __name__ == "__main__":
         print(f"\tModel version: {response.model_version}")
     else:
         print("\tNo captions generated.")
+
+if __name__ == "__main__":
+    main()

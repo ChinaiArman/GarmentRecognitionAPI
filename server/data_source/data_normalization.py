@@ -78,12 +78,12 @@ def merge_description_columns(df: pd.DataFrame, column_list: list) -> pd.DataFra
     --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
-    ...        random       column      names    to     be     normalized
-    ...        1            abc     xyz     def   gef       url1
+    ...        random   |  column    |   names   |   to    |   be    |   normalized
+    ...        1        |    abc     |   xyz     |   def   |   gef   |   url1
     >>> df = merge_description_columns(df, ["column", "names", "to", "be"])
     >>> print(df.head())
-    ...        random     normalized     description
-    ...        1          url1          abc, xyz, def, gef
+    ...        random  |   normalized   |  column
+    ...        1       |  xyz, def, gef |  abc
 
     Author: ``@ChinaiArman``
     """
@@ -118,12 +118,12 @@ def rename_columns(df: pd.DataFrame, column_key: dict) -> pd.DataFrame:
     --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
-    ...        random       column      names    to     be     normalized
-    ...        1            abc     xyz     def   gef       url1
+    ...        random  |  column    |   names   |   to    |   be    |   normalized
+    ...        1       |    abc     |   xyz     |   def   |   gef   |   url1
     >>> df = rename_columns(df, {"id": "random", "name": "column"})
     >>> print(df.head())
-    ...        id       name        names     to     be     normalized
-    ...        1        abc         xyz     def     gef       url1
+    ...        id  |  name    |  names   |  to     |  be     |  normalized
+    ...        1   |  abc     |  xyz     |  def    |  gef    |  url1
 
     Author: ``@ChinaiArman``
     """
@@ -156,12 +156,12 @@ def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
-    ...        random   column      names    to     be     normalized
-    ...        1            abc     xyz     def   gef       url1
+    ...        random    |  column    |   names   |   to    |   be    |   normalized
+    ...        1         |    abc     |   xyz     |   def   |   gef   |   url1
     >>> df = drop_columns(df, ["random", "names"])
     >>> print(df.head())
-    ...        column     to     be     normalized
-    ...        abc        def   gef       url1
+    ...        column    |   to    |   be   |   normalized
+    ...        abc       |   def   |   gef  |   url1
 
     Author: ``@ChinaiArman``
     """
@@ -297,14 +297,18 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     """
     descriptions = []
     for _, row in df.iterrows():
-        imageUrl = row["imageUrl"]
-        description = dc.create_dense_captions(imageUrl)
-        descriptions.append(description)
+        try:
+            imageUrl = row["imageUrl"]
+            description = dc.create_dense_captions(imageUrl)
+            descriptions.append(description)
+        except Exception as e:
+            print(f"Error: {e}")
+            descriptions.append("")
     df["keywordDescriptions"] = descriptions
     return df
 
 
-def write_dataframe_to_csv(df):
+def write_dataframe_to_csv(df: pd.DataFrame) -> None:
     """
     Writes a DataFrame to a CSV file.
 
@@ -334,7 +338,7 @@ def write_dataframe_to_csv(df):
     df.to_csv("server/data_source/data.csv", index=False)
 
 
-def main():
+def main() -> None:
     """
     Normalizes and generates a modified CSV file.
 
@@ -366,21 +370,15 @@ def main():
     df2 = pd.read_csv("server/data_source/data_files/asos.csv")
     df2 = normalize_dataframe(df2, ASOS_COLUMN_KEY)
     df3 = pd.read_csv("server/data_source/data_files/free_clothes.csv")
-    df3 = normalize_dataframe(
-        df3,
-        FREE_CLOTHES,
-        description_column_list=FREE_CLOTHES_DESCRIPTION_COLUMNS,
-        sample=2000,
-    )
+    df3 = normalize_dataframe(df3, FREE_CLOTHES, description_column_list=FREE_CLOTHES_DESCRIPTION_COLUMNS, sample=2000)
 
     # Merge data sources
     merged_df = merge_dataframes([df, df2, df3])
-    # print(merged_df.head())
 
     # Generate keyword descriptions
     # keyword_df = generate_keywords(merged_df)
-    # print(keyword_df.head())
 
+    # Write merged DataFrame to CSV
     write_dataframe_to_csv(merged_df)
 
 

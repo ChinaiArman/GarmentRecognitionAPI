@@ -133,6 +133,11 @@ class Database:
         """
         pass
 
+    def get_id_keyword_description(self, description: str):
+        """
+        """
+        pass
+
 
 if __name__ == "__main__":
     db = Database()
