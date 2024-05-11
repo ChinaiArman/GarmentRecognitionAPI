@@ -297,14 +297,18 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     """
     descriptions = []
     for _, row in df.iterrows():
-        imageUrl = row["imageUrl"]
-        description = dc.create_dense_captions(imageUrl)
-        descriptions.append(description)
+        try:
+            imageUrl = row["imageUrl"]
+            description = dc.create_dense_captions(imageUrl)
+            descriptions.append(description)
+        except Exception as e:
+            print(f"Error: {e}")
+            descriptions.append("")
     df["keywordDescriptions"] = descriptions
     return df
 
 
-def write_dataframe_to_csv(df):
+def write_dataframe_to_csv(df: pd.DataFrame) -> None:
     """
     Writes a DataFrame to a CSV file.
 
@@ -334,7 +338,7 @@ def write_dataframe_to_csv(df):
     df.to_csv("server/data_source/data.csv", index=False)
 
 
-def main():
+def main() -> None:
     """
     Normalizes and generates a modified CSV file.
 
@@ -366,21 +370,15 @@ def main():
     df2 = pd.read_csv("server/data_source/data_files/asos.csv")
     df2 = normalize_dataframe(df2, ASOS_COLUMN_KEY)
     df3 = pd.read_csv("server/data_source/data_files/free_clothes.csv")
-    df3 = normalize_dataframe(
-        df3,
-        FREE_CLOTHES,
-        description_column_list=FREE_CLOTHES_DESCRIPTION_COLUMNS,
-        sample=2000,
-    )
+    df3 = normalize_dataframe(df3, FREE_CLOTHES, description_column_list=FREE_CLOTHES_DESCRIPTION_COLUMNS, sample=2000)
 
     # Merge data sources
     merged_df = merge_dataframes([df, df2, df3])
-    # print(merged_df.head())
 
     # Generate keyword descriptions
     # keyword_df = generate_keywords(merged_df)
-    # print(keyword_df.head())
 
+    # Write merged DataFrame to CSV
     write_dataframe_to_csv(merged_df)
 
 
