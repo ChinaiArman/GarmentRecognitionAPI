@@ -20,6 +20,7 @@ import aiohttp
 import asyncio
 import pandas as pd
 import os
+from dotenv import load_dotenv
 
 
 HTTP_SUCCESS_CODE = 200
@@ -331,6 +332,8 @@ async def main() -> None:
 
     Author: ``@cc-dev-65535``
     """
+    load_dotenv()
+
     # Get data from ASOS
     api_url = "https://asos2.p.rapidapi.com/products/v2/list"
     api_params = {
