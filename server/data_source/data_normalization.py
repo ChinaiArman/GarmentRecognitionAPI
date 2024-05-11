@@ -78,12 +78,12 @@ def merge_description_columns(df: pd.DataFrame, column_list: list) -> pd.DataFra
     --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
-    ...        random       column      names    to     be     normalized
-    ...        1            abc     xyz     def   gef       url1
+    ...        random   |  column    |   names   |   to    |   be    |   normalized
+    ...        1        |    abc     |   xyz     |   def   |   gef   |   url1
     >>> df = merge_description_columns(df, ["column", "names", "to", "be"])
     >>> print(df.head())
-    ...        random     normalized     description
-    ...        1          url1          abc, xyz, def, gef
+    ...        random  |   normalized   |  column
+    ...        1       |  xyz, def, gef |  abc
 
     Author: ``@ChinaiArman``
     """
@@ -118,12 +118,12 @@ def rename_columns(df: pd.DataFrame, column_key: dict) -> pd.DataFrame:
     --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
-    ...        random       column      names    to     be     normalized
-    ...        1            abc     xyz     def   gef       url1
+    ...        random  |  column    |   names   |   to    |   be    |   normalized
+    ...        1       |    abc     |   xyz     |   def   |   gef   |   url1
     >>> df = rename_columns(df, {"id": "random", "name": "column"})
     >>> print(df.head())
-    ...        id       name        names     to     be     normalized
-    ...        1        abc         xyz     def     gef       url1
+    ...        id  |  name    |  names   |  to     |  be     |  normalized
+    ...        1   |  abc     |  xyz     |  def    |  gef    |  url1
 
     Author: ``@ChinaiArman``
     """
@@ -156,12 +156,12 @@ def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     --------
     >>> df = pd.read_csv("data.csv")
     >>> print(df.head())
-    ...        random   column      names    to     be     normalized
-    ...        1            abc     xyz     def   gef       url1
+    ...        random    |  column    |   names   |   to    |   be    |   normalized
+    ...        1         |    abc     |   xyz     |   def   |   gef   |   url1
     >>> df = drop_columns(df, ["random", "names"])
     >>> print(df.head())
-    ...        column     to     be     normalized
-    ...        abc        def   gef       url1
+    ...        column    |   to    |   be   |   normalized
+    ...        abc       |   def   |   gef  |   url1
 
     Author: ``@ChinaiArman``
     """
