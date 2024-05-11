@@ -15,9 +15,11 @@ To use this module from the command line, you can run the following command:
 This will execute the data aggregation and data normalization processes.
 """
 
+
 import asyncio
 import data_aggregation
 import data_normalization
+
 
 if __name__ == "__main__":
     asyncio.run(data_aggregation.main())
