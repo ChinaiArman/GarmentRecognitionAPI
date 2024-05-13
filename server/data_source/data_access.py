@@ -128,40 +128,29 @@ class Database:
         return item
     
 
-    def get_id_keyword_description(self, description: str) -> pd.DataFrame:
+    def get_id_keyword_description(self) -> pd.DataFrame:
         """
-        Retrieves a pandas DataFrame of item IDs and their descriptions based on a search keyword found in their descriptions.
-
-        Args:
-        -----
-        description : ``str``
-            The keyword to search for within the keywordDescriptions column.
+        Retrieves a pandas DataFrame containing only the 'id' and 'keywordDescriptions' columns of all items.
 
         Returns:
         --------
-        ``pd.DataFrame``
-            A DataFrame containing the ids and descriptions of items whose keyword descriptions match the keyword.
-
-        Notes:
-        ------
-        1. The method filters the data based on the presence of the keyword in the 'keywordDescriptions' column.
-        2. The search is case insensitive and ignores NaN values.
-        3. This method returns both the ID and the keyword description, useful for detailed searches.
+        pd.DataFrame
+            A DataFrame containing only the 'id' and 'keywordDescriptions' columns for all items.
 
         Example:
         --------
         >>> db = Database()
-        >>> detailed_matching_items = db.get_id_keyword_description("casual")
-        >>> print(detailed_matching_items)
+        >>> detailed_items = db.get_id_keyword_description()
+        >>> print(detailed_items)
         ... id  |  keywordDescriptions
-        ... 24  |  casual, comfortable, cool
+        ... 1   |  casual, comfortable, cool
+        ... 2   |  elegant, formal, sleek
 
         Author: ``@Ehsan138``
         """
-        # change this to just return the id and keywordDescriptions columns.
-        # might be something like this, not entirely sure: return df[['id', 'keywordDescriptions']]
-        result = self.df[self.df['keywordDescriptions'].str.contains(description, na=False, case=False)]
-        return result[['id', 'keywordDescriptions']]
+        df = self.get_data_frame()
+        return df[['id', 'keywordDescriptions']]
+
 
 
 
