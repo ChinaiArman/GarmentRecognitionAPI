@@ -128,10 +128,6 @@ class Database:
         item = df.loc[df['id'] == id]
         return item
     
-    def get_id_by_keyword_description(self, description: str):
-        """
-        """
-        pass
 
     def get_id_keyword_description(self, description: str) -> pd.DataFrame:
         """
