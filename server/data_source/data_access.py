@@ -133,10 +133,12 @@ class Database:
         """
         pass
 
-    def get_id_keyword_description(self, description: str):
+    def get_id_keyword_description(self, description: str) -> pd.DataFrame:
         """
         """
-        pass
+        df = self.get_data_frame()
+        result = df[df['keywordDescriptions'].str.contains(description, na=False, case=False)]
+        return result[['id', 'keywordDescriptions']]
 
 
 if __name__ == "__main__":
