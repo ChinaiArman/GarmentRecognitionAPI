@@ -159,6 +159,8 @@ class Database:
 
         Author: ``@Ehsan138``
         """
+        # change this to just return the id and keywordDescriptions columns.
+        # might be something like this, not entirely sure: return df[['id', 'keywordDescriptions']]
         df = self.get_data_frame()
         result = df[df['keywordDescriptions'].str.contains(description, na=False, case=False)]
         return result[['id', 'keywordDescriptions']]
