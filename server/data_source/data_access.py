@@ -164,9 +164,17 @@ class Database:
         return result[['id', 'keywordDescriptions']]
 
 
+
+def main() -> None:
+    """
+    """
+    pass
+
+
 if __name__ == "__main__":
-    db = Database()
-    data = db.get_data_frame()
-    print(data.head())
-    item = db.get_item_by_id(1)
-    print(item)
+    # db = Database()
+    # data = db.get_data_frame()
+    # print(data.head())
+    # item = db.get_item_by_id(1)
+    # print(item)
+    main()
