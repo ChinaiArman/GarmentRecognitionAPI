@@ -95,13 +95,6 @@ def vector_comparison(keywords: list) -> pd.DataFrame:
     pass
 
 
-"""
-    keywords = the keywords of the image being compared
-    database_keywords = list of keywords from the database
-    returns a new column with the vectors for the analysis
-"""
-
-
 def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
     """
     Perform semantic textual analysis to calculate similarity scores between a list of keywords and a list of database keywords.
