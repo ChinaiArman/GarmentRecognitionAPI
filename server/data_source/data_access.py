@@ -131,7 +131,8 @@ class Database:
     def get_id_by_keyword_description(self, description: str):
         """
         """
-        pass
+        df = self.get_data_frame()
+        return df[df['keywordDescriptions'].str.contains(description, na=False, case=False)]
 
     def get_id_keyword_description(self, description: str) -> pd.DataFrame:
         """
