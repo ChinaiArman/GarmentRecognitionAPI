@@ -1,8 +1,6 @@
 """
 """
 
-
-# need to add these to requirements.txt
 import torch.nn.functional as F
 from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
@@ -51,7 +49,7 @@ def normalize_embeddings(embeddings: Tensor):
     """
     makes the embedding results a decimal from 0-1
     """
-    pass
+    return F.normalize(embeddings, p=2, dim=1)
 
 
 def model_wrapper(url: str, size: int) -> list:
