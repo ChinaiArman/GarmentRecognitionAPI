@@ -47,7 +47,34 @@ def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
 
 def normalize_embeddings(embeddings: Tensor):
     """
-    makes the embedding results a decimal from 0-1
+    Normalizes each vector in the embeddings tensor to have a unit L2 norm. This means that the length or magnitude
+    of each vector will be scaled to 1. The normalization is performed across the last dimension of the tensor, 
+    which typically corresponds to the feature or embedding dimension.
+
+    Args:
+        embeddings (Tensor): The embeddings tensor to normalize. This tensor could typically have a shape 
+                             like (batch_size, embedding_dimension), where each row represents an embedding vector.
+
+    Returns:
+        Tensor: The normalized embeddings tensor, with each vector having a unit norm. The shape of the tensor remains unchanged.
+
+    Notes:
+        The L2 norm, used here, scales the vector components such that the square root of the sum of the squared components equals 1.
+        This operation is commonly used to prepare embeddings for cosine similarity calculations, as it ensures that the angle between
+        vectors reflects their semantic similarity more than their magnitude.
+
+    Example:
+        >>> embeddings = torch.tensor([[3.0, 4.0], [1.0, 2.0]])
+        >>> normalized_embeddings = normalize_embeddings(embeddings)
+        >>> print(normalized_embeddings)
+        tensor([[0.6000, 0.8000],
+                [0.4472, 0.8944]])
+        # Explanation: 
+        # The first vector [3.0, 4.0] has an original length of 5. After normalization, its components are scaled so that
+        # its length becomes 1, calculated as sqrt(0.6^2 + 0.8^2) = 1.
+        # The second vector [1.0, 2.0] is normalized similarly, from a length of sqrt(5) to 1.
+
+    Author: ``@Ehsan138``
     """
     return F.normalize(embeddings, p=2, dim=1)
 
