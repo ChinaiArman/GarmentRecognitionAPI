@@ -136,7 +136,7 @@ class Database:
 
         Returns:
         --------
-        pd.DataFrame
+        ``pd.DataFrame``
             A DataFrame containing only the 'id' and 'keywordDescriptions' columns for all items.
 
         Notes:
