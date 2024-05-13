@@ -6,6 +6,15 @@ from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
 import pandas as pd
 
+from dotenv import load_dotenv
+import os
+import sys
+
+load_dotenv()
+sys.path.insert(0, os.getenv("PYTHONPATH"))
+
+from dense_captioning_model import dense_captioning as dc
+
 
 def load_embedded_model() -> tuple[AutoTokenizer, AutoModel]:
     """
@@ -111,13 +120,43 @@ def normalize_embeddings(embeddings: Tensor) -> list:
     return scores[0].tolist()
 
 
-def model_wrapper(url: str, size: int) -> list:
+def model_wrapper(filepath_or_url: str, size: int) -> list:
     """
-    calls vector_comparison, returns 'size' top results.
-    will generate the keywords for the image here from dense_captioning_model.py
-    """
-    pass
+    Wrapper function to call the dense captioning model and then perform semantic textual analysis.
 
+    Args:
+    -----
+    filepath_or_url : ``str``
+        The filepath or url of the image to be analyzed.
+    size : ``int``
+        The number of similar items to return.
+
+    Returns:
+    --------
+    ``list``
+        A list of the top `size` similar items based on the analysis.
+
+    Notes:
+    ------
+    1. The function calls the dense captioning model to generate keywords from the image.
+    2. The keywords are then used to perform semantic textual analysis to find similar items in the database.
+    3. The function returns the IDs of the top `size` similar items based on the analysis.
+    4. If no keywords are generated from the image, an empty list is returned.
+
+    Example:
+    --------
+    >>> url = "https://image-url.com/image.jpg"
+    >>> size = 5
+    >>> similar_items = model_wrapper(url, size)
+    >>> print(similar_items)
+    ... ["item1", "item2", "item3", "item4", "item5"]
+    """
+    keywords = dc.create_dense_captions(filepath_or_url)
+    if not keywords:
+        return []
+    df = vector_comparison(keywords)
+    return df["id"].tolist()[:size]
+    
 
 def vector_comparison(keywords: list) -> pd.DataFrame:
     """
