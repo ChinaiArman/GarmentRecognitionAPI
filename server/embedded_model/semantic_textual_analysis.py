@@ -8,6 +8,9 @@ from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
 import pandas as pd
 
+# Initialize tokenizer and model from a pre-trained transformer.
+tokenizer = AutoTokenizer.from_pretrained("thenlper/gte-base")
+model = AutoModel.from_pretrained("thenlper/gte-base")
 
 def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
     """
