@@ -6,10 +6,36 @@ from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
 import pandas as pd
 
-# Initialize tokenizer and model from a pre-trained transformer.
-tokenizer = AutoTokenizer.from_pretrained("thenlper/gte-base")
-model = AutoModel.from_pretrained("thenlper/gte-base")
 
+def load_embedded_model() -> tuple[AutoTokenizer, AutoModel]:
+    """
+    Load the pre-trained transformer model and tokenizer for generating text embeddings.
+
+    Args:
+    -----
+    None.
+
+    Returns:
+    --------
+    ``tuple``
+        A tuple containing the tokenizer and model objects.
+    
+    Notes:
+    ------
+    1. The model and tokenizer are pre-trained on a large corpus and can be used to generate embeddings for text data.
+    2. The model used here is the GTE-base model, which is a transformer-based model.
+    3. The tokenizer is used to convert text data into input tensors for the model.
+    4. The model generates embeddings for the input text, which can be used for various NLP tasks. 
+
+    Example:
+    --------
+    >>> tokenizer, model = load_embedded_model()
+    >>> # Use the tokenizer and model objects for further processing.
+    """
+    tokenizer = AutoTokenizer.from_pretrained("thenlper/gte-base")
+    model = AutoModel.from_pretrained("thenlper/gte-base")
+    return tokenizer, model
+    
 
 def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
     """
@@ -17,14 +43,14 @@ def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
 
     Args:
     -----
-    last_hidden_states : Tensor
+    last_hidden_states : ``Tensor``
         The output tensor from the last hidden layer of a transformer model, typically of shape (batch_size, sequence_length, hidden_size).
-    attention_mask : Tensor
+    attention_mask : ``Tensor``
         An attention mask tensor of shape (batch_size, sequence_length) where `True` indicates a token's presence and `False` indicates padding.
 
     Returns:
     --------
-    Tensor
+    ``Tensor``
         The average-pooled embeddings tensor of shape (batch_size, hidden_size).
 
     Notes:
@@ -40,44 +66,49 @@ def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
     >>> print(averaged_embeddings.shape)
     ... torch.Size([2, 768])
 
-    Author: ``@Ehsan138``
+    Author: ``@cc-dev-65535``
     """
     last_hidden = last_hidden_states.masked_fill(~attention_mask[..., None].bool(), 0.0)
     return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
 
 
-def normalize_embeddings(embeddings: Tensor):
+def normalize_embeddings(embeddings: Tensor) -> list:
     """
     Normalizes each vector in the embeddings tensor to have a unit L2 norm. This means that the length or magnitude
     of each vector will be scaled to 1. The normalization is performed across the last dimension of the tensor,
     which typically corresponds to the feature or embedding dimension.
 
     Args:
-        embeddings (Tensor): The embeddings tensor to normalize. This tensor could typically have a shape
-                             like (batch_size, embedding_dimension), where each row represents an embedding vector.
+    -----
+    embeddings : ``Tensor``
+        The embeddings tensor to normalize. This tensor could typically have a shape like (batch_size, embedding_dimension), where each row represents an embedding vector.
 
     Returns:
-        Tensor: The normalized embeddings tensor, with each vector having a unit norm. The shape of the tensor remains unchanged.
+    --------
+    ``List``
+        The normalized embeddings tensor, stored as a list, with each vector having a unit norm. The shape of the tensor remains unchanged.
 
     Notes:
-        The L2 norm, used here, scales the vector components such that the square root of the sum of the squared components equals 1.
-        This operation is commonly used to prepare embeddings for cosine similarity calculations, as it ensures that the angle between
-        vectors reflects their semantic similarity more than their magnitude.
+    ------
+    1. The L2 norm, used here, scales the vector components such that the square root of the sum of the squared components equals 1.
+    2. This operation is commonly used to prepare embeddings for cosine similarity calculations, as it ensures that the angle between vectors reflects their semantic similarity more than their magnitude.
 
     Example:
-        >>> embeddings = torch.tensor([[3.0, 4.0], [1.0, 2.0]])
-        >>> normalized_embeddings = normalize_embeddings(embeddings)
-        >>> print(normalized_embeddings)
-        tensor([[0.6000, 0.8000],
-                [0.4472, 0.8944]])
-        # Explanation:
-        # The first vector [3.0, 4.0] has an original length of 5. After normalization, its components are scaled so that
-        # its length becomes 1, calculated as sqrt(0.6^2 + 0.8^2) = 1.
-        # The second vector [1.0, 2.0] is normalized similarly, from a length of sqrt(5) to 1.
+    --------
+    >>> embeddings = torch.tensor([[3.0, 4.0], [1.0, 2.0]])
+    >>> normalized_embeddings = normalize_embeddings(embeddings)
+    >>> print(normalized_embeddings)
+    ... tensor([[0.6000, 0.8000], [0.4472, 0.8944]])
+    # Explanation:
+    # The first vector [3.0, 4.0] has an original length of 5. After normalization, its components are scaled so that
+    # its length becomes 1, calculated as sqrt(0.6^2 + 0.8^2) = 1.
+    # The second vector [1.0, 2.0] is normalized similarly, from a length of sqrt(5) to 1.
 
     Author: ``@Ehsan138``
     """
-    return F.normalize(embeddings, p=2, dim=1)
+    embeddings = F.normalize(embeddings, p=2, dim=1)
+    scores = (embeddings[:1] @ embeddings[1:].T) * 100
+    return scores[0].tolist()
 
 
 def model_wrapper(url: str, size: int) -> list:
@@ -126,6 +157,9 @@ def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
 
     Author: ``@cc-dev-65535``
     """
+    # Load the pre-trained model and tokenizer
+    tokenizer, model = load_embedded_model()
+
     # Tokenize the input texts
     input_sentence = " ".join(keywords)
     sentence_list = [" ".join(keyword_list) for keyword_list in database_keywords]
@@ -141,9 +175,9 @@ def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
     outputs = model(**batch_dict)
     embeddings = average_pool(outputs.last_hidden_state, batch_dict["attention_mask"])
 
+    # Normalize the embeddings
     normalized_embeddings = normalize_embeddings(embeddings)
-    scores = (normalized_embeddings[:1] @ normalized_embeddings[1:].T) * 100
-    return scores[0].tolist()
+    return normalized_embeddings
 
 
 def main() -> None:
