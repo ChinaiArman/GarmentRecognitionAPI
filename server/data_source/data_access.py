@@ -63,6 +63,7 @@ class Database:
         if not os.path.exists("server/data-source/data.csv"):
             raise FileNotFoundError("The data source file does not exist.")
         self.file_path = "server/data-source/data.csv"
+        self.df = pd.read_csv(self.file_path)
 
     def get_data_frame(self) -> pd.DataFrame:
         """
@@ -92,8 +93,7 @@ class Database:
 
         Author: ``@levxxvi``
         """
-        df = pd.read_csv(self.file_path)
-        return df
+        return self.df
 
     def get_item_by_id(self, id: str) -> pd.DataFrame:
         """
