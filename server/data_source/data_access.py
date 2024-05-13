@@ -135,12 +135,12 @@ class Database:
 
         Args:
         -----
-        description : str
+        description : ``str``
             The keyword to search for within the keywordDescriptions column.
 
         Returns:
         --------
-        pd.DataFrame
+        ``pd.DataFrame``
             A DataFrame containing the ids and descriptions of items whose keyword descriptions match the keyword.
 
         Notes:
