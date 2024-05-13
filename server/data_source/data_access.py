@@ -128,7 +128,7 @@ class Database:
         item = df.loc[df['id'] == id]
         return item
     
-    def get_id_by_keyword_description(self, description: str):
+    def get_id_by_keyword_description(self, description: str) -> pd.DataFrame:
         """
         """
         df = self.get_data_frame()
@@ -136,6 +136,33 @@ class Database:
 
     def get_id_keyword_description(self, description: str) -> pd.DataFrame:
         """
+        Retrieves a pandas DataFrame of item IDs and their descriptions based on a search keyword found in their descriptions.
+
+        Args:
+        -----
+        description : str
+            The keyword to search for within the keywordDescriptions column.
+
+        Returns:
+        --------
+        pd.DataFrame
+            A DataFrame containing the ids and descriptions of items whose keyword descriptions match the keyword.
+
+        Notes:
+        ------
+        1. The method filters the data based on the presence of the keyword in the 'keywordDescriptions' column.
+        2. The search is case insensitive and ignores NaN values.
+        3. This method returns both the ID and the keyword description, useful for detailed searches.
+
+        Example:
+        --------
+        >>> db = Database()
+        >>> detailed_matching_items = db.get_id_keyword_description("casual")
+        >>> print(detailed_matching_items)
+        ... id  |  keywordDescriptions
+        ... 24  |  casual, comfortable, cool
+
+        Author: ``@Ehsan138``
         """
         df = self.get_data_frame()
         result = df[df['keywordDescriptions'].str.contains(description, na=False, case=False)]
