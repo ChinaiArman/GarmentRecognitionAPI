@@ -101,6 +101,12 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
     # return response
 
 
+def normalize_dense_caption_response(response: ImageAnalysisResult) -> list:
+    """
+    """
+    pass
+
+
 def main() -> None:
     """
     Main function to run the dense captioning model.
