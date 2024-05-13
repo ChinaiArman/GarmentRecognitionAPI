@@ -111,8 +111,7 @@ class Database:
 
         Notes:
         ------
-        1. The method uses the get_data_frame() method to retrieve the data.
-        2. The method filters the data by the provided id and returns the item as a DataFrame.
+        1. The method filters the data by the provided id and returns the item as a DataFrame.
 
         Example:
         --------
@@ -127,15 +126,22 @@ class Database:
         item = self.df.loc[self.df['id'] == id]
         return item
     
-
     def get_id_keyword_description(self) -> pd.DataFrame:
         """
         Retrieves a pandas DataFrame containing only the 'id' and 'keywordDescriptions' columns of all items.
+
+        Args:
+        -----
+        None.
 
         Returns:
         --------
         pd.DataFrame
             A DataFrame containing only the 'id' and 'keywordDescriptions' columns for all items.
+
+        Notes:
+        ------
+        1. Returns a DataFrame with only the 'id' and 'keywordDescriptions' columns.
 
         Example:
         --------
@@ -148,9 +154,7 @@ class Database:
 
         Author: ``@Ehsan138``
         """
-        df = self.get_data_frame()
-        return df[['id', 'keywordDescriptions']]
-
+        return self.df[['id', 'keywordDescriptions']]
 
 
 
