@@ -124,8 +124,7 @@ class Database:
 
         Author: ``@levxxvi``
         """
-        df = self.get_data_frame()
-        item = df.loc[df['id'] == id]
+        item = self.df.loc[self.df['id'] == id]
         return item
     
 
@@ -161,8 +160,7 @@ class Database:
         """
         # change this to just return the id and keywordDescriptions columns.
         # might be something like this, not entirely sure: return df[['id', 'keywordDescriptions']]
-        df = self.get_data_frame()
-        result = df[df['keywordDescriptions'].str.contains(description, na=False, case=False)]
+        result = self.df[self.df['keywordDescriptions'].str.contains(description, na=False, case=False)]
         return result[['id', 'keywordDescriptions']]
 
 
