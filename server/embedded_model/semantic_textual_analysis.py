@@ -10,6 +10,7 @@ import pandas as pd
 tokenizer = AutoTokenizer.from_pretrained("thenlper/gte-base")
 model = AutoModel.from_pretrained("thenlper/gte-base")
 
+
 def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
     """
     Applies average pooling to the last hidden states of a transformer model output, considering the attention mask.
@@ -48,11 +49,11 @@ def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
 def normalize_embeddings(embeddings: Tensor):
     """
     Normalizes each vector in the embeddings tensor to have a unit L2 norm. This means that the length or magnitude
-    of each vector will be scaled to 1. The normalization is performed across the last dimension of the tensor, 
+    of each vector will be scaled to 1. The normalization is performed across the last dimension of the tensor,
     which typically corresponds to the feature or embedding dimension.
 
     Args:
-        embeddings (Tensor): The embeddings tensor to normalize. This tensor could typically have a shape 
+        embeddings (Tensor): The embeddings tensor to normalize. This tensor could typically have a shape
                              like (batch_size, embedding_dimension), where each row represents an embedding vector.
 
     Returns:
@@ -69,7 +70,7 @@ def normalize_embeddings(embeddings: Tensor):
         >>> print(normalized_embeddings)
         tensor([[0.6000, 0.8000],
                 [0.4472, 0.8944]])
-        # Explanation: 
+        # Explanation:
         # The first vector [3.0, 4.0] has an original length of 5. After normalization, its components are scaled so that
         # its length becomes 1, calculated as sqrt(0.6^2 + 0.8^2) = 1.
         # The second vector [1.0, 2.0] is normalized similarly, from a length of sqrt(5) to 1.
@@ -94,20 +95,82 @@ def vector_comparison(keywords: list) -> pd.DataFrame:
     pass
 
 
-def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
-    """
+"""
     keywords = the keywords of the image being compared
     database_keywords = list of keywords from the database
     returns a new column with the vectors for the analysis
+"""
+
+
+def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
     """
-    pass
+    Perform semantic textual analysis to calculate similarity scores between a list of keywords and a list of database keywords.
+
+    Args:
+    -----
+        keywords ``list``
+            A list of keywords to be analyzed.
+        database_keywords ``list``
+            A list of keywords from the database for comparison.
+
+    Returns:
+    --------
+    ``list``
+        A list of similarity scores between the input keywords and the database keywords.
+
+    Notes:
+    ------
+    1. This function uses a pre-trained model to calculate text embeddings for the input keywords and database keywords.
+    2. The similarity scores are calculated by taking the dot product of the normalized embeddings.
+    3. The scores are scaled by multiplying them by 100.
+
+    Examples:
+    ---------
+    >>> keywords = ["apple"]
+    >>> database_keywords = [["fruit", "apple"], ["fruit", "banana"], ["fruit", "orange"]]
+    >>> semantic_textual_analysis(keywords, database_keywords)
+    ... [90.51500701904297, 81.43607330322266, 81.61931610107422]
+
+    Author: ``@cc-dev-65535``
+    """
+    # Tokenize the input texts
+    input_sentence = " ".join(keywords)
+    sentence_list = [" ".join(keyword_list) for keyword_list in database_keywords]
+    batch_dict = tokenizer(
+        [input_sentence] + sentence_list,
+        max_length=512,
+        padding=True,
+        truncation=True,
+        return_tensors="pt",
+    )
+
+    # Pass input to model to get text embeddings
+    outputs = model(**batch_dict)
+    embeddings = average_pool(outputs.last_hidden_state, batch_dict["attention_mask"])
+
+    normalized_embeddings = normalize_embeddings(embeddings)
+    scores = (normalized_embeddings[:1] @ normalized_embeddings[1:].T) * 100
+    return scores[0].tolist()
 
 
 def main() -> None:
     """
+    Main function with examples.
     """
-    pass
+    # Example usage of the semantic_textual_analysis function
+    print(
+        semantic_textual_analysis(
+            ["brown", "dog"],
+            [
+                ["cat"],
+                ["fish"],
+                ["brown", "bear"],
+                ["brown", "hot dog"],
+                ["brown", "german shepherd"],
+            ],
+        )
+    )
 
 
-if __name__ == '__main__':
-    pass
+if __name__ == "__main__":
+    main()
