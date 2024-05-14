@@ -60,9 +60,9 @@ class Database:
         """
         Initializes the Database class.
         """
-        if not os.path.exists("server/data-source/data.csv"):
+        if not os.path.exists("server/data_source/data.csv"):
             raise FileNotFoundError("The data source file does not exist.")
-        self.file_path = "server/data-source/data.csv"
+        self.file_path = "server/data_source/data.csv"
         self.df = pd.read_csv(self.file_path)
         try:
             self.df['keywordDescriptions'] = self.df['keywordDescriptions'].apply(lambda x: x.split(', '))
