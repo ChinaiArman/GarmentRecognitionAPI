@@ -27,6 +27,8 @@ from dotenv import load_dotenv
 from azure.ai.vision.imageanalysis import ImageAnalysisClient
 from azure.ai.vision.imageanalysis.models import VisualFeatures, ImageAnalysisResult
 from azure.core.credentials import AzureKeyCredential
+import spacy
+nlp = spacy.load('en_core_web_sm')
 
 
 def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
@@ -103,9 +105,41 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
 
 def normalize_dense_caption_response(response: ImageAnalysisResult) -> list:
     """
-    """
-    pass
+    Generates a list of normalized keywords from the dense captioning response.
 
+    Args:
+    -----
+    response : ``ImageAnalysisResult``
+        The response from Azure's dense captioning model.
+
+    Returns:
+    --------
+    ``list``
+        A list of normalized keywords extracted from the dense captioning response.
+
+    Notes:
+    ------
+    1. The function uses the spaCy library to extract nouns and adjectives from the dense captioning response.
+
+    Example:
+    --------
+    >>> keywords_list = normalize_dense_caption_response(response)
+    >>> print(keywords_list)
+    ... # Prints the list of normalized keywords extracted from the dense captioning response.
+
+    Author: ``@nataliecly``
+    """
+    if response.dense_captions is not None and response.dense_captions.list:
+        values = response['denseCaptionsResult']['values']
+        keywords = []
+        for value in values:
+            doc = nlp(value['text'])
+            for token in doc:
+                if token.pos_ in ['NOUN', 'ADJ']:
+                    keywords.append(token.text.lower())
+        keywords = list(set(keywords))
+
+    return keywords
 
 def main() -> None:
     """
