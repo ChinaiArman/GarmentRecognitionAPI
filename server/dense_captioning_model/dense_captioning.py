@@ -131,6 +131,8 @@ def normalize_dense_caption_response(response: ImageAnalysisResult) -> list:
     """
     if response.dense_captions is not None and response.dense_captions.list:
         keywords = [caption.text for caption in response.dense_captions.list if caption.confidence > 0.8]
+        if len(keywords) == 0:
+            keywords = [caption.text for caption in response.dense_captions.list]
         return keywords
 
 
