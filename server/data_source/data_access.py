@@ -111,8 +111,7 @@ class Database:
 
         Notes:
         ------
-        1. The method uses the get_data_frame() method to retrieve the data.
-        2. The method filters the data by the provided id and returns the item as a DataFrame.
+        1. The method filters the data by the provided id and returns the item as a DataFrame.
 
         Example:
         --------
@@ -127,46 +126,48 @@ class Database:
         item = self.df.loc[self.df['id'] == id]
         return item
     
-
-    def get_id_keyword_description(self, description: str) -> pd.DataFrame:
+    def get_id_keyword_description(self) -> pd.DataFrame:
         """
-        Retrieves a pandas DataFrame of item IDs and their descriptions based on a search keyword found in their descriptions.
+        Retrieves a pandas DataFrame containing only the 'id' and 'keywordDescriptions' columns of all items.
 
         Args:
         -----
-        description : ``str``
-            The keyword to search for within the keywordDescriptions column.
+        None.
 
         Returns:
         --------
         ``pd.DataFrame``
-            A DataFrame containing the ids and descriptions of items whose keyword descriptions match the keyword.
+            A DataFrame containing only the 'id' and 'keywordDescriptions' columns for all items.
 
         Notes:
         ------
-        1. The method filters the data based on the presence of the keyword in the 'keywordDescriptions' column.
-        2. The search is case insensitive and ignores NaN values.
-        3. This method returns both the ID and the keyword description, useful for detailed searches.
+        1. Returns a DataFrame with only the 'id' and 'keywordDescriptions' columns.
 
         Example:
         --------
         >>> db = Database()
-        >>> detailed_matching_items = db.get_id_keyword_description("casual")
-        >>> print(detailed_matching_items)
+        >>> detailed_items = db.get_id_keyword_description()
+        >>> print(detailed_items)
         ... id  |  keywordDescriptions
-        ... 24  |  casual, comfortable, cool
+        ... 1   |  casual, comfortable, cool
+        ... 2   |  elegant, formal, sleek
 
         Author: ``@Ehsan138``
         """
-        # change this to just return the id and keywordDescriptions columns.
-        # might be something like this, not entirely sure: return df[['id', 'keywordDescriptions']]
-        result = self.df[self.df['keywordDescriptions'].str.contains(description, na=False, case=False)]
-        return result[['id', 'keywordDescriptions']]
+        return self.df[['id', 'keywordDescriptions']]
+
+
+
+def main() -> None:
+    """
+    """
+    pass
 
 
 if __name__ == "__main__":
-    db = Database()
-    data = db.get_data_frame()
-    print(data.head())
-    item = db.get_item_by_id(1)
-    print(item)
+    # db = Database()
+    # data = db.get_data_frame()
+    # print(data.head())
+    # item = db.get_item_by_id(1)
+    # print(item)
+    main()
