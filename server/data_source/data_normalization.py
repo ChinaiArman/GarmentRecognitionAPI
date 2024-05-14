@@ -301,6 +301,7 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
         try:
             imageUrl = row["imageUrl"]
             description = dc.normalize_dense_caption_response(dc.create_dense_captions(imageUrl))
+            description = ", ".join(description)
             descriptions.append(description)
         except Exception as e:
             print(f"Error: {e}")
@@ -380,7 +381,7 @@ def main() -> None:
     # keyword_df = generate_keywords(merged_df)
 
     # Write merged DataFrame to CSV
-    write_dataframe_to_csv(merged_df)
+    # write_dataframe_to_csv(keyword_df)
 
 
 if __name__ == "__main__":
