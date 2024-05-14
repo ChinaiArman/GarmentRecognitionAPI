@@ -64,6 +64,10 @@ class Database:
             raise FileNotFoundError("The data source file does not exist.")
         self.file_path = "server/data-source/data.csv"
         self.df = pd.read_csv(self.file_path)
+        try:
+            self.df['keywordDescriptions'] = self.df['keywordDescriptions'].apply(lambda x: x.split(', '))
+        except:
+            pass
 
     def get_data_frame(self) -> pd.DataFrame:
         """
