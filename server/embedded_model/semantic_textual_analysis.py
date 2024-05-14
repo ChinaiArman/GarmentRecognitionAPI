@@ -54,8 +54,12 @@ def load_embedded_model() -> tuple[AutoTokenizer, AutoModel]:
     --------
     >>> tokenizer, model = load_embedded_model()
     >>> # Use the tokenizer and model objects for further processing.
+
+    Author: ``@Ehsan138``
     """
+    # Load the pre-trained tokenizer from the transformers library
     tokenizer = AutoTokenizer.from_pretrained("thenlper/gte-base")
+    # Load the pre-trained model from the transformers library
     model = AutoModel.from_pretrained("thenlper/gte-base")
     return tokenizer, model
     
@@ -91,7 +95,9 @@ def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
 
     Author: ``@cc-dev-65535``
     """
+    # Apply attention mask to zero out padded tokens
     last_hidden = last_hidden_states.masked_fill(~attention_mask[..., None].bool(), 0.0)
+    # Sum the hidden states and divide by the number of non-padded tokens to get the average
     return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
 
 
@@ -129,8 +135,11 @@ def normalize_embeddings(embeddings: Tensor) -> list:
 
     Author: ``@Ehsan138``
     """
+    # Normalize embeddings to have unit L2 norm (length = 1)
     embeddings = F.normalize(embeddings, p=2, dim=1)
+    # Calculate cosine similarity scores between the first embedding and the rest
     scores = (embeddings[:1] @ embeddings[1:].T) * 100
+    # Return the similarity scores as a list
     return scores[0].tolist()
 
 
