@@ -150,6 +150,8 @@ def model_wrapper(filepath_or_url: str, size: int) -> list:
     >>> similar_items = model_wrapper(url, size)
     >>> print(similar_items)
     ... ["item1", "item2", "item3", "item4", "item5"]
+
+    Author: ``@ChinaiArman``
     """
     keywords = dc.create_dense_captions(filepath_or_url)
     if not keywords:
@@ -221,7 +223,27 @@ def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
 
 def main() -> None:
     """
-    Main function with examples.
+    Example usage of the semantic_textual_analysis function.
+
+    Args:
+    -----
+    None.
+
+    Returns:
+    --------
+    None.
+
+    Notes:
+    ------
+    1. This function demonstrates the usage of the semantic_textual_analysis function with sample input.
+    2. The function prints the similarity scores between the input keywords and the database keywords.
+
+    Example:
+    --------
+    >>> main()
+    ... [90.51500701904297, 81.43607330322266, 81.61931610107422]
+
+    Author: ``@Ehsan138``
     """
     # Example usage of the semantic_textual_analysis function
     print(

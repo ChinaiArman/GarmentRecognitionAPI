@@ -158,8 +158,10 @@ def main() -> None:
 
     Example:
     --------
-    >>> python dense_captioning.py "image.jpg"S
+    >>> python dense_captioning.py "image.jpg"
     ... # Prints the dense captions of the image.
+
+    @Author: ``@ChinaiArman``
     """
     # Define console parser and add arguments.
     parser = argparse.ArgumentParser(description="Generates keyword captions of images using Azure's dense captioning technology.")
