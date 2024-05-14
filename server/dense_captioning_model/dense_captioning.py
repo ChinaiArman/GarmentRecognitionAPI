@@ -116,7 +116,8 @@ def normalize_dense_caption_response(response: ImageAnalysisResult) -> list:
 
     Notes:
     ------
-    1. The function uses the spaCy library to extract nouns and adjectives from the dense captioning response.
+    1. The function extracts the keywords from the dense captioning response.
+    2. The function filters the keywords based on a confidence threshold of 0.8.
 
     Example:
     --------
@@ -127,15 +128,8 @@ def normalize_dense_caption_response(response: ImageAnalysisResult) -> list:
     Author: ``@nataliecly``
     """
     if response.dense_captions is not None and response.dense_captions.list:
-        values = response['denseCaptionsResult']['values']
-        keywords = []
-        for value in values:
-            doc = nlp(value['text'])
-            for token in doc:
-                if token.pos_ in ['NOUN', 'ADJ']:
-                    keywords.append(token.text.lower())
-        keywords = sorted(list(set(keywords)))
-    return keywords
+        keywords = [caption.text for caption in response.dense_captions.list if caption.confidence > 0.8]
+        return keywords
 
 
 def main() -> None:
