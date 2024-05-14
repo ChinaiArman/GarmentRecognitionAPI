@@ -163,7 +163,30 @@ def model_wrapper(filepath_or_url: str, size: int) -> list:
 
 def vector_comparison(keywords: list) -> pd.DataFrame:
     """
-    calls semantic_textual_analysis, returns an updated dataframe with an extra vector column with the analysis
+    Performs semantic textual analysis to compare the input keywords with the database keywords.
+
+    Args:
+    -----
+    keywords : ``list``
+        A list of keywords generated from the image.
+
+    Returns:
+    --------
+    ``pd.DataFrame``
+        A DataFrame containing the IDs and similarity scores of the database items.
+
+    Example:
+    --------
+    >>> vector_comparison(keywords)
+    ... # Returns a DataFrame with the IDs and similarity scores of the database items.
+
+    Notes:
+    ------
+    1. This function retrieves the database keywords and their descriptions.
+    2. It calculates the similarity scores between the input keywords and the database keywords.
+    3. The function returns a DataFrame with the IDs and similarity scores of the database items.
+    
+    Author: ``@nataliecly``
     """
     db = da.Database()
     database_keywords = db.get_id_keyword_description()
