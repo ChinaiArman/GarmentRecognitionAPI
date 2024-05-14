@@ -42,13 +42,13 @@ def load_embedded_model() -> tuple[AutoTokenizer, AutoModel]:
     --------
     ``tuple``
         A tuple containing the tokenizer and model objects.
-    
+
     Notes:
     ------
     1. The model and tokenizer are pre-trained on a large corpus and can be used to generate embeddings for text data.
     2. The model used here is the GTE-base model, which is a transformer-based model.
     3. The tokenizer is used to convert text data into input tensors for the model.
-    4. The model generates embeddings for the input text, which can be used for various NLP tasks. 
+    4. The model generates embeddings for the input text, which can be used for various NLP tasks.
 
     Example:
     --------
@@ -58,7 +58,7 @@ def load_embedded_model() -> tuple[AutoTokenizer, AutoModel]:
     tokenizer = AutoTokenizer.from_pretrained("thenlper/gte-base")
     model = AutoModel.from_pretrained("thenlper/gte-base")
     return tokenizer, model
-    
+
 
 def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
     """
@@ -167,12 +167,14 @@ def model_wrapper(filepath_or_url: str, size: int) -> list:
 
     Author: ``@ChinaiArman``
     """
-    keywords = dc.normalize_dense_caption_response(dc.create_dense_captions(filepath_or_url))
+    keywords = dc.normalize_dense_caption_response(
+        dc.create_dense_captions(filepath_or_url)
+    )
     if not keywords:
         return []
     df = vector_comparison(keywords)
     return df["id"].tolist()[:size]
-    
+
 
 def vector_comparison(keywords: list) -> pd.DataFrame:
     """
@@ -198,12 +200,14 @@ def vector_comparison(keywords: list) -> pd.DataFrame:
     1. This function retrieves the database keywords and their descriptions.
     2. It calculates the similarity scores between the input keywords and the database keywords.
     3. The function returns a DataFrame with the IDs and similarity scores of the database items.
-    
+
     Author: ``@nataliecly``
     """
     db = da.Database()
     database_keywords = db.get_id_keyword_description()
-    embeddings = semantic_textual_analysis(keywords, database_keywords["keywordDescriptions"].tolist())
+    embeddings = semantic_textual_analysis(
+        keywords, database_keywords["keywordDescriptions"].tolist()
+    )
     database_keywords["vector"] = embeddings
     database_keywords = database_keywords.sort_values(by="vector", ascending=False)
     return database_keywords
@@ -215,9 +219,9 @@ def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
 
     Args:
     -----
-        keywords ``list``
+        keywords : ``list``
             A list of keywords to be analyzed.
-        database_keywords ``list``
+        database_keywords : ``list``
             A list of keywords from the database for comparison.
 
     Returns:
@@ -244,8 +248,8 @@ def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
     tokenizer, model = load_embedded_model()
 
     # Tokenize the input texts
-    input_sentence = " ".join(keywords)
-    sentence_list = [" ".join(keyword_list) for keyword_list in database_keywords]
+    input_sentence = ", ".join(keywords)
+    sentence_list = [", ".join(keyword_list) for keyword_list in database_keywords]
     batch_dict = tokenizer(
         [input_sentence] + sentence_list,
         max_length=512,
