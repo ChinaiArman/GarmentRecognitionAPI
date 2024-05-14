@@ -325,19 +325,19 @@ def write_dataframe_to_csv(df: pd.DataFrame) -> None:
 
     Notes:
     ------
-    1. This function writes the DataFrame to a CSV file named 'data.csv' in the 'server/data_source' directory.
+    1. This function writes the DataFrame to a CSV file stored in the 'DATA_SOURCE_FILE' environment variable.
     2. The id column of the DataFrame is converted to unique sequential integers for all rows before writing.
 
     Example:
     --------
     >>> df = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
     >>> write_dataframe_to_csv(df)
-    ... # Dataframe saved as CSV file to server/data_source/data.csv.
+    ... # Dataframe saved as CSV file to a file specified in the environment variable 'DATA_SOURCE_FILE'.
 
     Author: ``@cc-dev-65535``
     """
     df.loc[:, "id"] = df.index
-    df.to_csv("server/data_source/data.csv", index=False)
+    df.to_csv(os.getenv("DATA_SOURCE_FILE"), index=False)
 
 
 def main() -> None:

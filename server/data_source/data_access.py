@@ -7,7 +7,7 @@ A class to interact with the data source stored in a CSV file.
 
 Requirements:
 This class requires the installation of the pandas library.
-The data source file must be located at "server/data-source/data.csv".
+The data source file path must be specified in the environment variables under "DATA_SOURCE_FILE".
 
 Usage:
 To use this class, create an instance of the Database class and call the desired method.
@@ -18,6 +18,8 @@ In the command line, you can run the following commands to interact with the dat
 
 import pandas as pd
 import os.path
+from dotenv import load_dotenv
+import os
 
 
 class Database:
@@ -41,7 +43,7 @@ class Database:
     Notes:
     ------
     1. The class is used to interact with the data source.
-    2. The data source is a CSV file located at "server/data_source/data.csv".
+    2. The data source is a CSV file specified in the environment variables.
     3. The class provides methods to retrieve data from the data source.
     4. The class uses the Pandas library to read the CSV file and manipulate the data.
 
@@ -60,9 +62,10 @@ class Database:
         """
         Initializes the Database class.
         """
-        if not os.path.exists("server/data_source/data.csv"):
+        load_dotenv()
+        if not os.path.exists(os.getenv("DATA_SOURCE_FILE")):
             raise FileNotFoundError("The data source file does not exist.")
-        self.file_path = "server/data_source/data.csv"
+        self.file_path = os.getenv("DATA_SOURCE_FILE")
         self.df = pd.read_csv(self.file_path)
         try:
             self.df['keywordDescriptions'] = self.df['keywordDescriptions'].apply(lambda x: x.split(', '))
@@ -84,7 +87,7 @@ class Database:
 
         Notes:
         ------
-        1. The method reads the CSV file located at ``server/data_source/data.csv``.
+        1. The method reads the CSV file specified in the environment variables.
         2. The method returns the data as a pandas DataFrame.
 
         Example:
