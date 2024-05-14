@@ -27,6 +27,9 @@ from dotenv import load_dotenv
 from azure.ai.vision.imageanalysis import ImageAnalysisClient
 from azure.ai.vision.imageanalysis.models import VisualFeatures, ImageAnalysisResult
 from azure.core.credentials import AzureKeyCredential
+import spacy
+import time
+nlp = spacy.load('en_core_web_sm')
 
 
 def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
@@ -82,29 +85,53 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
     try: 
         with open(filepath_or_url, "rb") as f:
             image_data = f.read()
-    except FileNotFoundError:
-        print("Error: Invalid file path.")
-        return
-    except OSError:
+    except:
         try:
             image_data = requests.get(filepath_or_url).content
-        except requests.exceptions.RequestException:
-            print(f"Error: Invalid URL")
+        except:
+            print(f"Error: Invalid Filepath or URL")
             return
 
     # Call dense captioning model to create keyword captions.
-    # response = client.analyze(
-    #     image_data=image_data,
-    #     visual_features=[VisualFeatures.DENSE_CAPTIONS],
-    #     gender_neutral_caption=True,
-    # )
-    # return response
+    response = client.analyze(
+        image_data=image_data,
+        visual_features=[VisualFeatures.DENSE_CAPTIONS],
+        gender_neutral_caption=True,
+    )
+    time.sleep(0.1)
+    return response
 
 
 def normalize_dense_caption_response(response: ImageAnalysisResult) -> list:
     """
+    Generates a list of normalized keywords from the dense captioning response.
+
+    Args:
+    -----
+    response : ``ImageAnalysisResult``
+        The response from Azure's dense captioning model.
+
+    Returns:
+    --------
+    ``list``
+        A list of normalized keywords extracted from the dense captioning response.
+
+    Notes:
+    ------
+    1. The function extracts the keywords from the dense captioning response.
+    2. The function filters the keywords based on a confidence threshold of 0.8.
+
+    Example:
+    --------
+    >>> keywords_list = normalize_dense_caption_response(response)
+    >>> print(keywords_list)
+    ... # Prints the list of normalized keywords extracted from the dense captioning response.
+
+    Author: ``@nataliecly``
     """
-    pass
+    if response.dense_captions is not None and response.dense_captions.list:
+        keywords = [caption.text for caption in response.dense_captions.list if caption.confidence > 0.8]
+        return keywords
 
 
 def main() -> None:
@@ -129,6 +156,8 @@ def main() -> None:
     --------
     >>> python dense_captioning.py "image.jpg"
     ... # Prints the dense captions of the image.
+
+    @Author: ``@ChinaiArman``
     """
     # Define console parser and add arguments.
     parser = argparse.ArgumentParser(description="Generates keyword captions of images using Azure's dense captioning technology.")
@@ -150,6 +179,11 @@ def main() -> None:
         print(f"\tModel version: {response.model_version}")
     else:
         print("\tNo captions generated.")
+
+    # Extract and print normalized keywords from dense caption response.
+    print("\nNormalized Keywords:")
+    keywords_list = normalize_dense_caption_response(response)
+    print(keywords_list)
 
 if __name__ == "__main__":
     main()

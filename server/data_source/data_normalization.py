@@ -1,6 +1,6 @@
 """
 Author: ``@ChinaiArman``
-Version: ``2.0.0``
+Version: ``1.0.0``
 
 Description:
 Normalizes data from different sources to a common format and writes to a CSV file.
@@ -300,7 +300,8 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     for _, row in df.iterrows():
         try:
             imageUrl = row["imageUrl"]
-            description = dc.create_dense_captions(imageUrl)
+            description = dc.normalize_dense_caption_response(dc.create_dense_captions(imageUrl))
+            description = ", ".join(description)
             descriptions.append(description)
         except Exception as e:
             print(f"Error: {e}")
@@ -324,19 +325,19 @@ def write_dataframe_to_csv(df: pd.DataFrame) -> None:
 
     Notes:
     ------
-    1. This function writes the DataFrame to a CSV file named 'data.csv' in the 'server/data_source' directory.
+    1. This function writes the DataFrame to a CSV file stored in the 'DATA_SOURCE_FILE' environment variable.
     2. The id column of the DataFrame is converted to unique sequential integers for all rows before writing.
 
     Example:
     --------
     >>> df = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
     >>> write_dataframe_to_csv(df)
-    ... # Dataframe saved as CSV file to server/data_source/data.csv.
+    ... # Dataframe saved as CSV file to a file specified in the environment variable 'DATA_SOURCE_FILE'.
 
     Author: ``@cc-dev-65535``
     """
     df.loc[:, "id"] = df.index
-    df.to_csv("server/data_source/data.csv", index=False)
+    df.to_csv(os.getenv("DATA_SOURCE_FILE"), index=False)
 
 
 def main() -> None:
@@ -380,7 +381,7 @@ def main() -> None:
     # keyword_df = generate_keywords(merged_df)
 
     # Write merged DataFrame to CSV
-    write_dataframe_to_csv(merged_df)
+    # write_dataframe_to_csv(keyword_df)
 
 
 if __name__ == "__main__":

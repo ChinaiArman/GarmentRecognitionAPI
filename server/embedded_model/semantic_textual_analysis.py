@@ -1,4 +1,17 @@
 """
+Author: ``@ChinaiArman``
+Version: ``1.0.0``
+
+Description:
+This module contains functions to normalize text embeddings and perform semantic textual analysis.
+
+Requirements:
+This module requires the transformers library and the torch library.
+This module requires the dense_captioning_model module.
+
+Usage:
+To execute this module, run the following command:
+    ``python server/embedded_model/semantic_textual_analysis.py``
 """
 
 import torch.nn.functional as F
@@ -14,6 +27,7 @@ load_dotenv()
 sys.path.insert(0, os.getenv("PYTHONPATH"))
 
 from dense_captioning_model import dense_captioning as dc
+from data_source import data_access as da
 
 
 def load_embedded_model() -> tuple[AutoTokenizer, AutoModel]:
@@ -150,8 +164,10 @@ def model_wrapper(filepath_or_url: str, size: int) -> list:
     >>> similar_items = model_wrapper(url, size)
     >>> print(similar_items)
     ... ["item1", "item2", "item3", "item4", "item5"]
+
+    Author: ``@ChinaiArman``
     """
-    keywords = dc.create_dense_captions(filepath_or_url)
+    keywords = dc.normalize_dense_caption_response(dc.create_dense_captions(filepath_or_url))
     if not keywords:
         return []
     df = vector_comparison(keywords)
@@ -160,9 +176,37 @@ def model_wrapper(filepath_or_url: str, size: int) -> list:
 
 def vector_comparison(keywords: list) -> pd.DataFrame:
     """
-    calls semantic_textual_analysis, returns an updated dataframe with an extra vector column with the analysis
+    Performs semantic textual analysis to compare the input keywords with the database keywords.
+
+    Args:
+    -----
+    keywords : ``list``
+        A list of keywords generated from the image.
+
+    Returns:
+    --------
+    ``pd.DataFrame``
+        A DataFrame containing the IDs and similarity scores of the database items.
+
+    Example:
+    --------
+    >>> vector_comparison(keywords)
+    ... # Returns a DataFrame with the IDs and similarity scores of the database items.
+
+    Notes:
+    ------
+    1. This function retrieves the database keywords and their descriptions.
+    2. It calculates the similarity scores between the input keywords and the database keywords.
+    3. The function returns a DataFrame with the IDs and similarity scores of the database items.
+    
+    Author: ``@nataliecly``
     """
-    pass
+    db = da.Database()
+    database_keywords = db.get_id_keyword_description()
+    embeddings = semantic_textual_analysis(keywords, database_keywords["keywordDescriptions"].tolist())
+    database_keywords["vector"] = embeddings
+    database_keywords = database_keywords.sort_values(by="vector", ascending=False)
+    return database_keywords
 
 
 def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
@@ -221,7 +265,27 @@ def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
 
 def main() -> None:
     """
-    Main function with examples.
+    Example usage of the semantic_textual_analysis function.
+
+    Args:
+    -----
+    None.
+
+    Returns:
+    --------
+    None.
+
+    Notes:
+    ------
+    1. This function demonstrates the usage of the semantic_textual_analysis function with sample input.
+    2. The function prints the similarity scores between the input keywords and the database keywords.
+
+    Example:
+    --------
+    >>> main()
+    ... [90.51500701904297, 81.43607330322266, 81.61931610107422]
+
+    Author: ``@Ehsan138``
     """
     # Example usage of the semantic_textual_analysis function
     print(
