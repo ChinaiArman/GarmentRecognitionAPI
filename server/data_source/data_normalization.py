@@ -378,10 +378,10 @@ def main() -> None:
     merged_df = merge_dataframes([df, df2, df3])
 
     # Generate keyword descriptions
-    # keyword_df = generate_keywords(merged_df)
+    keyword_df = generate_keywords(merged_df)
 
     # Write merged DataFrame to CSV
-    # write_dataframe_to_csv(keyword_df)
+    write_dataframe_to_csv(keyword_df)
 
 
 if __name__ == "__main__":
