@@ -28,6 +28,7 @@ from azure.ai.vision.imageanalysis import ImageAnalysisClient
 from azure.ai.vision.imageanalysis.models import VisualFeatures, ImageAnalysisResult
 from azure.core.credentials import AzureKeyCredential
 import spacy
+import time
 nlp = spacy.load('en_core_web_sm')
 
 
@@ -97,6 +98,7 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
         visual_features=[VisualFeatures.DENSE_CAPTIONS],
         gender_neutral_caption=True,
     )
+    time.sleep(0.1)
     return response
 
 
