@@ -48,11 +48,11 @@ class Database:
     Methods:
     --------
     >>> get_data_frame()
-    ... # Retreives a pandas DataFrame from the data source.
+    ... # Retrieves a pandas DataFrame from the data source.
     >>> get_item_by_id(id)
-    ... # Retreives Panadas DataFrame of an item by its id.
+    ... # Retrieves Panadas DataFrame of an item by its id.
     >>> get_id_by_keyword_description(description)
-    ... # Retreives the id of an item by its description.
+    ... # Retrieves the id of an item by its description.
 
     Author: ``@levxxvi``
     """
@@ -67,7 +67,7 @@ class Database:
 
     def get_data_frame(self) -> pd.DataFrame:
         """
-        Retreives a pandas DataFrame from the data source.
+        Retrieves a pandas DataFrame from the data source.
 
         Args:
         -----
@@ -97,7 +97,7 @@ class Database:
 
     def get_item_by_id(self, id: str) -> pd.DataFrame:
         """
-        Retreives Panadas DataFrame of an item by its id.
+        Retrieves Panadas DataFrame of an item by its id.
 
         Args:
         -----
@@ -160,14 +160,35 @@ class Database:
 
 def main() -> None:
     """
+    Demonstrates the usage of the Database class.
+
+    Args:
+    -----
+    None.
+
+    Returns:
+    --------
+    None.
+
+    Notes:
+    ------
+    1. The method demonstrates the usage of the Database class.
+
+    Example:
+    --------
+    >>> main()
+    ... # Prints the retrieved data from the data source.
+
+    Author: ``@levxxvi``
     """
-    pass
+    db = Database()
+    data = db.get_data_frame()
+    print(data.head())
+    item = db.get_item_by_id(1)
+    print(item)
+    item_from_keyword = db.get_id_keyword_description()
+    print(item_from_keyword)
 
 
 if __name__ == "__main__":
-    # db = Database()
-    # data = db.get_data_frame()
-    # print(data.head())
-    # item = db.get_item_by_id(1)
-    # print(item)
     main()
