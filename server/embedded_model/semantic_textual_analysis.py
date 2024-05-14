@@ -153,7 +153,7 @@ def model_wrapper(filepath_or_url: str, size: int) -> list:
 
     Author: ``@ChinaiArman``
     """
-    keywords = dc.create_dense_captions(filepath_or_url)
+    keywords = dc.normalize_dense_caption_response(dc.create_dense_captions(filepath_or_url))
     if not keywords:
         return []
     df = vector_comparison(keywords)

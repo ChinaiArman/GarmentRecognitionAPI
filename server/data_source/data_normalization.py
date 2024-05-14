@@ -300,7 +300,7 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     for _, row in df.iterrows():
         try:
             imageUrl = row["imageUrl"]
-            description = dc.create_dense_captions(imageUrl)
+            description = dc.normalize_dense_caption_response(dc.create_dense_captions(imageUrl))
             descriptions.append(description)
         except Exception as e:
             print(f"Error: {e}")
