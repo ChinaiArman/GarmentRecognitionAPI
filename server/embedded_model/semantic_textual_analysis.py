@@ -165,7 +165,12 @@ def vector_comparison(keywords: list) -> pd.DataFrame:
     """
     calls semantic_textual_analysis, returns an updated dataframe with an extra vector column with the analysis
     """
-    pass
+    db = da.Database()
+    database_keywords = db.get_id_keyword_description()
+    embeddings = semantic_textual_analysis(keywords, database_keywords["keywordDescriptions"].tolist())
+    database_keywords["vector"] = embeddings
+    database_keywords = database_keywords.sort_values(by="vector", ascending=False)
+    return database_keywords
 
 
 def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
