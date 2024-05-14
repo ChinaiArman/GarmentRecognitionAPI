@@ -1,6 +1,6 @@
 """
 Author: ``@ChinaiArman``
-Version: ``2.0.0``
+Version: ``1.0.0``
 
 Description:
 Normalizes data from different sources to a common format and writes to a CSV file.

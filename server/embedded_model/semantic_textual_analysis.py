@@ -1,4 +1,17 @@
 """
+Author: ``@ChinaiArman``
+Version: ``1.0.0``
+
+Description:
+This module contains functions to normalize text embeddings and perform semantic textual analysis.
+
+Requirements:
+This module requires the transformers library and the torch library.
+This module requires the dense_captioning_model module.
+
+Usage:
+To execute this module, run the following command:
+    ``python server/embedded_model/semantic_textual_analysis.py``
 """
 
 import torch.nn.functional as F
