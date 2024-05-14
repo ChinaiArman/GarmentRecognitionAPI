@@ -84,23 +84,20 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
     try: 
         with open(filepath_or_url, "rb") as f:
             image_data = f.read()
-    except FileNotFoundError:
-        print("Error: Invalid file path.")
-        return
-    except OSError:
+    except:
         try:
             image_data = requests.get(filepath_or_url).content
-        except requests.exceptions.RequestException:
-            print(f"Error: Invalid URL")
+        except:
+            print(f"Error: Invalid Filepath or URL")
             return
 
     # Call dense captioning model to create keyword captions.
-    # response = client.analyze(
-    #     image_data=image_data,
-    #     visual_features=[VisualFeatures.DENSE_CAPTIONS],
-    #     gender_neutral_caption=True,
-    # )
-    # return response
+    response = client.analyze(
+        image_data=image_data,
+        visual_features=[VisualFeatures.DENSE_CAPTIONS],
+        gender_neutral_caption=True,
+    )
+    return response
 
 
 def normalize_dense_caption_response(response: ImageAnalysisResult) -> list:
@@ -137,9 +134,9 @@ def normalize_dense_caption_response(response: ImageAnalysisResult) -> list:
             for token in doc:
                 if token.pos_ in ['NOUN', 'ADJ']:
                     keywords.append(token.text.lower())
-        keywords = list(set(keywords))
-
+        keywords = sorted(list(set(keywords)))
     return keywords
+
 
 def main() -> None:
     """
@@ -161,7 +158,7 @@ def main() -> None:
 
     Example:
     --------
-    >>> python dense_captioning.py "image.jpg"
+    >>> python dense_captioning.py "image.jpg"S
     ... # Prints the dense captions of the image.
     """
     # Define console parser and add arguments.
@@ -184,6 +181,11 @@ def main() -> None:
         print(f"\tModel version: {response.model_version}")
     else:
         print("\tNo captions generated.")
+
+    # Extract and print normalized keywords from dense caption response.
+    print("\nNormalized Keywords:")
+    keywords_list = normalize_dense_caption_response(response)
+    print(keywords_list)
 
 if __name__ == "__main__":
     main()
