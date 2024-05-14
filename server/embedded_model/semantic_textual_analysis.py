@@ -14,6 +14,7 @@ load_dotenv()
 sys.path.insert(0, os.getenv("PYTHONPATH"))
 
 from dense_captioning_model import dense_captioning as dc
+from data_source import data_access as da
 
 
 def load_embedded_model() -> tuple[AutoTokenizer, AutoModel]:
