@@ -15,7 +15,7 @@ To execute this module, run the following command:
 """
 
 import torch.nn.functional as F
-from torch import Tensor
+from torch import Tensor, cuda, no_grad
 from transformers import AutoTokenizer, AutoModel
 import pandas as pd
 
@@ -242,6 +242,9 @@ def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
     """
     # Load the pre-trained model and tokenizer
     tokenizer, model = load_embedded_model()
+    device = "cuda:0" if cuda.is_available() else "cpu"
+    print(f"Device: {device}")
+    model.to(device)
 
     # Tokenize the input texts
     input_sentence = " ".join(keywords)
@@ -252,10 +255,12 @@ def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
         padding=True,
         truncation=True,
         return_tensors="pt",
-    )
+    ).to(device)
 
     # Pass input to model to get text embeddings
-    outputs = model(**batch_dict)
+    print("Begin embedded model processing...")
+    with no_grad():
+        outputs = model(**batch_dict)
     embeddings = average_pool(outputs.last_hidden_state, batch_dict["attention_mask"])
 
     # Normalize the embeddings
