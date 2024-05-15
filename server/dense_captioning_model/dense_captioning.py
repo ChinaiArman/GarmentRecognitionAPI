@@ -27,12 +27,11 @@ from dotenv import load_dotenv
 from azure.ai.vision.imageanalysis import ImageAnalysisClient
 from azure.ai.vision.imageanalysis.models import VisualFeatures, ImageAnalysisResult
 from azure.core.credentials import AzureKeyCredential
-import spacy
-import time
-nlp = spacy.load('en_core_web_sm')
 
 
-def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
+def create_dense_captions(
+    filepath_or_url: str
+) -> ImageAnalysisResult:
     """
     Generates keyword captions of images using Azure's dense captioning technology.
 
@@ -98,11 +97,12 @@ def create_dense_captions(filepath_or_url: str) -> ImageAnalysisResult:
         visual_features=[VisualFeatures.DENSE_CAPTIONS],
         gender_neutral_caption=True,
     )
-    time.sleep(0.1)
     return response
 
 
-def normalize_dense_caption_response(response: ImageAnalysisResult) -> list:
+def normalize_dense_caption_response(
+    response: ImageAnalysisResult
+) -> list:
     """
     Generates a list of normalized keywords from the dense captioning response.
 
@@ -129,14 +129,15 @@ def normalize_dense_caption_response(response: ImageAnalysisResult) -> list:
 
     Author: ``@nataliecly``
     """
-    if response.dense_captions is not None and response.dense_captions.list:
+    if response is not None:
         keywords = [caption.text for caption in response.dense_captions.list if caption.confidence > 0.8]
         if len(keywords) == 0:
             keywords = [caption.text for caption in response.dense_captions.list]
         return keywords
 
 
-def main() -> None:
+def main(
+) -> None:
     """
     Main function to run the dense captioning model.
 

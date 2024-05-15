@@ -30,7 +30,8 @@ sys.path.insert(0, os.getenv("PYTHONPATH"))
 from data_source import data_access as da
 
 
-def main() -> None:
+def main(
+) -> None:
     """
     Main function to demonstrate the usage of the embedded model.
 

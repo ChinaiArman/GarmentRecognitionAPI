@@ -55,7 +55,10 @@ FREE_CLOTHES_DESCRIPTION_COLUMNS = [
 ]
 
 
-def merge_description_columns(df: pd.DataFrame, column_list: list) -> pd.DataFrame:
+def merge_description_columns(
+    df: pd.DataFrame,
+    column_list: list
+) -> pd.DataFrame:
     """
     Merges multiple columns into a single 'description' column.
 
@@ -95,7 +98,10 @@ def merge_description_columns(df: pd.DataFrame, column_list: list) -> pd.DataFra
     return df.reset_index(drop=True)
 
 
-def rename_columns(df: pd.DataFrame, column_key: dict) -> pd.DataFrame:
+def rename_columns(
+    df: pd.DataFrame,
+    column_key: dict
+) -> pd.DataFrame:
     """
     Renames the columns of a DataFrame based on a specified mapping.
 
@@ -133,7 +139,10 @@ def rename_columns(df: pd.DataFrame, column_key: dict) -> pd.DataFrame:
     return df.reset_index(drop=True)
 
 
-def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
+def drop_columns(
+    df: pd.DataFrame,
+    columns: list
+) -> pd.DataFrame:
     """
     Drops columns from a DataFrame based on a specified list of column names.
 
@@ -227,7 +236,9 @@ def normalize_dataframe(
     return df.reset_index(drop=True)
 
 
-def merge_dataframes(df_list: list) -> pd.DataFrame:
+def merge_dataframes(
+    df_list: list
+) -> pd.DataFrame:
     """
     Merges multiple DataFrames into a single DataFrame.
 
@@ -264,7 +275,9 @@ def merge_dataframes(df_list: list) -> pd.DataFrame:
     return merged_df
 
 
-def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
+def generate_keywords(
+    df: pd.DataFrame
+) -> pd.DataFrame:
     """
     Generates keyword descriptions for a DataFrame containing image URLs.
 
@@ -310,7 +323,9 @@ def generate_keywords(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def write_dataframe_to_csv(df: pd.DataFrame) -> None:
+def write_dataframe_to_csv(
+    df: pd.DataFrame
+) -> None:
     """
     Writes a DataFrame to a CSV file.
 

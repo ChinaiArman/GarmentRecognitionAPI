@@ -32,7 +32,11 @@ from dense_captioning_model import dense_captioning as dc
 from data_source import data_access as da
 
 
-def load_embedded_model() -> tuple[AutoTokenizer, AutoModel]:
+def load_embedded_model(
+) -> tuple[
+        AutoTokenizer,
+        AutoModel
+    ]:
     """
     Load the pre-trained transformer model and tokenizer for generating text embeddings.
 
@@ -66,7 +70,10 @@ def load_embedded_model() -> tuple[AutoTokenizer, AutoModel]:
     return tokenizer, model
 
 
-def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
+def average_pool(
+    last_hidden_states: Tensor,
+    attention_mask: Tensor
+) -> Tensor:
     """
     Applies average pooling to the last hidden states of a transformer model output, considering the attention mask.
 
@@ -103,7 +110,9 @@ def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
     return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
 
 
-def normalize_embeddings(embeddings: Tensor) -> list:
+def normalize_embeddings(
+    embeddings: Tensor
+) -> list:
     """
     Normalizes each vector in the embeddings tensor to have a unit L2 norm. This means that the length or magnitude
     of each vector will be scaled to 1. The normalization is performed across the last dimension of the tensor,
@@ -145,7 +154,10 @@ def normalize_embeddings(embeddings: Tensor) -> list:
     return scores[0].tolist()
 
 
-def model_wrapper(filepath_or_url: str, size: int) -> list:
+def model_wrapper(
+    filepath_or_url: str,
+    size: int
+) -> list:
     """
     Wrapper function to call the dense captioning model and then perform semantic textual analysis.
 
@@ -187,7 +199,9 @@ def model_wrapper(filepath_or_url: str, size: int) -> list:
     return df["id"].tolist()[:size]
 
 
-def vector_comparison(keywords: list) -> pd.DataFrame:
+def vector_comparison(
+    keywords: list
+) -> pd.DataFrame:
     """
     Performs semantic textual analysis to compare the input keywords with the database keywords.
 
@@ -224,7 +238,10 @@ def vector_comparison(keywords: list) -> pd.DataFrame:
     return database_keywords
 
 
-def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
+def semantic_textual_analysis(
+    keywords: list,
+    database_keywords: list
+) -> list:
     """
     Perform semantic textual analysis to calculate similarity scores between a list of keywords and a list of database keywords.
 
@@ -283,7 +300,8 @@ def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
     return normalized_embeddings
 
 
-def main() -> None:
+def main(
+) -> None:
     """
     Example usage of the semantic_textual_analysis function.
 

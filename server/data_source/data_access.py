@@ -58,7 +58,9 @@ class Database:
 
     Author: ``@levxxvi``
     """
-    def __init__(self) -> None:
+    def __init__(
+        self
+        ) -> None:
         """
         Initializes the Database class.
         """
@@ -72,7 +74,9 @@ class Database:
         except:
             pass
 
-    def get_data_frame(self) -> pd.DataFrame:
+    def get_data_frame(
+        self
+    ) -> pd.DataFrame:
         """
         Retrieves a pandas DataFrame from the data source.
 
@@ -102,7 +106,10 @@ class Database:
         """
         return self.df
 
-    def get_item_by_id(self, id: str) -> pd.DataFrame:
+    def get_item_by_id(
+        self,
+        id: str
+    ) -> pd.DataFrame:
         """
         Retrieves Panadas DataFrame of an item by its id.
 
@@ -133,7 +140,9 @@ class Database:
         item = self.df.loc[self.df['id'] == id]
         return item
     
-    def get_id_keyword_description(self) -> pd.DataFrame:
+    def get_id_keyword_description(
+        self
+    ) -> pd.DataFrame:
         """
         Retrieves a pandas DataFrame containing only the 'id' and 'keywordDescriptions' columns of all items.
 
@@ -165,7 +174,8 @@ class Database:
 
 
 
-def main() -> None:
+def main(
+) -> None:
     """
     Demonstrates the usage of the Database class.
 
