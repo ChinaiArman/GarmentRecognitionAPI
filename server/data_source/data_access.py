@@ -60,7 +60,7 @@ class Database:
     """
     def __init__(
         self
-        ) -> None:
+    ) -> None:
         """
         Initializes the Database class.
         """
