@@ -10,7 +10,7 @@ This module requires the transformers library and the torch library.
 This module requires the dense_captioning_model module.
 
 Usage:
-To execute this module, run the following command:
+To execute this module from the root directory, run the following command:
     ``python server/embedded_model/semantic_textual_analysis.py``
 """
 

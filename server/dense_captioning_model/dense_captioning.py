@@ -14,14 +14,13 @@ This module requires the following environment variables to be set:
 The module uses the Azure Cognitive Services SDK to interact with the Azure Vision service.
 
 Usage:
-To execute this module, run the following command:
-    ``python dense_captioning.py <filepath_or_url>``
+To execute this module from the root directory, run the following command:
+    ``python server/dense_captioning_model/dense_captioning.py <filepath_or_url>``
 where <filepath_or_url> is the file path or URL of the image.
 """
 
 
 import os
-import argparse
 import requests
 from dotenv import load_dotenv
 from azure.ai.vision.imageanalysis import ImageAnalysisClient
@@ -162,13 +161,8 @@ def main(
 
     @Author: ``@ChinaiArman``
     """
-    # Define console parser and add arguments.
-    parser = argparse.ArgumentParser(description="Generates keyword captions of images using Azure's dense captioning technology.")
-    parser.add_argument("filepath_or_url", action="store", help="An image file path or URL")
-    args = parser.parse_args()
-
     # Call azure dense captioning model.
-    response = create_dense_captions(args.filepath_or_url)
+    response = create_dense_captions("https://i.pinimg.com/736x/f3/cb/c8/f3cbc85b4be2c66c21d7eb170aac9137.jpg")
 
     # Print dense caption results to the console.
     print("Image analysis results:")

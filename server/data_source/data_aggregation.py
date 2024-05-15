@@ -12,8 +12,8 @@ This module requires the following environment variables to be set:
     - RAPID_API_KEY: API key for Rapid API service.
 
 Usage:
-In the command line, execute the module using the command:
-    ``python data_aggregation.py``
+To execute this module from the root directory, run the following command:
+    ``python server/data_source/data_aggregation.py``
 """
 
 import aiohttp

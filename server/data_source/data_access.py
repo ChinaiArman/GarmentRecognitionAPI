@@ -11,8 +11,8 @@ The data source file path must be specified in the environment variables under "
 
 Usage:
 To use this class, create an instance of the Database class and call the desired method.
-In the command line, you can run the following commands to interact with the data source:
-    ``python data_access.py``
+To execute this module from the root directory, run the following command:
+    ``python server/data_source/data_access.py``
 """
 
 

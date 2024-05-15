@@ -9,7 +9,7 @@ Requirements:
 This script requires the installation of the pandas library.
 
 Usage:
-To execute this module, run the following command:
+To execute this module from the root directory, run the following command:
     ``python server/data_source/data_normalization.py``
 """
 

@@ -10,9 +10,8 @@ This module requires the data_aggregation module in the same package.
 This module requires the data_normalization module in the same package.
 
 Usage:
-To use this module from the command line, you can run the following command:
-    ``python main.py``
-This will execute the data aggregation and data normalization processes.
+To execute this module from the root directory, run the following command:
+    ``python server/data_source/main.py``
 """
 
 

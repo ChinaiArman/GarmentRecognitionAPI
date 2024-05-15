@@ -11,9 +11,10 @@ This module requires the semantic_textual_analysis module.
 This module requires the data_access module.
 
 Usage:
-To use this module, run the following command:
+To execute this module from the root directory, run the following command:
     ``python server/embedded_model/main.py <filepath_or_url> <size>``
-where <filepath_or_url> is the file path or URL of the image and <size> is the number of results to return.
+where <filepath_or_url> is the file path or URL of the image and 
+where <size> is the number of results to return.
 """
 
 

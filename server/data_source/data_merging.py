@@ -11,9 +11,8 @@ Requirements:
 This script requires the installation of the pandas library.
 
 Usage:
-To execute this module, run the following command:
-    ``python merge_datasets_script.py``
-This script assumes that the file paths for the images and styles CSV files are correctly set in the main section of the script.
+To execute this module from the root directory, run the following command:
+    ``python server/data_source/data_merging.py``
 """
 
 
