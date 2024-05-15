@@ -19,6 +19,8 @@ from torch import Tensor, cuda, no_grad
 from transformers import AutoTokenizer, AutoModel
 import pandas as pd
 
+pd.options.mode.copy_on_write = True
+
 from dotenv import load_dotenv
 import os
 import sys
@@ -217,7 +219,7 @@ def vector_comparison(keywords: list) -> pd.DataFrame:
     embeddings = semantic_textual_analysis(
         keywords, database_keywords["keywordDescriptions"].tolist()
     )
-    database_keywords["vector"] = embeddings
+    database_keywords.loc[:, "vector"] = embeddings
     database_keywords = database_keywords.sort_values(by="vector", ascending=False)
     return database_keywords
 
