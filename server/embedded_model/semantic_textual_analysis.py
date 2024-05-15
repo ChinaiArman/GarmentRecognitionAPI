@@ -64,9 +64,9 @@ def load_embedded_model(
     Author: ``@Ehsan138``
     """
     # Load the pre-trained tokenizer from the transformers library
-    tokenizer = AutoTokenizer.from_pretrained("thenlper/gte-base")
+    tokenizer = AutoTokenizer.from_pretrained(os.getenv("EMBEDDED_MODEL"))
     # Load the pre-trained model from the transformers library
-    model = AutoModel.from_pretrained("thenlper/gte-base")
+    model = AutoModel.from_pretrained(os.getenv("EMBEDDED_MODEL"))
     return tokenizer, model
 
 
