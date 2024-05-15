@@ -42,23 +42,27 @@ def load_embedded_model() -> tuple[AutoTokenizer, AutoModel]:
     --------
     ``tuple``
         A tuple containing the tokenizer and model objects.
-    
+
     Notes:
     ------
     1. The model and tokenizer are pre-trained on a large corpus and can be used to generate embeddings for text data.
     2. The model used here is the GTE-base model, which is a transformer-based model.
     3. The tokenizer is used to convert text data into input tensors for the model.
-    4. The model generates embeddings for the input text, which can be used for various NLP tasks. 
+    4. The model generates embeddings for the input text, which can be used for various NLP tasks.
 
     Example:
     --------
     >>> tokenizer, model = load_embedded_model()
     >>> # Use the tokenizer and model objects for further processing.
+
+    Author: ``@Ehsan138``
     """
+    # Load the pre-trained tokenizer from the transformers library
     tokenizer = AutoTokenizer.from_pretrained("thenlper/gte-base")
+    # Load the pre-trained model from the transformers library
     model = AutoModel.from_pretrained("thenlper/gte-base")
     return tokenizer, model
-    
+
 
 def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
     """
@@ -91,7 +95,9 @@ def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
 
     Author: ``@cc-dev-65535``
     """
+    # Apply attention mask to zero out padded tokens
     last_hidden = last_hidden_states.masked_fill(~attention_mask[..., None].bool(), 0.0)
+    # Sum the hidden states and divide by the number of non-padded tokens to get the average
     return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
 
 
@@ -129,8 +135,11 @@ def normalize_embeddings(embeddings: Tensor) -> list:
 
     Author: ``@Ehsan138``
     """
+    # Normalize embeddings to have unit L2 norm (length = 1)
     embeddings = F.normalize(embeddings, p=2, dim=1)
+    # Calculate cosine similarity scores between the first embedding and the rest
     scores = (embeddings[:1] @ embeddings[1:].T) * 100
+    # Return the similarity scores as a list
     return scores[0].tolist()
 
 
@@ -167,12 +176,14 @@ def model_wrapper(filepath_or_url: str, size: int) -> list:
 
     Author: ``@ChinaiArman``
     """
-    keywords = dc.normalize_dense_caption_response(dc.create_dense_captions(filepath_or_url))
+    keywords = dc.normalize_dense_caption_response(
+        dc.create_dense_captions(filepath_or_url)
+    )
     if not keywords:
         return []
     df = vector_comparison(keywords)
     return df["id"].tolist()[:size]
-    
+
 
 def vector_comparison(keywords: list) -> pd.DataFrame:
     """
@@ -198,12 +209,14 @@ def vector_comparison(keywords: list) -> pd.DataFrame:
     1. This function retrieves the database keywords and their descriptions.
     2. It calculates the similarity scores between the input keywords and the database keywords.
     3. The function returns a DataFrame with the IDs and similarity scores of the database items.
-    
+
     Author: ``@nataliecly``
     """
     db = da.Database()
     database_keywords = db.get_id_keyword_description()
-    embeddings = semantic_textual_analysis(keywords, database_keywords["keywordDescriptions"].tolist())
+    embeddings = semantic_textual_analysis(
+        keywords, database_keywords["keywordDescriptions"].tolist()
+    )
     database_keywords["vector"] = embeddings
     database_keywords = database_keywords.sort_values(by="vector", ascending=False)
     return database_keywords
@@ -215,9 +228,9 @@ def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
 
     Args:
     -----
-        keywords ``list``
+        keywords : ``list``
             A list of keywords to be analyzed.
-        database_keywords ``list``
+        database_keywords : ``list``
             A list of keywords from the database for comparison.
 
     Returns:
@@ -247,8 +260,8 @@ def semantic_textual_analysis(keywords: list, database_keywords: list) -> list:
     model.to(device)
 
     # Tokenize the input texts
-    input_sentence = " ".join(keywords)
-    sentence_list = [" ".join(keyword_list) for keyword_list in database_keywords]
+    input_sentence = ", ".join(keywords)
+    sentence_list = [", ".join(keyword_list) for keyword_list in database_keywords]
     batch_dict = tokenizer(
         [input_sentence] + sentence_list,
         max_length=512,
