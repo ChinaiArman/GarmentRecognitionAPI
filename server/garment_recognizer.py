@@ -13,6 +13,7 @@ class GarmentRecognizer:
         self
     ) -> None:
         """
+        Initializes the Database class.
         """
         self.db = Database()
         self.tokenizer, self.model = load_embedded_model()

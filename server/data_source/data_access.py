@@ -171,7 +171,36 @@ class Database:
         Author: ``@Ehsan138``
         """
         return self.df[['id', 'keywordDescriptions']]
+    
+    def delete_row(
+        self,
+        id: str
+    ) -> None:
+        """
+        Deletes a row from the data source by its id.
 
+        Args:
+        -----
+        id : ``str``
+            The id of the item to delete.
+
+        Returns:
+        --------
+        None.
+
+        Notes:
+        ------
+        1. The method deletes the row with the provided id from the data source.
+
+        Example:
+        --------
+        >>> db = Database()
+        >>> db.delete_row(1)
+
+        Author: ``@levxxvi``
+        """
+        self.df = self.df[self.df['id'] != id]
+        self.df.to_csv(self.file_path, index=False)
 
 
 def main(
