@@ -17,3 +17,9 @@ class GarmentRecognizer:
         """
         self.db = Database()
         self.tokenizer, self.model = load_embedded_model()
+
+    def delete_row(self, id: str) -> None:
+        """
+        """
+        
+

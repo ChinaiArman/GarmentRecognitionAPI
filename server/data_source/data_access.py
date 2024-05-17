@@ -202,6 +202,43 @@ class Database:
         self.df = self.df[self.df['id'] != id]
         self.df.to_csv(self.file_path, index=False)
 
+    def add_row(
+        self, 
+        new_row: dict
+    ) -> None:
+        """
+        Adds a row to the data source.
+
+        Args:
+        -----
+        new_row : ``dict``
+            A dictionary containing the new row data.
+
+        Returns:
+        --------
+        None.
+
+        Notes:
+        ------
+        1. The method appends the new row to the data source.
+
+        Example:
+        --------
+        >>> db = Database()
+        >>> new_row = {
+        ...     'id': 3,
+        ...     'name': 'new item',
+        ...     'description': 'a new item',
+        ...     'imageUrl': 'https://url.com',
+        ...     'keywordDescriptions': 'new, item'
+        ... }
+        >>> db.add_row(new_row)
+
+        Author: ``@levxxvi``
+        """
+        self.df = self.df.append(new_row, ignore_index=True)
+        self.df.to_csv(self.file_path, index=False)
+
 
 def main(
 ) -> None:
