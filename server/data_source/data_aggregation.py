@@ -27,10 +27,7 @@ HTTP_SUCCESS_CODE = 200
 
 
 async def get_json_data(
-    session: aiohttp.ClientSession,
-    http_variables: dict,
-    offset: dict,
-    category: dict
+    session: aiohttp.ClientSession, http_variables: dict, offset: dict, category: dict
 ) -> dict:
     """
     Gets JSON data from api source with a single HTTP request.
@@ -95,9 +92,7 @@ async def get_json_data(
         return None
 
 
-def write_asos_data(
-    responses: list
-) -> None:
+def write_asos_data(responses: list) -> None:
     """
     Writes data from ASOS API calls to CSV file.
 
@@ -141,9 +136,7 @@ def write_asos_data(
     df_merged.to_csv("server/data_source/data_files/asos.csv", index=False)
 
 
-def write_hm_data(
-    responses: list
-) -> None:
+def write_hm_data(responses: list) -> None:
     """
     Writes data from H&M API calls to CSV file.
 
@@ -187,10 +180,7 @@ def write_hm_data(
     df_merged.to_csv("server/data_source/data_files/hm.csv", index=False)
 
 
-async def process_requests(
-    write_to_csv,
-    http_variables: dict
-) -> None:
+async def process_requests(write_to_csv, http_variables: dict) -> None:
     """
     Executes multiple asynchronous HTTP requests and writes the returned data to a CSV file.
 
@@ -209,7 +199,7 @@ async def process_requests(
     Notes:
     ------
     1. This function takes a write_to_csv function and HTTP variables.
-    2. It creates an aiohttp client session.
+    2. It creates an aiohttp client session with rate limiting set as specified.
     3. It creates a list of async coroutines for each combination of offset and category.
     4. It gathers the responses from the async coroutines.
     5. It filters out any invalid HTTP responses.
@@ -230,7 +220,10 @@ async def process_requests(
 
     Author: ``@cc-dev-65535``
     """
-    connector = aiohttp.TCPConnector(limit_per_host=1)
+    if http_variables["rate_limiting"]:
+        connector = aiohttp.TCPConnector(limit_per_host=1)
+    else:
+        connector = None
     async with aiohttp.ClientSession(connector=connector) as session:
         async_coroutines = [
             get_json_data(session, http_variables, offset, category)
@@ -252,6 +245,7 @@ def create_http_variables(
     api_headers: dict = None,
     offset: dict = None,
     categories: dict = None,
+    rate_limiting: bool = False,
 ) -> dict:
     """
     Creates a dictionary of HTTP variables for HTTP requests.
@@ -271,6 +265,8 @@ def create_http_variables(
         The offset query parameter name and values. Defaults to None.
     categories : ``dict``
         The categories query parameter name and values. Defaults to None.
+    rate_limiting: ``bool``
+        The rate limiting boolean to turn on serial HTTP requests. Defaults to False.
 
     Returns:
     --------
@@ -309,11 +305,11 @@ def create_http_variables(
         "api_headers": api_headers,
         "offset": offset,
         "categories": categories,
+        "rate_limiting": rate_limiting,
     }
 
 
-async def main(
-) -> None:
+async def main() -> None:
     """
     Gets JSON data from multiple API sources.
 
@@ -366,7 +362,7 @@ async def main(
         "param_list": [str(num) for num in range(0, 48 * 8, 48)],
     }
     http_variables = create_http_variables(
-        api_url, api_params, api_headers, asos_offset
+        api_url, api_params, api_headers, asos_offset, True
     )
     await process_requests(write_asos_data, http_variables)
 
@@ -390,7 +386,7 @@ async def main(
         "param_list": ["men_all", "ladies_all"],
     }
     http_variables = create_http_variables(
-        api_url, api_params, api_headers, hm_offset, hm_categories
+        api_url, api_params, api_headers, hm_offset, hm_categories, True
     )
     await process_requests(write_hm_data, http_variables)
 
