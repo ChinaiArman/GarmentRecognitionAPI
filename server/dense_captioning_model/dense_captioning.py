@@ -103,7 +103,7 @@ def normalize_dense_caption_response(
     response: ImageAnalysisResult
 ) -> list:
     """
-    Generates a list of normalized keywords from the dense captioning response.
+    Generates a list of normalized keyword captions from the dense captioning response.
 
     Args:
     -----
@@ -113,11 +113,11 @@ def normalize_dense_caption_response(
     Returns:
     --------
     ``list``
-        A list of normalized keywords extracted from the dense captioning response.
+        A list of normalized keyword captions extracted from the dense captioning response.
 
     Notes:
     ------
-    1. The function extracts the keywords from the dense captioning response.
+    1. The function extracts the keyword captions from the dense captioning response.
     2. The function filters the keywords based on a confidence threshold of 0.8.
 
     Example:
