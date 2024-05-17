@@ -1,5 +1,5 @@
 """
-Author: ``@ChinaiArman``
+Author: ``@Ehsan138``
 Version: ``1.0.0``
 
 Description:
@@ -56,7 +56,7 @@ def main(
     >>> python main.py "image.jpg" 5
     ... # Prints the top 5 results of the dense captioning model.
 
-    Author: ``@ChinaiArman``
+    Author: ``@levxxvi``
     """
     parser = argparse.ArgumentParser(description="Generates keyword captions of images using Azure's dense captioning technology.")
     parser.add_argument("filepath_or_url", action="store", help="An image file path or URL")
@@ -67,8 +67,8 @@ def main(
 
     try:
         results = sta.model_wrapper(args.filepath_or_url, int(args.size))
-    except Exception:
-        raise ValueError("size must be an integer.")
+    except Exception as e:
+        raise RuntimeError(f"Error: {e}")
 
     print("Results: ")
     for row_id in results:
