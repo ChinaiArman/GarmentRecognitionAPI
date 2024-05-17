@@ -27,7 +27,10 @@ HTTP_SUCCESS_CODE = 200
 
 
 async def get_json_data(
-    session: aiohttp.ClientSession, http_variables: dict, offset: dict, category: dict
+    session: aiohttp.ClientSession,
+    http_variables: dict,
+    offset: dict,
+    category: dict
 ) -> dict:
     """
     Gets JSON data from api source with a single HTTP request.
@@ -92,7 +95,9 @@ async def get_json_data(
         return None
 
 
-def write_asos_data(responses: list) -> None:
+def write_asos_data(
+    responses: list
+) -> None:
     """
     Writes data from ASOS API calls to CSV file.
 
@@ -136,7 +141,9 @@ def write_asos_data(responses: list) -> None:
     df_merged.to_csv("server/data_source/data_files/asos.csv", index=False)
 
 
-def write_hm_data(responses: list) -> None:
+def write_hm_data(
+    responses: list
+) -> None:
     """
     Writes data from H&M API calls to CSV file.
 
@@ -180,7 +187,10 @@ def write_hm_data(responses: list) -> None:
     df_merged.to_csv("server/data_source/data_files/hm.csv", index=False)
 
 
-async def process_requests(write_to_csv, http_variables: dict) -> None:
+async def process_requests(
+    write_to_csv,
+    http_variables: dict
+) -> None:
     """
     Executes multiple asynchronous HTTP requests and writes the returned data to a CSV file.
 
@@ -220,7 +230,7 @@ async def process_requests(write_to_csv, http_variables: dict) -> None:
 
     Author: ``@cc-dev-65535``
     """
-    if http_variables["rate_limiting"]:
+    if (http_variables["rate_limiting"]):
         connector = aiohttp.TCPConnector(limit_per_host=1)
     else:
         connector = None
@@ -245,7 +255,7 @@ def create_http_variables(
     api_headers: dict = None,
     offset: dict = None,
     categories: dict = None,
-    rate_limiting: bool = False,
+    rate_limiting: bool = False
 ) -> dict:
     """
     Creates a dictionary of HTTP variables for HTTP requests.
@@ -305,11 +315,12 @@ def create_http_variables(
         "api_headers": api_headers,
         "offset": offset,
         "categories": categories,
-        "rate_limiting": rate_limiting,
+        "rate_limiting": rate_limiting
     }
 
 
-async def main() -> None:
+async def main(
+) -> None:
     """
     Gets JSON data from multiple API sources.
 
