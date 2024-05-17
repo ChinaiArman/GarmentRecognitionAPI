@@ -20,6 +20,28 @@ class GarmentRecognizer:
 
     def delete_row(self, id: str) -> None:
         """
+        Deletes a row from the data source by its id.
+
+        Args:
+        -----
+        id : ``str``
+            The id of the item to delete.
+
+        Returns:
+        --------
+        None.
+
+        Notes:
+        ------
+        1. The method deletes the row with the provided id from the data source.
+
+        Example:
+        --------
+        >>> gr = GarmentRecognizer()
+        >>> gr.delete_row(1)
+        ... # Deletes the row with id 1 from the data source.
+
+        Author: ``@levxxvi``
         """
-        
+        self.db.delete_row(id)
 
