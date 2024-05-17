@@ -1,7 +1,7 @@
 """
 """
 
-
+import pandas as pd
 from data_source.data_access import Database
 from embedded_model.semantic_textual_analysis import model_wrapper, load_embedded_model
 
@@ -45,3 +45,45 @@ class GarmentRecognizer:
         """
         self.db.delete_row(id)
 
+    def get_item_by_semantic_search(self, file_path_or_url: str, size: int) -> list:
+        """
+        Gets a list of item IDs of items from data source similar to the provided image by using a semantic search.
+
+        Args:
+        -----
+        file_path_or_url : ``str``
+            The path to the image file or the URL of the image.
+        size : ``int``
+            The number of items to return in the list.
+
+        Returns:
+        --------
+        ``list``
+            A list of item IDs of those items similar to the provided image, up to `size` in length.
+
+        Notes:
+        ------
+        1. The method uses the embedded model to extract the semantic meaning of the provided image.
+        2. The method then uses the semantic meaning to find similar items in the data source.
+        3. The method returns a list of specified size of the item IDs of the most similar items in the data source.
+
+        Example:
+        --------
+        >>> gr = GarmentRecognizer()
+        >>> gr.get_item_by_semantics('path/to/image.jpg', 5)
+        ... # Returns a list of 5 items from data source most similar to the provided image.
+
+        Author: ``@cc-dev-65535``
+        """
+        return model_wrapper(file_path_or_url, size)
+
+
+def main():
+    garment_recognizer = GarmentRecognizer()
+    print("Get items by semantic search...")
+    url = "http://assets.myntassets.com/v1/images/style/properties/be5106fa146a771fdb128833b4ab9b8b_images.jpg"
+    print(garment_recognizer.get_item_by_semantic_search(url, 5))
+
+
+if __name__ == "__main__":
+    main()
