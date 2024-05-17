@@ -47,7 +47,7 @@ class GarmentRecognizer:
 
     def get_item_by_semantic_search(self, file_path_or_url: str, size: int) -> list:
         """
-        Gets a list of item IDs of items from data source similar to the provided image by using a semantic search.
+        Gets a list of items from data source similar to the provided image by using a semantic search.
 
         Args:
         -----
@@ -59,13 +59,13 @@ class GarmentRecognizer:
         Returns:
         --------
         ``list``
-            A list of item IDs of those items similar to the provided image, up to `size` in length.
+            A list of those items similar to the provided image, up to `size` in length.
 
         Notes:
         ------
         1. The method uses the embedded model to extract the semantic meaning of the provided image.
         2. The method then uses the semantic meaning to find similar items in the data source.
-        3. The method returns a list of specified size of the item IDs of the most similar items in the data source.
+        3. The method returns a list of specified size of the most similar items in the data source.
 
         Example:
         --------
@@ -75,7 +75,11 @@ class GarmentRecognizer:
 
         Author: ``@cc-dev-65535``
         """
-        return model_wrapper(file_path_or_url, size)
+        item_ids = model_wrapper(file_path_or_url, size)
+        return [
+            self.db.get_item_by_id(item_id).to_dict("records")[0]
+            for item_id in item_ids
+        ]
 
 
 def main():
