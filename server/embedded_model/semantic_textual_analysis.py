@@ -277,6 +277,8 @@ def semantic_textual_analysis(
     device = "cuda:0" if cuda.is_available() else "cpu"
     print(f"Device: {device}")
     model.to(device)
+    cuda.empty_cache()
+    print(f"Memory allocated: {cuda.memory_allocated()}")
 
     # Tokenize the input texts
     input_sentence = ", ".join(keywords)
