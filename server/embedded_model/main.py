@@ -67,8 +67,8 @@ def main(
 
     try:
         results = sta.model_wrapper(args.filepath_or_url, int(args.size))
-    except Exception:
-        raise ValueError("size must be an integer.")
+    except Exception as e:
+        raise RuntimeError(f"Error: {e}")
 
     print("Results: ")
     for row_id in results:
