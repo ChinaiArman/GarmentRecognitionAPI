@@ -50,6 +50,37 @@ paths:
                   error:
                     type: string
 
+  /keyword_search:
+    post:
+      tags:
+        - garment
+      summary: Search garments by keywords
+      description: Search garments by keywords
+      requestBody:
+        description: Keywords to search for garments
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                keywords:
+                  type: array
+                  items:
+                    type: string
+              example:
+                keywords: ["shirt", "red"]
+                size: 5
+      responses:
+        "200":
+          description: List of matching garments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Garment"
+
   /items/{id}:
     get:
       tags:
@@ -101,37 +132,6 @@ paths:
                 properties:
                   error:
                     type: string
-
-  /keyword_search:
-    post:
-      tags:
-        - garment
-      summary: Search garments by keywords
-      description: Search garments by keywords
-      requestBody:
-        description: Keywords to search for garments
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                keywords:
-                  type: array
-                  items:
-                    type: string
-              example:
-                keywords: ["shirt", "red"]
-                size: 5
-      responses:
-        "200":
-          description: List of matching garments
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Garment"
 
   /items:
     post:
