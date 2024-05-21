@@ -1,3 +1,6 @@
+"""
+"""
+
 from flask import Flask, jsonify, request, abort, render_template
 from flask_cors import CORS
 from garment_recognizer import GarmentRecognizer
@@ -11,16 +14,22 @@ garment_recognizer = GarmentRecognizer()
 
 @app.errorhandler(400)
 def bad_request(e):
+    """
+    """
     return jsonify(error=str(e)), 400
 
 
 @app.route("/")
 def root():
+    """
+    """
     return render_template("index.html")
 
 
-@app.post("/search")
+@app.route("/search", methods=["POST"])
 def search_items():
+    """
+    """
     try:
         image_url = request.json["url"]
         results_size = request.json["size"]
@@ -35,6 +44,8 @@ def search_items():
 
 @app.route("/items/<int:id>", methods=["GET"])
 def get_item_by_id(id):
+    """
+    """
     item = garment_recognizer.get_item_by_id(id)
     if item is None:
         abort(404, description="Garment not found.")
@@ -43,6 +54,8 @@ def get_item_by_id(id):
 
 @app.route("/items/search", methods=["POST"])
 def search_items_by_keywords():
+    """
+    """
     try:
         keywords = request.json["keywords"]
     except KeyError:
@@ -53,6 +66,8 @@ def search_items_by_keywords():
 
 @app.route("/items", methods=["POST"])
 def add_item():
+    """
+    """
     try:
         new_item = request.json
     except KeyError:
@@ -63,6 +78,8 @@ def add_item():
 
 @app.route("/items/<int:id>", methods=["DELETE"])
 def delete_item(id):
+    """
+    """
     success = garment_recognizer.delete_item(id)
     if not success:
         abort(404, description="Garment not found.")
