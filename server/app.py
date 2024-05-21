@@ -18,7 +18,31 @@ def bad_request(
     e: Exception,
 ) -> dict:
     """
-    REFACTOR TO RETURN A DICT
+    Bad request error handler.
+
+    Args:
+    -----
+    e : ``Exception``
+        The exception raised.
+    
+    Returns:
+    --------
+    ``dict``
+        A dictionary containing the error message.
+    
+    Notes:
+    ------
+    1. The function returns a dictionary containing the error message and a 400 status code.
+    2. The error message is extracted from the exception and converted to a string.
+
+    Example:
+    --------
+    >>> e = Exception("Bad request.")
+    >>> response = bad_request(e)
+    >>> print(response)
+    ... # {'Error': 'Bad request.'}
+
+    Author: ``@ChinaiArman``
     """
     return {"Error": str(e)}, 400
 
