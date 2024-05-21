@@ -69,7 +69,7 @@ def main(
     time_start = time.time()
 
     try:
-        results = sta.model_wrapper(args.filepath_or_url, int(args.size))
+        results = sta.image_model_wrapper(args.filepath_or_url, int(args.size))
     except Exception as e:
         raise RuntimeError(f"Error: {e}")
 
