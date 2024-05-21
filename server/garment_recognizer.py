@@ -1,7 +1,6 @@
 """
 """
 
-import pandas as pd
 from data_source.data_access import Database
 from embedded_model.semantic_textual_analysis import image_model_wrapper, load_embedded_model, keyword_model_wrapper
 
