@@ -1,13 +1,47 @@
 """
 """
 
-import pandas as pd
 from data_source.data_access import Database
 from embedded_model.semantic_textual_analysis import image_model_wrapper, load_embedded_model, keyword_model_wrapper
 
 
 class GarmentRecognizer:
     """
+    Class to recognize garments and interact with the data source.
+
+    Args:
+    -----
+    None.
+
+    Attributes:
+    -----------
+    db : ``Database``
+        An instance of the Database class
+    tokenizer: ``Tokenizer``
+        The tokenizer used to tokenize the text data.
+    model: ``Model``
+        The model used to extract the semantic meaning of the text data.
+
+    Methods:
+    --------
+    >>> insert_row(data)
+    ... # Inserts a row into the data source.
+    >>> delete_row(id)
+    ... # Deletes a row from the data source by its id.
+    >>> get_item_by_semantic_search(file_path_or_url, size)
+    ... # Gets a list of items from data source similar to the provided image by using a semantic search.
+    >>> get_item_by_id(id)
+    ... # Retrieves an item from the data source by its id.
+    >>> get_items_by_keywords(keywords, size)
+    ... # Retrieves items from the data source by their keywords.
+    
+    Notes:
+    ------
+    1. The class provides methods to interact with the data source and recognize garments.
+    2. The class uses the Database class to interact with the data source.
+    3. The class uses the embedded model to extract the semantic meaning of the text data.
+
+    Author: ``@ChinaiArman``
     """
     def __init__(
         self
@@ -18,7 +52,10 @@ class GarmentRecognizer:
         self.db = Database()
         self.tokenizer, self.model = load_embedded_model()
 
-    def insert_row(self, data: dict) -> None:
+    def insert_row(
+        self,
+        data: dict
+    ) -> None:
         """
         Inserts a new row of data into the data source.
 
@@ -45,7 +82,10 @@ class GarmentRecognizer:
         """
         self.db.add_row(data)
     
-    def delete_row(self, id: str) -> None:
+    def delete_row(
+        self,
+        id: str
+    ) -> None:
         """
         Deletes a row from the data source by its id.
 
@@ -70,9 +110,13 @@ class GarmentRecognizer:
 
         Author: ``@levxxvi``
         """
-        self.db.delete_row(id)
+        return self.db.delete_row(id)
 
-    def get_item_by_semantic_search(self, file_path_or_url: str, size: int) -> list:
+    def get_item_by_semantic_search(
+        self,
+        file_path_or_url: str,
+        size: int
+    ) -> list:
         """
         Gets a list of items from data source similar to the provided image by using a semantic search.
 
@@ -108,7 +152,10 @@ class GarmentRecognizer:
             for item_id in item_ids
         ]
     
-    def get_item_by_id(self, id: int) -> dict:
+    def get_item_by_id(
+        self,
+        id: int
+    ) -> dict:
         """
         Retrieves an item from the data source by its id.
 
@@ -138,7 +185,11 @@ class GarmentRecognizer:
         item = self.db.get_item_by_id(id)
         return item.to_dict("records")[0] if not item.empty else None
     
-    def get_items_by_keywords(self, keywords: list, size: int) -> list:
+    def get_items_by_keywords(
+        self,
+        keywords: list,
+        size: int
+    ) -> list:
         """
         Retrieves items from the data source by their keywords.
         
