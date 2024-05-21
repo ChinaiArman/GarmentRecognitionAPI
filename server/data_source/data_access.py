@@ -55,6 +55,10 @@ class Database:
     ... # Retrieves Panadas DataFrame of an item by its id.
     >>> get_id_by_keyword_description(description)
     ... # Retrieves the id of an item by its description.
+    >>> delete_row(id)
+    ... # Deletes a row from the data source by its id.
+    >>> add_row(new_row)
+    ... # Adds a row to the data source.
 
     Author: ``@levxxvi``
     """
