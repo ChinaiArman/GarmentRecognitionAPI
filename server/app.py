@@ -183,8 +183,8 @@ def delete_item(id):
 
     Returns:
     --------
-    ``str``
-        An empty string with a 204 status code if the garment is deleted successfully.
+    ``dict``
+        A dictionary with a success message and a 204 status code if the garment is deleted successfully.
 
     Notes:
     ------
@@ -194,16 +194,16 @@ def delete_item(id):
     Example:
     --------
     >>> response = client.delete("/items/1")
-    >>> print(response.status_code)
-    ... # Prints 204 if the garment is deleted successfully, 404 if not found.
+    >>> print(response.json)
+    ... # Prints {'message': 'Garment deleted successfully'} if the garment is deleted successfully,
+    ... # 404 if not found.
 
     Author: ``@Ehsan138``
     """
-    #  REFACTOR TO RETURN A DICT
-    # success = garment_recognizer.delete_item(id)
-    # if not success:
-    #     abort(404, description="Garment not found.")
-    # return '', 204
+    success = garment_recognizer.delete_item(id)
+    if not success:
+        abort(404, description="Garment not found.")
+    return jsonify({'message': 'Garment deleted successfully'}), 204
 
 
 if __name__ == "__main__":
