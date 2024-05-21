@@ -119,6 +119,41 @@ def search_items_by_keywords():
 @app.route("/items", methods=["POST"])
 def add_item():
     """
+    Adds a new garment to the database.
+
+    Args:
+    -----
+    None.
+
+    Request Body:
+    -------------
+    new_item : ``dict``
+        The new garment data.
+
+    Returns:
+    --------
+    ``json``
+        The added garment data in JSON format.
+
+    Notes:
+    ------
+    1. The function adds a new garment to the database using the GarmentRecognizer.
+    2. If the item details are not provided, it aborts with a 400 status code and an error message.
+
+    Example:
+    --------
+    >>> new_item = {
+    ...     'id': 3,
+    ...     'name': 'new item',
+    ...     'description': 'a new item',
+    ...     'imageUrl': 'https://url.com',
+    ...     'keywordDescriptions': 'new, item'
+    ... }
+    >>> response = client.post("/items", json=new_item)
+    >>> print(response.json)
+    ... # Prints the added garment data in JSON format.
+
+    Author: ``@Ehsan138``
     """
     try:
         new_item = request.json
