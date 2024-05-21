@@ -3,7 +3,7 @@
 
 import pandas as pd
 from data_source.data_access import Database
-from embedded_model.semantic_textual_analysis import model_wrapper, load_embedded_model
+from embedded_model.semantic_textual_analysis import image_model_wrapper, load_embedded_model
 
 
 class GarmentRecognizer:
@@ -75,7 +75,7 @@ class GarmentRecognizer:
 
         Author: ``@cc-dev-65535``
         """
-        item_ids = model_wrapper(file_path_or_url, size)
+        item_ids = image_model_wrapper(file_path_or_url, size)
         return [
             self.db.get_item_by_id(item_id).to_dict("records")[0]
             for item_id in item_ids
@@ -110,6 +110,35 @@ class GarmentRecognizer:
         """
         item = self.db.get_item_by_id(id)
         return item.to_dict("records")[0] if not item.empty else None
+    
+    def get_items_by_keywords(self, keywords: list) -> list:
+        """
+        Retrieves items from the data source by their keywords.
+        
+        Args:
+        -----
+        keywords : ``list``
+            A list of keywords to search for.
+        
+        Returns:
+        --------
+        ``list``
+            A list of items that contain the provided keywords.
+
+        Notes:
+        ------
+        1. The method retrieves items from the data source that contain the provided keywords.
+
+        Example:
+        --------
+        >>> gr = GarmentRecognizer()
+        >>> items = gr.get_items_by_keywords(['shirt', 'blue'])
+        >>> print(items)
+        ... # Prints a list of items that contain the keywords 'shirt' and 'blue'.
+
+        Author: ``@ChinaiArman``    
+        """
+
 
 
 def main():

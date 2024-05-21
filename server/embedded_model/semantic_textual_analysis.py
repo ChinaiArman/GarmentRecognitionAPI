@@ -154,7 +154,7 @@ def normalize_embeddings(
     return scores[0].tolist()
 
 
-def model_wrapper(
+def image_model_wrapper(
     filepath_or_url: str,
     size: int
 ) -> list:
@@ -195,6 +195,44 @@ def model_wrapper(
     )
     if not keywords:
         return []
+    df = vector_comparison(keywords)
+    return df["id"].tolist()[:size]
+
+
+def keyword_model_wrapper(
+    keywords: list,
+    size: int
+) -> list:
+    """
+    Wrapper function to call the semantic textual analysis function.
+
+    Args:
+    -----
+    keywords : ``list``
+        A list of keywords generated from the image.
+    size : ``int``
+        The number of similar items to return.
+    
+    Returns:
+    --------
+    ``list``
+        A list of the top `size` similar items based on the analysis.
+
+    Notes:
+    ------
+    1. The function calls the semantic textual analysis function to find similar items in the database based on the input keywords.
+    2. The function returns the IDs of the top `size` similar items based on the analysis.
+
+    Example:
+    --------
+    >>> keywords = ["apple", "banana"]
+    >>> size = 5
+    >>> similar_items = keyword_model_wrapper(keywords, size)
+    >>> print(similar_items)
+    ... ["item1", "item2", "item3", "item4", "item5"]
+
+    Author: ``@ChinaiArman``
+    """
     df = vector_comparison(keywords)
     return df["id"].tolist()[:size]
 
