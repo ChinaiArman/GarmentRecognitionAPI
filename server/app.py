@@ -355,7 +355,9 @@ def add_item():
 
 
 @app.route("/items/<int:id>", methods=["DELETE"])
-def delete_item(id):
+def delete_item(
+    id : int
+) -> dict:
     """
     Deletes a garment by its ID.
 
