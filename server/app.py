@@ -6,7 +6,7 @@ Description:
 This file contains the main application logic for the Garment Recognition API server.
 
 Requirements:
-This script requires the installation of the Flask and Flask-CORS libraries.
+This script requires the installation of the flask and flask_cors libraries.
 The GarmentRecognizer class is defined in the garment_recognizer module.
 
 Usage:
