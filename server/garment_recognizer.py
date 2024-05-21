@@ -80,6 +80,36 @@ class GarmentRecognizer:
             self.db.get_item_by_id(item_id).to_dict("records")[0]
             for item_id in item_ids
         ]
+    
+    def get_item_by_id(self, id: int) -> dict:
+        """
+        Retrieves an item from the data source by its id.
+
+        Args:
+        -----
+        id : ``int``
+            The id of the item to retrieve.
+
+        Returns:
+        --------
+        ``dict``
+            The item data.
+
+        Notes:
+        ------
+        1. The method retrieves the item with the provided id from the data source.
+
+        Example:
+        --------
+        >>> gr = GarmentRecognizer()
+        >>> item = gr.get_item_by_id(1)
+        >>> print(item)
+        ... # Prints the item with id 1 from the data source.
+
+        Author: ``@Ehsan138``
+        """
+        item = self.db.get_item_by_id(id)
+        return item.to_dict("records")[0] if not item.empty else None
 
 
 def main():
