@@ -170,6 +170,30 @@ def add_item():
 @app.route("/items/<int:id>", methods=["DELETE"])
 def delete_item(id):
     """
+    Deletes a garment by its ID.
+
+    Args:
+    -----
+    id : ``int``
+        The ID of the garment to delete.
+
+    Returns:
+    --------
+    ``str``
+        An empty string with a 204 status code if the garment is deleted successfully.
+
+    Notes:
+    ------
+    1. The function deletes the garment with the provided ID using the GarmentRecognizer.
+    2. If the garment is not found, it aborts with a 404 status code and an error message.
+
+    Example:
+    --------
+    >>> response = client.delete("/items/1")
+    >>> print(response.status_code)
+    ... # Prints 204 if the garment is deleted successfully, 404 if not found.
+
+    Author: ``@Ehsan138``
     """
     success = garment_recognizer.delete_item(id)
     if not success:
