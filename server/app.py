@@ -33,6 +33,36 @@ def root():
 @app.route("/search", methods=["POST"])
 def search_items():
     """
+    Searches for garments by image from url.
+
+    Args:
+    -----
+    None.
+
+    Request Body:
+    -------------
+    url : ``str``
+        The URL of the image to search for garments.
+    size : ``int``
+        The maximum number of items to return in the list.
+    
+    Returns:
+    --------
+    ``json``
+        A list of matching garments in JSON format.
+    
+    Notes:
+    ------
+    1. The function retrieves garments that match the provided image using the GarmentRecognizer.
+    2. If the image URL is not provided, it aborts with a 400 status code and an error message.
+
+    Example:
+    --------
+    >>> response = client.post("/search", json={"url": "https://url.com", "size": 5})
+    >>> print(response.json)
+    ... # Prints the list of matching garments in JSON format.
+
+    Author: ``@cc-dev-65535``
     """
     try:
         image_url = request.json["url"]
