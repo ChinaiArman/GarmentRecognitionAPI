@@ -41,5 +41,15 @@ def get_item_by_id(id):
     return jsonify(item)
 
 
+@app.route("/items/search", methods=["POST"])
+def search_items_by_keywords():
+    try:
+        keywords = request.json["keywords"]
+    except KeyError:
+        abort(400, description="Invalid request format. Please provide 'keywords' in the request body.")
+    response = garment_recognizer.get_items_by_keywords(keywords)
+    return jsonify(response)
+
+
 if __name__ == "__main__":
     app.run(debug=True, threaded=False)
