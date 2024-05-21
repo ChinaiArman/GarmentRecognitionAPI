@@ -61,5 +61,13 @@ def add_item():
     return jsonify(response), 201
 
 
+@app.route("/items/<int:id>", methods=["DELETE"])
+def delete_item(id):
+    success = garment_recognizer.delete_item(id)
+    if not success:
+        abort(404, description="Garment not found.")
+    return '', 204
+
+
 if __name__ == "__main__":
     app.run(debug=True, threaded=False)
