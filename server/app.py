@@ -52,7 +52,31 @@ def not_found(
     e: Exception,
 ) -> dict:
     """
-    REFACTOR TO RETURN A DICT
+    Not found error handler.
+
+    Args:
+    -----
+    e : ``Exception``
+        The exception raised.
+    
+    Returns:
+    --------
+    ``dict``
+        A dictionary containing the error message.
+    
+    Notes:
+    ------
+    1. The function returns a dictionary containing the error message and a 404 status code.
+    2. The error message is extracted from the exception and converted to a string.
+
+    Example:
+    --------
+    >>> e = Exception("Not found.")
+    >>> response = not_found(e)
+    >>> print(response)
+    ... # {'Error': 'Not found.'}
+
+    Author: ``@ChinaiArman``
     """
     return {"Error": str(e)}, 404
 
