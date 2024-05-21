@@ -11,7 +11,7 @@ tags:
     description: Everything about garments
 paths:
   /search:
-    get:
+    post:
       tags:
         - garment
       summary: Search for a garment by image
