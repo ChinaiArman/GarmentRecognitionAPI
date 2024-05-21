@@ -20,6 +20,28 @@ class GarmentRecognizer:
 
     def insert_row(self, data: dict) -> None:
         """
+        Inserts a new row of data into the data source.
+
+        Args:
+        -----
+        data : ``dict``
+            A dictionary containing the new row data.
+
+        Returns:
+        --------
+        None.
+
+        Notes:
+        ------
+        1. The method inserts a new row into the data source.
+
+        Example:
+        --------
+        >>> gr = GarmentRecognizer()
+        >>> gr.insert_row({'id': 1, 'name': 'shirt', 'color': 'blue'})
+        ... # Inserts the row into the data source.
+
+        Author: ``@nataliecly``
         """
         self.db.add_row(data)
     
