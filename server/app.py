@@ -13,10 +13,14 @@ garment_recognizer = GarmentRecognizer()
 
 
 @app.errorhandler(400)
-def bad_request(e):
+def bad_request(
+    e: Exception,
+) -> dict:
     """
+    REFACTOR TO RETURN A DICT
     """
-    return jsonify(error=str(e)), 400
+    # return jsonify(error=str(e)), 400
+    pass
 
 
 @app.route("/")
@@ -195,10 +199,11 @@ def delete_item(id):
 
     Author: ``@Ehsan138``
     """
-    success = garment_recognizer.delete_item(id)
-    if not success:
-        abort(404, description="Garment not found.")
-    return '', 204
+    #  REFACTOR TO RETURN A DICT
+    # success = garment_recognizer.delete_item(id)
+    # if not success:
+    #     abort(404, description="Garment not found.")
+    # return '', 204
 
 
 if __name__ == "__main__":
