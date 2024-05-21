@@ -12,17 +12,72 @@ CORS(app)
 garment_recognizer = GarmentRecognizer()
 
 
+# ERROR HANDLERS
 @app.errorhandler(400)
 def bad_request(
     e: Exception,
 ) -> dict:
     """
+    Bad request error handler.
+
+    Args:
+    -----
+    e : ``Exception``
+        The exception raised.
+    
+    Returns:
+    --------
+    ``dict``
+        A dictionary containing the error message.
+    
+    Notes:
+    ------
+    1. The function returns a dictionary containing the error message and a 400 status code.
+    2. The error message is extracted from the exception and converted to a string.
+
+    Example:
+    --------
+    >>> e = Exception("Bad request.")
+    >>> response = bad_request(e)
+    >>> print(response)
+    ... # {'Error': 'Bad request.'}
+
+    Author: ``@ChinaiArman``
+    """
+    return {"Error": str(e)}, 400
+
+
+@app.errorhandler(404)
+def not_found(
+    e: Exception,
+) -> dict:
+    """
     REFACTOR TO RETURN A DICT
     """
-    # return jsonify(error=str(e)), 400
-    pass
+    return {"Error": str(e)}, 404
 
 
+@app.errorhandler(500)
+def internal_server_error(
+    e: Exception,
+) -> dict:
+    """
+    REFACTOR TO RETURN A DICT
+    """
+    return {"Error": str(e)}, 500
+
+
+@app.errorhandler(405)
+def method_not_allowed(
+    e: Exception,
+) -> dict:
+    """
+    REFACTOR TO RETURN A DICT
+    """
+    return {"Error": str(e)}, 405
+
+
+# ROUTES
 @app.route("/")
 def root():
     """
@@ -213,8 +268,8 @@ def delete_item(id):
 
     Returns:
     --------
-    ``str``
-        An empty string with a 204 status code if the garment is deleted successfully.
+    ``dict``
+        A dictionary with a success message and a 204 status code if the garment is deleted successfully.
 
     Notes:
     ------
@@ -224,16 +279,16 @@ def delete_item(id):
     Example:
     --------
     >>> response = client.delete("/items/1")
-    >>> print(response.status_code)
-    ... # Prints 204 if the garment is deleted successfully, 404 if not found.
+    >>> print(response.json)
+    ... # Prints {'message': 'Garment deleted successfully'} if the garment is deleted successfully,
+    ... # 404 if not found.
 
     Author: ``@Ehsan138``
     """
-    #  REFACTOR TO RETURN A DICT
-    # success = garment_recognizer.delete_item(id)
-    # if not success:
-    #     abort(404, description="Garment not found.")
-    # return '', 204
+    success = garment_recognizer.delete_item(id)
+    if not success:
+        abort(404, description="Garment not found.")
+    return jsonify({'message': 'Garment deleted successfully'}), 204
 
 
 if __name__ == "__main__":
