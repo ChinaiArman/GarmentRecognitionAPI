@@ -1,4 +1,17 @@
 """
+Author: ``@cc-dev-65535``
+Version: ``1.0.0``
+
+Description:
+This file contains the main application logic for the Garment Recognition API server.
+
+Requirements:
+This script requires the installation of the Flask and Flask-CORS libraries.
+The GarmentRecognizer class is defined in the garment_recognizer module.
+
+Usage:
+To execute this module from the root directory, run the following command:
+    ``python server/app.py``
 """
 
 from flask import Flask, jsonify, request, abort, render_template
@@ -175,7 +188,7 @@ def root(
     >>> print(response)
     ... # The index page.
 
-    Author: ``cc-dev-65535``
+    Author: ``@cc-dev-65535``
     """
     return render_template("index.html")
 
