@@ -20,6 +20,7 @@ where <size> is the number of results to return.
 
 import semantic_textual_analysis as sta
 import argparse
+import time
 
 from dotenv import load_dotenv
 import os
@@ -65,14 +66,19 @@ def main(
 
     db = da.Database()
 
+    time_start = time.time()
+
     try:
         results = sta.model_wrapper(args.filepath_or_url, int(args.size))
     except Exception as e:
         raise RuntimeError(f"Error: {e}")
 
+    time_end = time.time()
     print("Results: ")
     for row_id in results:
         print(f"\t{db.get_item_by_id(row_id)}")
+    
+    print(f"Runtime: {time_end - time_start} seconds.")
     
 
 if __name__ == "__main__":
