@@ -52,7 +52,10 @@ class GarmentRecognizer:
         self.db = Database()
         self.tokenizer, self.model = load_embedded_model()
 
-    def insert_row(self, data: dict) -> None:
+    def insert_row(
+        self,
+        data: dict
+    ) -> None:
         """
         Inserts a new row of data into the data source.
 
@@ -79,7 +82,10 @@ class GarmentRecognizer:
         """
         self.db.add_row(data)
     
-    def delete_row(self, id: str) -> None:
+    def delete_row(
+        self,
+        id: str
+    ) -> None:
         """
         Deletes a row from the data source by its id.
 
@@ -106,7 +112,11 @@ class GarmentRecognizer:
         """
         return self.db.delete_row(id)
 
-    def get_item_by_semantic_search(self, file_path_or_url: str, size: int) -> list:
+    def get_item_by_semantic_search(
+        self,
+        file_path_or_url: str,
+        size: int
+    ) -> list:
         """
         Gets a list of items from data source similar to the provided image by using a semantic search.
 
@@ -142,7 +152,10 @@ class GarmentRecognizer:
             for item_id in item_ids
         ]
     
-    def get_item_by_id(self, id: int) -> dict:
+    def get_item_by_id(
+        self,
+        id: int
+    ) -> dict:
         """
         Retrieves an item from the data source by its id.
 
@@ -172,7 +185,11 @@ class GarmentRecognizer:
         item = self.db.get_item_by_id(id)
         return item.to_dict("records")[0] if not item.empty else None
     
-    def get_items_by_keywords(self, keywords: list, size: int) -> list:
+    def get_items_by_keywords(
+        self,
+        keywords: list,
+        size: int
+    ) -> list:
         """
         Retrieves items from the data source by their keywords.
         
