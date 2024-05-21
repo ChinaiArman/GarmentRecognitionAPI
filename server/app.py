@@ -181,7 +181,8 @@ def root(
 
 
 @app.route("/search", methods=["POST"])
-def search_items():
+def search_items(
+) -> dict:
     """
     Searches for garments by image from url.
 
