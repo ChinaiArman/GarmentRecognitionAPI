@@ -33,5 +33,13 @@ def search_items():
     return response
 
 
+@app.route("/items/<int:id>", methods=["GET"])
+def get_item_by_id(id):
+    item = garment_recognizer.get_item_by_id(id)
+    if item is None:
+        abort(404, description="Garment not found.")
+    return jsonify(item)
+
+
 if __name__ == "__main__":
     app.run(debug=True, threaded=False)
