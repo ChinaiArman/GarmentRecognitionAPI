@@ -45,6 +45,30 @@ def search_items():
 @app.route("/items/<int:id>", methods=["GET"])
 def get_item_by_id(id):
     """
+    Retrieves a garment by its ID.
+
+    Args:
+    -----
+    id : ``int``
+        The ID of the garment to retrieve.
+
+    Returns:
+    --------
+    ``json``
+        The garment data in JSON format.
+
+    Notes:
+    ------
+    1. The function retrieves the garment with the provided ID using the GarmentRecognizer.
+    2. If the garment is not found, it aborts with a 404 status code and an error message.
+
+    Example:
+    --------
+    >>> response = client.get("/items/1")
+    >>> print(response.json)
+    ... # Prints the garment data with ID 1 in JSON format.
+
+    Author: ``@Ehsan138``
     """
     item = garment_recognizer.get_item_by_id(id)
     if item is None:
@@ -55,6 +79,34 @@ def get_item_by_id(id):
 @app.route("/keyword_search", methods=["POST"])
 def search_items_by_keywords():
     """
+    Searches for garments by keywords.
+
+    Args:
+    -----
+    None.
+
+    Request Body:
+    -------------
+    keywords : ``list``
+        A list of keywords to search for garments.
+
+    Returns:
+    --------
+    ``json``
+        A list of matching garments in JSON format.
+
+    Notes:
+    ------
+    1. The function retrieves garments that match the provided keywords using the GarmentRecognizer.
+    2. If the keywords are not provided, it aborts with a 400 status code and an error message.
+
+    Example:
+    --------
+    >>> response = client.post("/items/search", json={"keywords": ["shirt", "red"]})
+    >>> print(response.json)
+    ... # Prints the list of matching garments in JSON format.
+
+    Author: ``@Ehsan138``
     """
     try:
         keywords = request.json["keywords"]
