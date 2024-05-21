@@ -1,19 +1,21 @@
 openapi: 3.0.0
 info:
   title: Garment Recognition API
-  description: API for Garment Recognition
+  description: An API for accessing the Garment Recognition AI model
   version: 1.0.0
 servers:
   - url: http://localhost:5000
     description: Garment Recognition API
 tags:
-  - name: garment
-    description: Everything about garments
+  - name: Garment Recognition Model
+    description: Endpoints for accessing the AI model
+  - name: Database Operations
+    description: Endpoints for accessing the database
 paths:
   /search:
     post:
       tags:
-        - garment
+        - Garment Recognition Model
       summary: Search for a garment by image
       description: Search for a garment using an image URL
       requestBody:
@@ -53,7 +55,7 @@ paths:
   /keyword_search:
     post:
       tags:
-        - garment
+        - Garment Recognition Model
       summary: Search garments by keywords
       description: Search garments by keywords
       requestBody:
@@ -84,7 +86,7 @@ paths:
   /items/{id}:
     get:
       tags:
-        - garment
+        - Database Operations
       summary: Find a garment by ID
       description: Find a garment by ID
       parameters:
@@ -111,7 +113,7 @@ paths:
                     type: string
     delete:
       tags:
-        - garment
+        - Database Operations
       summary: Delete a garment by ID
       description: Delete a garment by ID
       parameters:
@@ -136,7 +138,7 @@ paths:
   /add_item:
     post:
       tags:
-        - garment
+        - Database Operations
       summary: Add a new garment
       description: Add a new garment
       requestBody:
