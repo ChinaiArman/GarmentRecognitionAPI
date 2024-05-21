@@ -120,7 +120,31 @@ def method_not_allowed(
     e: Exception,
 ) -> dict:
     """
-    REFACTOR TO RETURN A DICT
+    Method not allowed error handler.
+
+    Args:
+    -----
+    e : ``Exception``
+        The exception raised.
+
+    Returns:
+    --------
+    ``dict``
+        A dictionary containing the error message.
+    
+    Notes:
+    ------
+    1. The function returns a dictionary containing the error message and a 405 status code.
+    2. The error message is extracted from the exception and converted to a string.
+
+    Example:
+    --------
+    >>> e = Exception("Method not allowed.")
+    >>> response = method_not_allowed(e)
+    >>> print(response)
+    ... # {'Error': 'Method not allowed.'}
+
+    Author: ``@ChinaiArman``
     """
     return {"Error": str(e)}, 405
 
