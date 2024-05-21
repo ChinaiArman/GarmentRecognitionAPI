@@ -120,7 +120,7 @@ def search_items_by_keywords():
     return jsonify(response)
 
 
-@app.route("/items", methods=["POST"])
+@app.route("/add_item", methods=["POST"])
 def add_item():
     """
     Adds a new garment to the database.

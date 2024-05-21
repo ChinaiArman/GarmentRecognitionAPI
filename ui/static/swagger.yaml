@@ -133,7 +133,7 @@ paths:
                   error:
                     type: string
 
-  /items:
+  /add_item:
     post:
       tags:
         - garment
