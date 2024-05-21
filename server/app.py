@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, render_template
 from flask_cors import CORS
 from garment_recognizer import GarmentRecognizer
 
@@ -16,8 +16,7 @@ def bad_request(e):
 
 @app.route("/")
 def root():
-    response = jsonify({"text": "hello world"})
-    return response
+    return render_template("index.html")
 
 
 @app.post("/search")

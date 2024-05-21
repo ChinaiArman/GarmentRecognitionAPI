@@ -1,0 +1,83 @@
+openapi: 3.0.0
+info:
+  title: Garment Recognition API
+  description: API for Garment Recognition
+  version: 1.0.0
+# servers:
+#   # replace `url` with the URL of the production server hosting the API
+#   - url: http://localhost:5000
+#     description: Garment Recognition API
+tags:
+  - name: garment
+    description: Everything about garments
+paths:
+  /search:
+    post:
+      tags:
+        - garment
+      summary: Search for a garment
+      description: Search for a garment
+      requestBody:
+        description: Search for a garment
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                size:
+                  type: integer
+              example:
+                url: "http://assets.myntassets.com/v1/images/stys/be5106fa146a771fdb128833b4ab9b8b_images.jpg"
+                size: 5
+      responses:
+        "200":
+          description: All the matching garments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Garment"
+              example:
+                - id: 922
+                  name: "Nike Men's Lunareclipse White Shoe"
+                  description: "Men, Footwear, Shoes, Sports Shoes, White, Summer, 2011.0, Sports"
+                  imageUrl: "http://assets.myntassets.com/v1/images/stys/be5106fa146a771fdb128833b4ab9b8b_images.jpg"
+                  keywordDescriptions:
+                    [
+                      "a white and red shoe",
+                      "a close-up of a red and white shoe",
+                      "a close up of a shoe",
+                      "a close up of a logo",
+                      "a close-up of a logo",
+                    ]
+        "400":
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+components:
+  schemas:
+    Garment:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+        keywordDescriptions:
+          type: array
+          items:
+            type: string
