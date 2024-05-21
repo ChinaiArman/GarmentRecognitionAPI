@@ -48,7 +48,7 @@ class GarmentRecognizer:
 
         Author: ``@levxxvi``
         """
-        self.db.delete_row(id)
+        return self.db.delete_row(id)
 
     def get_item_by_semantic_search(self, file_path_or_url: str, size: int) -> list:
         """

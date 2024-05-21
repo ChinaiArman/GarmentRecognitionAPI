@@ -175,7 +175,7 @@ class Database:
     def delete_row(
         self,
         id: str
-    ) -> None:
+    ) -> bool:
         """
         Deletes a row from the data source by its id.
 
@@ -186,7 +186,8 @@ class Database:
 
         Returns:
         --------
-        None.
+        ``bool``
+            True if the row was deleted successfully, False otherwise.
 
         Notes:
         ------
@@ -199,8 +200,13 @@ class Database:
 
         Author: ``@levxxvi``
         """
+        curr_len = len(self.df)
         self.df = self.df[self.df['id'] != id]
-        self.df.to_csv(self.file_path, index=False)
+        if len(self.df) == curr_len:
+            return False
+        else:
+            self.df.to_csv(self.file_path, index=False)
+            return True
 
     def add_row(
         self, 

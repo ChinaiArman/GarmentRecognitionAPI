@@ -385,7 +385,7 @@ def delete_item(
 
     Author: ``@Ehsan138``
     """
-    success = garment_recognizer.delete_item(id)
+    success = garment_recognizer.delete_row(id)
     if not success:
         abort(404, description="Garment not found.")
     return jsonify({'message': 'Garment deleted successfully'}), 204
