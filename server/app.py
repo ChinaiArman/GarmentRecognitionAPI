@@ -51,5 +51,15 @@ def search_items_by_keywords():
     return jsonify(response)
 
 
+@app.route("/items", methods=["POST"])
+def add_item():
+    try:
+        new_item = request.json
+    except KeyError:
+        abort(400, description="Invalid request format. Please provide the item details in the request body.")
+    response = garment_recognizer.add_item(new_item)
+    return jsonify(response), 201
+
+
 if __name__ == "__main__":
     app.run(debug=True, threaded=False)
