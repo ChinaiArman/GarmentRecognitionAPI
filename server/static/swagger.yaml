@@ -3,10 +3,9 @@ info:
   title: Garment Recognition API
   description: API for Garment Recognition
   version: 1.0.0
-# servers:
-#   # replace `url` with the URL of the production server hosting the API
-#   - url: http://localhost:5000
-#     description: Garment Recognition API
+servers:
+  - url: http://localhost:5000
+    description: Garment Recognition API
 tags:
   - name: garment
     description: Everything about garments
@@ -15,8 +14,8 @@ paths:
     post:
       tags:
         - garment
-      summary: Search for a garment
-      description: Search for a garment
+      summary: Search for a garment by image
+      description: Search for a garment using an image URL
       requestBody:
         description: Search for a garment
         required: true
@@ -41,19 +40,118 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Garment"
+        "400":
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /items/{id}:
+    get:
+      tags:
+        - garment
+      summary: Find a garment by ID
+      description: Find a garment by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The garment information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Garment"
+        "404":
+          description: Garment not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      tags:
+        - garment
+      summary: Delete a garment by ID
+      description: Delete a garment by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Garment deleted successfully
+        "404":
+          description: Garment not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /items/search:
+    post:
+      tags:
+        - garment
+      summary: Search garments by keywords
+      description: Search garments by keywords
+      requestBody:
+        description: Keywords to search for garments
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                keywords:
+                  type: array
+                  items:
+                    type: string
               example:
-                - id: 922
-                  name: "Nike Men's Lunareclipse White Shoe"
-                  description: "Men, Footwear, Shoes, Sports Shoes, White, Summer, 2011.0, Sports"
-                  imageUrl: "http://assets.myntassets.com/v1/images/stys/be5106fa146a771fdb128833b4ab9b8b_images.jpg"
-                  keywordDescriptions:
-                    [
-                      "a white and red shoe",
-                      "a close-up of a red and white shoe",
-                      "a close up of a shoe",
-                      "a close up of a logo",
-                      "a close-up of a logo",
-                    ]
+                keywords: ["shirt", "red"]
+      responses:
+        "200":
+          description: List of matching garments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Garment"
+
+  /items:
+    post:
+      tags:
+        - garment
+      summary: Add a new garment
+      description: Add a new garment
+      requestBody:
+        description: Garment to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Garment"
+      responses:
+        "201":
+          description: Garment added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Garment"
         "400":
           description: Invalid request body
           content:
