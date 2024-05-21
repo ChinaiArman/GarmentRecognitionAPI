@@ -228,7 +228,9 @@ def search_items(
 
 
 @app.route("/items/<int:id>", methods=["GET"])
-def get_item_by_id(id):
+def get_item_by_id(
+    id: int
+) -> dict:
     """
     Retrieves a garment by its ID.
 
