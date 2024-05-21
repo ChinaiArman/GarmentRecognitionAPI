@@ -151,8 +151,31 @@ def method_not_allowed(
 
 # ROUTES
 @app.route("/")
-def root():
+def root(
+) -> str:
     """
+    Renders the index page.
+
+    Args:
+    -----
+    None.
+
+    Returns:
+    --------
+    ``str``
+        The index page.
+    
+    Notes:
+    ------
+    1. The function renders the index page.
+
+    Example:
+    --------
+    >>> response = root()
+    >>> print(response)
+    ... # The index page.
+
+    Author: ``cc-dev-65535``
     """
     return render_template("index.html")
 
