@@ -86,7 +86,31 @@ def internal_server_error(
     e: Exception,
 ) -> dict:
     """
-    REFACTOR TO RETURN A DICT
+    Internal server error handler.
+
+    Args:
+    -----
+    e : ``Exception``
+        The exception raised.
+    
+    Returns:
+    --------
+    ``dict``
+        A dictionary containing the error message.
+    
+    Notes:
+    ------
+    1. The function returns a dictionary containing the error message and a 500 status code.
+    2. The error message is extracted from the exception and converted to a string.
+
+    Example:
+    --------
+    >>> e = Exception("Internal server error.")
+    >>> response = internal_server_error(e)
+    >>> print(response)
+    ... # {'Error': 'Internal server error.'}
+
+    Author: ``@ChinaiArman``
     """
     return {"Error": str(e)}, 500
 
