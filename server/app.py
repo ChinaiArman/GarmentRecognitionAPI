@@ -12,6 +12,7 @@ CORS(app)
 garment_recognizer = GarmentRecognizer()
 
 
+# ERROR HANDLERS
 @app.errorhandler(400)
 def bad_request(
     e: Exception,
@@ -19,10 +20,40 @@ def bad_request(
     """
     REFACTOR TO RETURN A DICT
     """
-    # return jsonify(error=str(e)), 400
-    pass
+    return {"Error": str(e)}, 400
 
 
+@app.errorhandler(404)
+def not_found(
+    e: Exception,
+) -> dict:
+    """
+    REFACTOR TO RETURN A DICT
+    """
+    return {"Error": str(e)}, 404
+
+
+@app.errorhandler(500)
+def internal_server_error(
+    e: Exception,
+) -> dict:
+    """
+    REFACTOR TO RETURN A DICT
+    """
+    return {"Error": str(e)}, 500
+
+
+@app.errorhandler(405)
+def method_not_allowed(
+    e: Exception,
+) -> dict:
+    """
+    REFACTOR TO RETURN A DICT
+    """
+    return {"Error": str(e)}, 405
+
+
+# ROUTES
 @app.route("/")
 def root():
     """
