@@ -1,4 +1,18 @@
 """
+Author: ``@cc-dev-65535``
+Version: ``1.0.0``
+
+Description:
+A class that provides access to the models that recognize garments and also provides methods to interact with the data source.
+
+Requirements:
+This class requires the installation of the pandas, tensorflow, and transformers libraries.
+The data source file path must be specified in the environment variables under "DATA_SOURCE_FILE".
+
+Usage:
+To use this class, create an instance of the GarmentRecognizer class and call the desired method.
+To execute this module from the root directory, run the following command:
+    ``python server/garment_recognizer.py``
 """
 
 from data_source.data_access import Database
