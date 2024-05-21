@@ -18,6 +18,11 @@ class GarmentRecognizer:
         self.db = Database()
         self.tokenizer, self.model = load_embedded_model()
 
+    def insert_row(self, data: dict) -> None:
+        """
+        """
+        self.db.add_row(data)
+    
     def delete_row(self, id: str) -> None:
         """
         Deletes a row from the data source by its id.
