@@ -6,7 +6,7 @@ Description:
 A class that provides access to the models that recognize garments and also provides methods to interact with the data source.
 
 Requirements:
-This class requires the installation of the pandas, tensorflow, and transformers libraries.
+This class requires the installation of the pandas, torch, and transformers libraries.
 The data source file path must be specified in the environment variables under "DATA_SOURCE_FILE".
 
 Usage:
