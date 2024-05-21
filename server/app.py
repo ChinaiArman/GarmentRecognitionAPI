@@ -79,6 +79,34 @@ def get_item_by_id(id):
 @app.route("/items/search", methods=["POST"])
 def search_items_by_keywords():
     """
+    Searches for garments by keywords.
+
+    Args:
+    -----
+    None.
+
+    Request Body:
+    -------------
+    keywords : ``list``
+        A list of keywords to search for garments.
+
+    Returns:
+    --------
+    ``json``
+        A list of matching garments in JSON format.
+
+    Notes:
+    ------
+    1. The function retrieves garments that match the provided keywords using the GarmentRecognizer.
+    2. If the keywords are not provided, it aborts with a 400 status code and an error message.
+
+    Example:
+    --------
+    >>> response = client.post("/items/search", json={"keywords": ["shirt", "red"]})
+    >>> print(response.json)
+    ... # Prints the list of matching garments in JSON format.
+
+    Author: ``@Ehsan138``
     """
     try:
         keywords = request.json["keywords"]
