@@ -19,7 +19,7 @@ def root():
     return render_template("index.html")
 
 
-@app.post("/search")
+@app.get("/search")
 def search_items():
     try:
         image_url = request.json["url"]
