@@ -3,7 +3,7 @@ from flask_cors import CORS
 from garment_recognizer import GarmentRecognizer
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="../ui/templates", static_folder="../ui/static")
 CORS(app)
 
 garment_recognizer = GarmentRecognizer()
