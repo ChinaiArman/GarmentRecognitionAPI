@@ -233,6 +233,8 @@ def keyword_model_wrapper(
 
     Author: ``@ChinaiArman``
     """
+    if not keywords:
+        return []
     df = vector_comparison(keywords)
     return df["id"].tolist()[:size]
 

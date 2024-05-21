@@ -3,7 +3,7 @@
 
 import pandas as pd
 from data_source.data_access import Database
-from embedded_model.semantic_textual_analysis import image_model_wrapper, load_embedded_model
+from embedded_model.semantic_textual_analysis import image_model_wrapper, load_embedded_model, keyword_model_wrapper
 
 
 class GarmentRecognizer:
@@ -111,7 +111,7 @@ class GarmentRecognizer:
         item = self.db.get_item_by_id(id)
         return item.to_dict("records")[0] if not item.empty else None
     
-    def get_items_by_keywords(self, keywords: list) -> list:
+    def get_items_by_keywords(self, keywords: list, size: int) -> list:
         """
         Retrieves items from the data source by their keywords.
         
@@ -119,6 +119,8 @@ class GarmentRecognizer:
         -----
         keywords : ``list``
             A list of keywords to search for.
+        size : ``int``
+            The number of items to return in the list.
         
         Returns:
         --------
@@ -138,7 +140,11 @@ class GarmentRecognizer:
 
         Author: ``@ChinaiArman``    
         """
-
+        items = keyword_model_wrapper(keywords, size)
+        return [
+            self.db.get_item_by_id(item_id).to_dict("records")[0]
+            for item_id in items
+        ]
 
 
 def main():
