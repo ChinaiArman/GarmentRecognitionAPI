@@ -13,6 +13,7 @@ pyvenv.cfg
 *.png
 !favicon-16x16.png
 !favicon-32x32.png
+!logo.png
 
 # __pycache__
 __pycache__/
