@@ -272,7 +272,10 @@ def get_item_by_id(
     """
     item = garment_recognizer.get_item_by_id(id)
     if item is None:
-        abort(404, description="Garment not found.")
+        abort(
+            404,
+            description="Garment not found."
+        )
     return jsonify(item)
 
 
@@ -362,7 +365,10 @@ def add_item():
     try:
         new_item = request.json
     except KeyError:
-        abort(400, description="Invalid request format. Please provide the item details in the request body.")
+        abort(
+            400,
+            description="Invalid request format. Please provide the item details in the request body."
+        )
     response = garment_recognizer.add_item(new_item)
     return jsonify(response), 201
 
@@ -400,7 +406,10 @@ def delete_item(
     """
     success = garment_recognizer.delete_row(id)
     if not success:
-        abort(404, description="Garment not found.")
+        abort(
+            404,
+            description="Garment not found."
+        )
     return jsonify({'message': 'Garment deleted successfully'}), 204
 
 
