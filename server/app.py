@@ -268,7 +268,7 @@ def get_item_by_id(
     >>> print(response.json)
     ... # Prints the garment data with ID 1 in JSON format.
 
-    Author: ``@Ehsan138``
+    Author: ``@nataliecly``
     """
     item = garment_recognizer.get_item_by_id(id)
     if item is None:
@@ -309,7 +309,7 @@ def search_items_by_keywords():
     >>> print(response.json)
     ... # Prints the list of matching garments in JSON format.
 
-    Author: ``@Ehsan138``
+    Author: ``@ChinaiArman``
     """
     try:
         keywords = request.json["keywords"]
@@ -360,7 +360,7 @@ def add_item():
     >>> print(response.json)
     ... # Prints the added garment data in JSON format.
 
-    Author: ``@Ehsan138``
+    Author: ``@levxxvi``
     """
     try:
         new_item = request.json
