@@ -273,7 +273,7 @@ def get_item_by_id(
     item = garment_recognizer.get_item_by_id(id)
     if item is None:
         abort(
-            400,
+            404,
             description="Garment not found."
         )
     return jsonify(item), 200

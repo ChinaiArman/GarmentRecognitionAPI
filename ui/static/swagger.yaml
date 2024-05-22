@@ -84,6 +84,15 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Garment"
+        "400":
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
 
   /items/{id}:
     get:
