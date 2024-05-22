@@ -239,7 +239,30 @@ class GarmentRecognizer:
         ]
 
 
-def main():
+def main(
+) -> None:
+    """
+    Main function to demonstrate the usage of the GarmentRecognizer class.
+
+    Args:
+    -----
+    None.
+
+    Returns:
+    --------
+    None.
+
+    Notes:
+    ------
+    1. The function demonstrates the usage of the GarmentRecognizer class.
+    
+    Example:
+    --------
+    >>> main()
+    ... # Demonstrates the usage of the GarmentRecognizer class.
+
+    Author: ``@Ehsan138``
+    """
     garment_recognizer = GarmentRecognizer()
     print("Get items by semantic search...")
     url = "http://assets.myntassets.com/v1/images/style/properties/be5106fa146a771fdb128833b4ab9b8b_images.jpg"
