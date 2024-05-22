@@ -4,7 +4,7 @@ const MyLogoPlugin = function (system) {
       Logo: () =>
         system.React.createElement("img", {
           alt: "My Logo",
-          height: 70,
+          height: 50,
           src: "/static/logo.png",
         }),
     },

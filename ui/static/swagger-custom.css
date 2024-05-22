@@ -1,3 +1,15 @@
 .swagger-ui .topbar {
-  background: #4267b2;
+  background: #B48EAE;
+}
+
+.swagger-ui .info .title small.version-stamp {
+  background: #B48EAE;
+}
+
+.swagger-ui .topbar .download-url-wrapper input[type=text] {
+  border: 2px solid #594157
+}
+
+.swagger-ui .topbar .download-url-wrapper .download-url-button {
+  background-color: #594157;
 }
