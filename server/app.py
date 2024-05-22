@@ -29,7 +29,7 @@ garment_recognizer = GarmentRecognizer()
 @app.errorhandler(400)
 def bad_request(
     e: Exception,
-) -> dict:
+) -> tuple:
     """
     Bad request error handler.
 
@@ -40,12 +40,12 @@ def bad_request(
     
     Returns:
     --------
-    ``dict``
-        A dictionary containing the error message.
+    ``tuple``
+        A tuple containing the error message and error code.
     
     Notes:
     ------
-    1. The function returns a dictionary containing the error message and a 400 status code.
+    1. The function returns a tuple containing the error message and a 400 status code.
     2. The error message is extracted from the exception and converted to a string.
 
     Example:
@@ -63,7 +63,7 @@ def bad_request(
 @app.errorhandler(404)
 def not_found(
     e: Exception,
-) -> dict:
+) -> tuple:
     """
     Not found error handler.
 
@@ -74,12 +74,12 @@ def not_found(
     
     Returns:
     --------
-    ``dict``
-        A dictionary containing the error message.
+    ``tuple``
+        A tuple containing the error message and error code.
     
     Notes:
     ------
-    1. The function returns a dictionary containing the error message and a 404 status code.
+    1. The function returns a tuple containing the error message and a 404 status code.
     2. The error message is extracted from the exception and converted to a string.
 
     Example:
@@ -97,7 +97,7 @@ def not_found(
 @app.errorhandler(500)
 def internal_server_error(
     e: Exception,
-) -> dict:
+) -> tuple:
     """
     Internal server error handler.
 
@@ -108,12 +108,12 @@ def internal_server_error(
     
     Returns:
     --------
-    ``dict``
-        A dictionary containing the error message.
+    ``tuple``
+        A tuple containing the error message and the error code.
     
     Notes:
     ------
-    1. The function returns a dictionary containing the error message and a 500 status code.
+    1. The function returns a tuple containing the error message and a 500 status code.
     2. The error message is extracted from the exception and converted to a string.
 
     Example:
@@ -131,7 +131,7 @@ def internal_server_error(
 @app.errorhandler(405)
 def method_not_allowed(
     e: Exception,
-) -> dict:
+) -> tuple:
     """
     Method not allowed error handler.
 
@@ -142,12 +142,12 @@ def method_not_allowed(
 
     Returns:
     --------
-    ``dict``
-        A dictionary containing the error message.
+    ``tuple``
+        A tuple containing the error message.
     
     Notes:
     ------
-    1. The function returns a dictionary containing the error message and a 405 status code.
+    1. The function returns a tuple containing the error message and the error code.
     2. The error message is extracted from the exception and converted to a string.
 
     Example:
@@ -195,7 +195,7 @@ def root(
 
 @app.route("/search", methods=["POST"])
 def search_items(
-) -> dict:
+) -> tuple:
     """
     Searches for garments by image from url.
 
@@ -212,8 +212,8 @@ def search_items(
     
     Returns:
     --------
-    ``json``
-        A list of matching garments in JSON format.
+    ``tuple``
+        A list of matching garments in JSON format and a 200 status code.
     
     Notes:
     ------
@@ -237,7 +237,7 @@ def search_items(
             description="Invalid request format. Please provide 'url' and 'size' in the request body.",
         )
     response = garment_recognizer.get_item_by_semantic_search(image_url, results_size)
-    return response
+    return jsonify(response), 200
 
 
 @app.route("/items/<int:id>", methods=["GET"])
@@ -254,8 +254,8 @@ def get_item_by_id(
 
     Returns:
     --------
-    ``json``
-        The garment data in JSON format.
+    ``tuple``
+        The garment data in JSON format and a 200 status code.
 
     Notes:
     ------
@@ -273,10 +273,10 @@ def get_item_by_id(
     item = garment_recognizer.get_item_by_id(id)
     if item is None:
         abort(
-            404,
+            400,
             description="Garment not found."
         )
-    return jsonify(item)
+    return jsonify(item), 200
 
 
 @app.route("/keyword_search", methods=["POST"])
@@ -295,8 +295,8 @@ def search_items_by_keywords():
 
     Returns:
     --------
-    ``json``
-        A list of matching garments in JSON format.
+    ``tuple``
+        A list of matching garments in JSON format and a 200 status code.
 
     Notes:
     ------
@@ -320,7 +320,7 @@ def search_items_by_keywords():
             description="Invalid request format. Please provide 'keywords' and 'size' in the request body.",
         )
     response = garment_recognizer.get_items_by_keywords(keywords, results_size)
-    return jsonify(response)
+    return jsonify(response), 200
 
 
 @app.route("/add_item", methods=["POST"])
@@ -339,8 +339,8 @@ def add_item():
 
     Returns:
     --------
-    ``json``
-        The added garment data in JSON format.
+    ``tuple``
+        The added garment data in JSON format and a 201 status code.
 
     Notes:
     ------
@@ -387,7 +387,7 @@ def delete_item(
 
     Returns:
     --------
-    ``dict``
+    ``tuple``
         A dictionary with a success message and a 204 status code if the garment is deleted successfully.
 
     Notes:
@@ -407,7 +407,7 @@ def delete_item(
     success = garment_recognizer.delete_row(id)
     if not success:
         abort(
-            404,
+            400,
             description="Garment not found."
         )
     return jsonify({'message': 'Garment deleted successfully'}), 204
