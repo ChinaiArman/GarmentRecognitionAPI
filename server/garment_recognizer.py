@@ -80,11 +80,13 @@ class GarmentRecognizer:
 
         Returns:
         --------
-        None.
+        ``str``
+            The id of the inserted row.
 
         Notes:
         ------
         1. The method inserts a new row into the data source.
+        2. The method returns the id of the inserted row.
 
         Example:
         --------
@@ -94,7 +96,7 @@ class GarmentRecognizer:
 
         Author: ``@nataliecly``
         """
-        self.db.add_row(data)
+        return self.db.add_row(data)
     
     def delete_row(
         self,

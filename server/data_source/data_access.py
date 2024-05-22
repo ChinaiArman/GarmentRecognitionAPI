@@ -17,9 +17,16 @@ To execute this module from the root directory, run the following command:
 
 
 import pandas as pd
+import uuid
 import os.path
 from dotenv import load_dotenv
 import os
+import sys
+
+load_dotenv()
+sys.path.insert(0, os.getenv("PYTHONPATH"))
+
+from dense_captioning_model import dense_captioning as dc
 
 
 class Database:
@@ -215,7 +222,7 @@ class Database:
     def add_row(
         self, 
         new_row: dict
-    ) -> None:
+    ) -> dict:
         """
         Adds a row to the data source.
 
@@ -226,11 +233,17 @@ class Database:
 
         Returns:
         --------
-        None.
+        ``dict``
+            The new row added to the data source.
+
 
         Notes:
         ------
         1. The method appends the new row to the data source.
+        2. The method generates a unique identifier for the new row.
+        3. The method normalizes the keyword descriptions using the dense captioning model.
+        4. The method saves the updated data source to the CSV file.
+        5. The method returns the new row added to the data source.
 
         Example:
         --------
@@ -246,8 +259,12 @@ class Database:
 
         Author: ``@levxxvi``
         """
-        self.df = self.df.append(new_row, ignore_index=True)
+        new_row['id'] = str(uuid.uuid4())
+        print(new_row)
+        new_row['keywordDescriptions'] = dc.normalize_dense_caption_response(dc.create_dense_captions(new_row['imageUrl']))
+        self.df.loc[len(self.df)] = new_row
         self.df.to_csv(self.file_path, index=False)
+        return new_row
 
 
 def main(

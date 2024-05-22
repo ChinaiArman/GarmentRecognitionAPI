@@ -364,12 +364,12 @@ def add_item():
     """
     try:
         new_item = request.json
+        response = garment_recognizer.insert_row(new_item)
     except KeyError:
         abort(
             400,
-            description="Invalid request format. Please provide the item details in the request body."
+            description="Invalid request format. Please provide the new item details in the request body.",
         )
-    response = garment_recognizer.add_item(new_item)
     return jsonify(response), 201
 
 
