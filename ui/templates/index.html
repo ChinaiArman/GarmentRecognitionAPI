@@ -7,6 +7,7 @@
   <title>Swagger UI</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dist/swagger-ui.css') }}" />
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dist/index.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='swagger-custom.css') }}" />
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='dist/favicon-32x32.png') }}" sizes="32x32" />
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='dist/favicon-16x16.png') }}" sizes="16x16" />
 </head>
@@ -15,6 +16,7 @@
   <div id="swagger-ui"></div>
   <script src="{{ url_for('static', filename='dist/swagger-ui-bundle.js') }}" charset="UTF-8"> </script>
   <script src="{{ url_for('static', filename='dist/swagger-ui-standalone-preset.js') }}" charset="UTF-8"> </script>
+  <script src="{{ url_for('static', filename='swagger-custom.js') }}" charset="UTF-8"> </script>
   <script src="{{ url_for('static', filename='dist/swagger-initializer.js') }}" charset="UTF-8"> </script>
 </body>
 
