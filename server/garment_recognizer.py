@@ -164,7 +164,7 @@ class GarmentRecognizer:
         """
         item_ids = image_model_wrapper(file_path_or_url, size)
         return [
-            self.db.get_item_by_id(item_id).to_dict("records")[0]
+            self.db.get_item_by_id(item_id).fillna("").to_dict("records")[0]
             for item_id in item_ids
         ]
     
@@ -199,7 +199,7 @@ class GarmentRecognizer:
         Author: ``@Ehsan138``
         """
         item = self.db.get_item_by_id(id)
-        return item.to_dict("records")[0] if not item.empty else None
+        return item.fillna("").to_dict("records")[0] if not item.empty else None
     
     def get_items_by_keywords(
         self,
@@ -236,7 +236,7 @@ class GarmentRecognizer:
         """
         items = keyword_model_wrapper(keywords, size)
         return [
-            self.db.get_item_by_id(item_id).to_dict("records")[0]
+            self.db.get_item_by_id(item_id).fillna("").to_dict("records")[0]
             for item_id in items
         ]
 
