@@ -170,14 +170,14 @@ class GarmentRecognizer:
     
     def get_item_by_id(
         self,
-        id: int
+        id: str
     ) -> dict:
         """
         Retrieves an item from the data source by its id.
 
         Args:
         -----
-        id : ``int``
+        id : ``str``
             The id of the item to retrieve.
 
         Returns:

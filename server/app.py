@@ -240,16 +240,16 @@ def search_items(
     return jsonify(response), 200
 
 
-@app.route("/items/<int:id>", methods=["GET"])
+@app.route("/items/<id>", methods=["GET"])
 def get_item_by_id(
-    id: int
+    id: str
 ) -> dict:
     """
     Retrieves a garment by its ID.
 
     Args:
     -----
-    id : ``int``
+    id : ``str``
         The ID of the garment to retrieve.
 
     Returns:
@@ -373,16 +373,16 @@ def add_item():
     return jsonify(response), 201
 
 
-@app.route("/items/<int:id>", methods=["DELETE"])
+@app.route("/items/<id>", methods=["DELETE"])
 def delete_item(
-    id : int
+    id : str
 ) -> dict:
     """
     Deletes a garment by its ID.
 
     Args:
     -----
-    id : ``int``
+    id : ``str``
         The ID of the garment to delete.
 
     Returns:

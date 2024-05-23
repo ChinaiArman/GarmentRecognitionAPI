@@ -79,7 +79,7 @@ class Database:
         if not os.path.exists(os.getenv("DATA_SOURCE_FILE")):
             raise FileNotFoundError("The data source file does not exist.")
         self.file_path = os.getenv("DATA_SOURCE_FILE")
-        self.df = pd.read_csv(self.file_path)
+        self.df = pd.read_csv(self.file_path, dtype={"id": str})
         try:
             self.df["keywordDescriptions"] = self.df["keywordDescriptions"].apply(
                 lambda x: x.split(", ") if pd.notna(x) else [""]
@@ -296,7 +296,7 @@ def main(
     db = Database()
     data = db.get_data_frame()
     print(data.head())
-    item = db.get_item_by_id(1)
+    item = db.get_item_by_id("1")
     print(item)
     item_from_keyword = db.get_id_keyword_description()
     print(item_from_keyword)
