@@ -267,6 +267,50 @@ class Database:
         self.df.loc[len(self.df)] = new_row
         self.df.to_csv(self.file_path, index=False)
         return new_row
+    
+    def edit_row(self, id: str, new_row: dict):
+        """
+        Edits a row in the data source.
+
+        Args:
+        -----
+        id : ``str``
+            The id of the item to edit.
+        new_row : ``dict``
+            A dictionary containing the new row data.
+
+        Returns:
+        --------
+        ``dict``
+            The edited row.
+
+        Notes:
+        ------
+        1. The method edits the row with the provided id in the data source.
+        2. The method normalizes the keyword descriptions using the dense captioning model.
+        3. The method saves the updated data source to the CSV file.
+        4. The method returns the edited row.
+
+        Example:
+        --------
+        >>> db = Database()
+        >>> edited_row = {
+        ...     'name': 'edited item',
+        ...     'description': 'an edited item',
+        ...     'imageUrl': 'https://url.com',
+        ...     'keywordDescriptions': 'edited, item'
+        ... }
+        >>> db.edit_row(3, edited_row)
+
+        Author: ``@levxxvi``
+        """
+        self.delete_row(id)
+        new_row['id'] = id
+        new_row['keywordDescriptions'] = dc.normalize_dense_caption_response(dc.create_dense_captions(new_row['imageUrl']))
+        self.df.loc[len(self.df)] = new_row
+        self.df.to_csv(self.file_path, index=False)
+        return new_row
+
 
 
 def main(
