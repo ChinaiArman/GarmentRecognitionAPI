@@ -186,6 +186,50 @@ paths:
                 properties:
                   error:
                     type: string
+    
+  /edit_item:
+    put:
+      tags:
+        - Database Operations
+      summary: Edit a garment
+      description: Edit a garment
+      requestBody:
+        description: Garment to edit
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                url:
+                  type: string
+                description:
+                  type: string
+              example:
+                id: "1"
+                name: "Black pants"
+                imageUrl: "https://image.hm.com/assets/hm/ea/d7/ead79a8422df6e29abb8e0057c7dbf2d6658bf4c.jpg"
+                description: "A pair of black pants"
+      responses:
+        "201":
+          description: Garment edited successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Garment"
+        "400":
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
 
 components:
   schemas:
