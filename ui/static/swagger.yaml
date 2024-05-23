@@ -204,3 +204,15 @@ components:
           type: array
           items:
             type: string
+      example:
+        id: "1"
+        name: "Slim Fit Easy-iron Shirt"
+        description: "Black"
+        imageUrl: "https://image.hm.com/assets/hm/1f/2c/1f2cbaabf4c3a97674acbfa042b2b90227380fc8.jpg"
+        keywordDescriptions:
+          [
+            "a black shirt on a swinger",
+            "a black shirt on a swinger",
+            "a close up of a black shirt",
+            "a close-up of a button on a shirt",
+          ]
