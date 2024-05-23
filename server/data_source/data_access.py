@@ -81,7 +81,9 @@ class Database:
         self.file_path = os.getenv("DATA_SOURCE_FILE")
         self.df = pd.read_csv(self.file_path)
         try:
-            self.df['keywordDescriptions'] = self.df['keywordDescriptions'].apply(lambda x: x.split(', '))
+            self.df["keywordDescriptions"] = self.df["keywordDescriptions"].apply(
+                lambda x: x.split(", ") if pd.notna(x) else [""]
+            )
         except:
             pass
 
@@ -150,7 +152,7 @@ class Database:
         """
         item = self.df.loc[self.df['id'] == id]
         return item
-    
+
     def get_id_keyword_description(
         self
     ) -> pd.DataFrame:
@@ -182,7 +184,7 @@ class Database:
         Author: ``@Ehsan138``
         """
         return self.df[['id', 'keywordDescriptions']]
-    
+
     def delete_row(
         self,
         id: str
