@@ -239,6 +239,39 @@ class GarmentRecognizer:
             self.db.get_item_by_id(item_id).fillna("").to_dict("records")[0]
             for item_id in items
         ]
+    
+    def edit_garment(
+        self, 
+        id: str, 
+        data: dict
+    ) -> None:
+        """
+        Edits a garment in the data source.
+
+        Args:
+        -----
+        id : ``str``
+            The id of the garment to edit.
+        data : ``dict``
+            The new data for the garment.
+
+        Returns:
+        --------
+        None.
+
+        Notes:
+        ------
+        1. The method edits the garment with the provided id in the data source.
+
+        Example:
+        --------
+        >>> gr = GarmentRecognizer()
+        >>> gr.edit_garment(1, {'name': 'shirt', 'color': 'red'})
+        ... # Edits the garment with id 1 in the data source.
+
+        Author: ``@levxxvi``
+        """
+        return self.db.edit_row(id, data)
 
 
 def main(

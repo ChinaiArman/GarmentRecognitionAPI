@@ -268,7 +268,11 @@ class Database:
         self.df.to_csv(self.file_path, index=False)
         return new_row
     
-    def edit_row(self, id: str, new_row: dict):
+    def edit_row(
+        self, 
+        id: str, 
+        new_row: dict
+    ) -> dict:
         """
         Edits a row in the data source.
 
