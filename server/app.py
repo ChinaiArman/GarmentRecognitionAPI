@@ -412,6 +412,56 @@ def delete_item(
         )
     return jsonify({'message': 'Garment deleted successfully'}), 204
 
+@app.route("/edit_item", methods=["PUT"])
+def edit_item(
+) -> tuple:
+    """
+    Edits a garment in the database.
+
+    Args:
+    -----
+    None.
+
+    Request Body:
+    -------------
+    item : ``dict``
+        The garment data to edit.
+
+    Returns:
+    --------
+    ``tuple``
+        The edited garment data in JSON format and a 200 status code.
+
+    Notes:
+    ------
+    1. The function edits a garment in the database using the GarmentRecognizer.
+    2. If the item details are not provided, it aborts with a 400 status code and an error message.
+
+    Example:
+    --------
+    >>> item = {
+    ...     'id': 1,
+    ...     'name': 'edited item',
+    ...     'description': 'an edited item',
+    ...     'imageUrl': 'https://url.com',
+    ...     'keywordDescriptions': 'edited, item'
+    ... }
+    >>> response = client.put("/items", json=item)
+    >>> print(response.json)
+    ...
+
+    Author: ``@levxxvi``
+    """
+    try:
+        item = request.json
+        response = garment_recognizer.edit_row(item['id'], item)
+    except KeyError:
+        abort(
+            400,
+            description="Invalid request format. Please provide the item details in the request body.",
+        )
+    return jsonify(response), 200
+
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
