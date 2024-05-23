@@ -240,7 +240,7 @@ class GarmentRecognizer:
             for item_id in items
         ]
     
-    def edit_garment(
+    def edit_row(
         self, 
         id: str, 
         data: dict
