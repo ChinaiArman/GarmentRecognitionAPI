@@ -249,7 +249,7 @@ def search_items(
 @app.route("/items/<id>", methods=["GET"])
 def get_item_by_id(
     id: str
-) -> dict:
+) -> tuple:
     """
     Retrieves a garment by its ID.
 
@@ -276,17 +276,18 @@ def get_item_by_id(
 
     Author: ``@nataliecly``
     """
-    item = garment_recognizer.get_item_by_id(id)
-    if item is None:
+    response = garment_recognizer.get_item_by_id(id)
+    if response is None:
         abort(
             404,
             description="Garment not found."
         )
-    return jsonify(item), 200
+    return jsonify(response), 200
 
 
 @app.route("/keyword_search", methods=["POST"])
-def search_items_by_keywords():
+def search_items_by_keywords(
+) -> tuple:
     """
     Searches for garments by keywords.
 
@@ -311,7 +312,7 @@ def search_items_by_keywords():
 
     Example:
     --------
-    >>> response = client.post("/items/search", json={"keywords": ["shirt", "red"]})
+    >>> response = client.post("/items/search", json={"keywords": ["shirt", "red"], "size": 5})
     >>> print(response.json)
     ... # Prints the list of matching garments in JSON format.
 
@@ -335,7 +336,8 @@ def search_items_by_keywords():
 
 
 @app.route("/add_item", methods=["POST"])
-def add_item():
+def add_item(
+) -> tuple:
     """
     Adds a new garment to the database.
 
@@ -361,11 +363,9 @@ def add_item():
     Example:
     --------
     >>> new_item = {
-    ...     'id': 3,
     ...     'name': 'new item',
     ...     'description': 'a new item',
     ...     'imageUrl': 'https://url.com',
-    ...     'keywordDescriptions': 'new, item'
     ... }
     >>> response = client.post("/items", json=new_item)
     >>> print(response.json)
@@ -387,7 +387,7 @@ def add_item():
 @app.route("/items/<id>", methods=["DELETE"])
 def delete_item(
     id : str
-) -> dict:
+) -> tuple:
     """
     Deletes a garment by its ID.
 
@@ -399,7 +399,7 @@ def delete_item(
     Returns:
     --------
     ``tuple``
-        A dictionary with a success message and a 204 status code if the garment is deleted successfully.
+        A tuple with a success message and a 204 status code if the garment is deleted successfully.
 
     Notes:
     ------
@@ -415,8 +415,8 @@ def delete_item(
 
     Author: ``@Ehsan138``
     """
-    success = garment_recognizer.delete_row(id)
-    if not success:
+    response = garment_recognizer.delete_row(id)
+    if not response:
         abort(
             400,
             description="Garment not found."
@@ -455,7 +455,6 @@ def edit_item(
     ...     'name': 'edited item',
     ...     'description': 'an edited item',
     ...     'imageUrl': 'https://url.com',
-    ...     'keywordDescriptions': 'edited, item'
     ... }
     >>> response = client.put("/items", json=item)
     >>> print(response.json)

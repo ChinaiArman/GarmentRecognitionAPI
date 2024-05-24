@@ -69,7 +69,7 @@ class GarmentRecognizer:
     def insert_row(
         self,
         data: dict
-    ) -> None:
+    ) -> dict:
         """
         Inserts a new row of data into the data source.
 
@@ -80,8 +80,8 @@ class GarmentRecognizer:
 
         Returns:
         --------
-        ``str``
-            The id of the inserted row.
+        ``dict``
+            A dictionary containing the inserted row data.
 
         Notes:
         ------
@@ -91,7 +91,7 @@ class GarmentRecognizer:
         Example:
         --------
         >>> gr = GarmentRecognizer()
-        >>> gr.insert_row({'id': 1, 'name': 'shirt', 'color': 'blue'})
+        >>> gr.insert_row({'id': 1, 'name': 'shirt', 'description': 'A blue shirt.', 'imageUrl': 'http://example.com/image.jpg'})
         ... # Inserts the row into the data source.
 
         Author: ``@nataliecly``
@@ -101,7 +101,7 @@ class GarmentRecognizer:
     def delete_row(
         self,
         id: str
-    ) -> None:
+    ) -> bool:
         """
         Deletes a row from the data source by its id.
 
@@ -112,7 +112,8 @@ class GarmentRecognizer:
 
         Returns:
         --------
-        None.
+        ``bool``
+            True if the row was deleted successfully, False otherwise.
 
         Notes:
         ------
@@ -233,7 +234,7 @@ class GarmentRecognizer:
         Example:
         --------
         >>> gr = GarmentRecognizer()
-        >>> items = gr.get_items_by_keywords(['shirt', 'blue'])
+        >>> items = gr.get_items_by_keywords(['shirt', 'blue'], 5)
         >>> print(items)
         ... # Prints a list of items that contain the keywords 'shirt' and 'blue'.
 
@@ -254,7 +255,7 @@ class GarmentRecognizer:
         self, 
         id: str, 
         data: dict
-    ) -> None:
+    ) -> dict:
         """
         Edits a garment in the data source.
 
@@ -267,7 +268,8 @@ class GarmentRecognizer:
 
         Returns:
         --------
-        None.
+        ``dict``
+            The edited garment data.
 
         Notes:
         ------
@@ -276,7 +278,7 @@ class GarmentRecognizer:
         Example:
         --------
         >>> gr = GarmentRecognizer()
-        >>> gr.edit_garment(1, {'name': 'shirt', 'color': 'red'})
+        >>> gr.edit_garment(1, {'name': 'shirt', 'description': 'A red shirt.', 'imageUrl': 'http://example.com/image.jpg'})
         ... # Edits the garment with id 1 in the data source.
 
         Author: ``@levxxvi``
