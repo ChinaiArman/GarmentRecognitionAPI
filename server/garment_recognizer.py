@@ -3,7 +3,8 @@ Author: ``@cc-dev-65535``
 Version: ``1.0.0``
 
 Description:
-A class that provides access to the models that recognize garments and also provides methods to interact with the data source.
+A class that acts as an interface to provide access to the models that recognize garments.
+The class also provides methods to interact with the data source.
 
 Requirements:
 This class requires the installation of the pandas, torch, and transformers libraries.

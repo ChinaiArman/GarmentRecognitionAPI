@@ -3,7 +3,8 @@ Author: ``@cc-dev-65535``
 Version: ``1.0.0``
 
 Description:
-This file contains the main application logic for the Garment Recognition API server.
+This module contains the main application logic for the Garment Recognition API server.
+The API provides endpoints for searching garments by image and keywords, adding new garments, and editing or deleting existing garments.
 
 Requirements:
 This script requires the installation of the flask and flask_cors libraries.
