@@ -162,7 +162,12 @@ class GarmentRecognizer:
 
         Author: ``@cc-dev-65535``
         """
-        item_ids = image_model_wrapper(file_path_or_url, size)
+        item_ids = image_model_wrapper(
+            file_path_or_url,
+            size,
+            self.model,
+            self.tokenizer
+        )
         return [
             self.db.get_item_by_id(item_id).fillna("").to_dict("records")[0]
             for item_id in item_ids
@@ -234,7 +239,12 @@ class GarmentRecognizer:
 
         Author: ``@ChinaiArman``    
         """
-        items = keyword_model_wrapper(keywords, size)
+        items = keyword_model_wrapper(
+            keywords,
+            size,
+            self.model,
+            self.tokenizer
+        )
         return [
             self.db.get_item_by_id(item_id).fillna("").to_dict("records")[0]
             for item_id in items

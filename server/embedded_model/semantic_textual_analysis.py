@@ -156,7 +156,9 @@ def normalize_embeddings(
 
 def image_model_wrapper(
     filepath_or_url: str,
-    size: int
+    size: int,
+    model: AutoModel,
+    tokenizer: AutoTokenizer
 ) -> list:
     """
     Wrapper function to call the dense captioning model and then perform semantic textual analysis.
@@ -195,13 +197,19 @@ def image_model_wrapper(
     )
     if not keywords:
         return []
-    df = vector_comparison(keywords)
+    df = vector_comparison(
+        keywords,
+        model,
+        tokenizer
+    )
     return df["id"].tolist()[:size]
 
 
 def keyword_model_wrapper(
     keywords: list,
-    size: int
+    size: int,
+    model: AutoModel,
+    tokenizer: AutoTokenizer
 ) -> list:
     """
     Wrapper function to call the semantic textual analysis function.
@@ -235,12 +243,18 @@ def keyword_model_wrapper(
     """
     if not keywords:
         return []
-    df = vector_comparison(keywords)
+    df = vector_comparison(
+        keywords,
+        model,
+        tokenizer
+    )
     return df["id"].tolist()[:size]
 
 
 def vector_comparison(
-    keywords: list
+    keywords: list,
+    model: AutoModel,
+    tokenizer: AutoTokenizer
 ) -> pd.DataFrame:
     """
     Performs semantic textual analysis to compare the input keywords with the database keywords.
@@ -271,7 +285,10 @@ def vector_comparison(
     db = da.Database()
     database_keywords = db.get_id_keyword_description()
     embeddings = semantic_textual_analysis(
-        keywords, database_keywords["keywordDescriptions"].tolist()
+        keywords,
+        database_keywords["keywordDescriptions"].tolist(),
+        model,
+        tokenizer
     )
     database_keywords.loc[:, "vector"] = embeddings
     database_keywords = database_keywords.sort_values(by="vector", ascending=False)
@@ -280,7 +297,9 @@ def vector_comparison(
 
 def semantic_textual_analysis(
     keywords: list,
-    database_keywords: list
+    database_keywords: list,
+    model: AutoModel,
+    tokenizer: AutoTokenizer
 ) -> list:
     """
     Perform semantic textual analysis to calculate similarity scores between a list of keywords and a list of database keywords.
@@ -313,11 +332,10 @@ def semantic_textual_analysis(
     Author: ``@cc-dev-65535``
     """
     # Load the pre-trained model and tokenizer
-    tokenizer, model = load_embedded_model()
+    cuda.empty_cache()
     device = "cuda:0" if cuda.is_available() else "cpu"
     print(f"Device: {device}")
     model.to(device)
-    cuda.empty_cache()
     print(f"Memory allocated: {cuda.memory_allocated()}")
 
     # Tokenize the input texts
