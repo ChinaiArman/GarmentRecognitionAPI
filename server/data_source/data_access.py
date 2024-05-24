@@ -218,7 +218,12 @@ class Database:
         if len(self.df) == curr_len:
             return False
         else:
-            self.df.to_csv(self.file_path, index=False)
+            self.df.reset_index(drop=True, inplace=True)
+            df_to_write = self.df.copy(deep=True)
+            df_to_write["keywordDescriptions"] = df_to_write["keywordDescriptions"].apply(
+                lambda x: ", ".join(x)
+            )
+            df_to_write.to_csv(self.file_path, index=False)
             return True
 
     def add_row(
@@ -265,9 +270,13 @@ class Database:
         print(new_row)
         new_row['keywordDescriptions'] = dc.normalize_dense_caption_response(dc.create_dense_captions(new_row['imageUrl']))
         self.df.loc[len(self.df)] = new_row
-        self.df.to_csv(self.file_path, index=False)
+        df_to_write = self.df.copy(deep=True)
+        df_to_write["keywordDescriptions"] = df_to_write["keywordDescriptions"].apply(
+            lambda x: ", ".join(x)
+        )
+        df_to_write.to_csv(self.file_path, index=False)
         return new_row
-    
+
     def edit_row(
         self, 
         id: str, 
@@ -312,9 +321,12 @@ class Database:
         new_row['id'] = id
         new_row['keywordDescriptions'] = dc.normalize_dense_caption_response(dc.create_dense_captions(new_row['imageUrl']))
         self.df.loc[len(self.df)] = new_row
-        self.df.to_csv(self.file_path, index=False)
+        df_to_write = self.df.copy(deep=True)
+        df_to_write["keywordDescriptions"] = df_to_write["keywordDescriptions"].apply(
+            lambda x: ", ".join(x)
+        )
+        df_to_write.to_csv(self.file_path, index=False)
         return new_row
-
 
 
 def main(
