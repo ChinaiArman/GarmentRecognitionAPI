@@ -17,6 +17,7 @@ To execute this module from the root directory, run the following command:
 from flask import Flask, jsonify, request, abort, render_template
 from flask_cors import CORS
 from garment_recognizer import GarmentRecognizer
+from torch.cuda import OutOfMemoryError
 
 
 app = Flask(__name__, template_folder="../ui/templates", static_folder="../ui/static")
@@ -231,12 +232,17 @@ def search_items(
     try:
         image_url = request.json["url"]
         results_size = request.json["size"]
+        response = garment_recognizer.get_item_by_semantic_search(image_url, results_size)
     except KeyError:
         abort(
             400,
             description="Invalid request format. Please provide 'url' and 'size' in the request body.",
         )
-    response = garment_recognizer.get_item_by_semantic_search(image_url, results_size)
+    except OutOfMemoryError:
+        abort(
+            500,
+            description="Out of memory error."
+        )
     return jsonify(response), 200
 
 
@@ -314,12 +320,17 @@ def search_items_by_keywords():
     try:
         keywords = request.json["keywords"]
         results_size = request.json["size"]
+        response = garment_recognizer.get_items_by_keywords(keywords, results_size)
     except KeyError:
         abort(
             400,
             description="Invalid request format. Please provide 'keywords' and 'size' in the request body.",
         )
-    response = garment_recognizer.get_items_by_keywords(keywords, results_size)
+    except OutOfMemoryError:
+        abort(
+            500,
+            description="Out of memory error."
+        )
     return jsonify(response), 200
 
 
@@ -460,7 +471,12 @@ def edit_item(
             400,
             description="Invalid request format. Please provide the item details in the request body.",
         )
-    return jsonify(response), 200
+    except ValueError:
+        abort(
+            400,
+            description=str("Data must contain keys: name, description, imageUrl, id")
+        )
+    return jsonify(response), 201
 
 
 if __name__ == "__main__":

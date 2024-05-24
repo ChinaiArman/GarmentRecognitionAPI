@@ -271,6 +271,9 @@ class GarmentRecognizer:
 
         Author: ``@levxxvi``
         """
+        # ensure data has all keys
+        if not all(key in data for key in ['name', 'description', 'imageUrl', 'id']):
+            raise ValueError()
         return self.db.edit_row(id, data)
 
 
