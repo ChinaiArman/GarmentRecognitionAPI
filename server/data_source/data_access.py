@@ -315,7 +315,7 @@ class Database:
         self.df.loc[len(self.df)] = new_row
         self.write_to_csv()
         return new_row
-    
+
     def write_to_csv(
         self
     ) -> None:
@@ -333,11 +333,15 @@ class Database:
         Notes:
         ------
         1. The method writes the current data to the CSV file.
+        2. The method converts the keyword descriptions to a string before writing.
 
         Example:
         --------
         >>> db = Database()
         >>> db.write_to_csv()
+        ... # Writes the current dataframe to the CSV file.
+
+        Author: ``@cc-dev-65535``
         """
         df_to_write = self.df.copy(deep=True)
         df_to_write["keywordDescriptions"] = df_to_write["keywordDescriptions"].apply(
