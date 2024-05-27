@@ -25,9 +25,11 @@ from garment_recognizer import GarmentRecognizer
 from torch.cuda import OutOfMemoryError
 
 
+# Flask server configuration
 app = Flask(__name__, template_folder="../ui/templates", static_folder="../ui/static")
 CORS(app)
 
+# Garment recognizer instance
 garment_recognizer = GarmentRecognizer()
 
 
