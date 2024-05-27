@@ -30,14 +30,26 @@ CORS(app)
 
 garment_recognizer = GarmentRecognizer()
 
+
 # JSON VALIDATION SCHEMAS
 class SemanticSearchSchema(Schema):
     url = fields.Str(required=True)
     size = fields.Int(required=True)
 
+
 class KeywordSearchSchema(Schema):
     keywords = fields.List(fields.Str(), required=True)
     size = fields.Int(required=True)
+
+
+class AddGarmentSchema(Schema):
+    name = fields.Str(required=True)
+    description = fields.Str(required=True)
+    imageUrl = fields.Str(required=True)
+
+
+class EditGarmentSchema(AddGarmentSchema):
+    id = fields.Str(required=True)
 
 
 # ERROR HANDLERS
@@ -398,9 +410,14 @@ def add_item(
     Author: ``@levxxvi``
     """
     try:
-        new_item = request.json
-        response = garment_recognizer.insert_row(new_item)
-    except KeyError:
+        data = AddGarmentSchema().load(request.json)
+        response = garment_recognizer.insert_row(data)
+    except BadRequest:
+        abort(
+            400,
+            description="Invalid request format. Data must contain keys: name, description, imageUrl.",
+        )
+    except ValidationError:
         abort(
             400,
             description="Invalid request format. Please provide the new item details in the request body.",
@@ -487,17 +504,17 @@ def edit_item(
     Author: ``@levxxvi``
     """
     try:
-        item = request.json
-        response = garment_recognizer.edit_row(item['id'], item)
-    except KeyError:
+        data = EditGarmentSchema().load(request.json)
+        response = garment_recognizer.edit_row(data["id"], data)
+    except BadRequest:
+        abort(
+            400,
+            description="Invalid request format. Data must contain keys: name, description, imageUrl, id.",
+        )
+    except ValidationError:
         abort(
             400,
             description="Invalid request format. Please provide the item details in the request body.",
-        )
-    except ValueError:
-        abort(
-            400,
-            description=str("Data must contain keys: name, description, imageUrl, id")
         )
     return jsonify(response), 201
 
