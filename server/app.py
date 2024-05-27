@@ -61,7 +61,7 @@ class SemanticSearchSchema(Schema):
     """
 
     url = fields.Str(required=True)
-    size = fields.Int(required=True)
+    size = fields.Int(required=True, strict=True)
 
 
 class KeywordSearchSchema(Schema):
@@ -93,7 +93,7 @@ class KeywordSearchSchema(Schema):
     """
 
     keywords = fields.List(fields.Str(), required=True)
-    size = fields.Int(required=True)
+    size = fields.Int(required=True, strict=True)
 
 
 class AddGarmentSchema(Schema):

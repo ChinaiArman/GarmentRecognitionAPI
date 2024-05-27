@@ -80,12 +80,9 @@ class Database:
             raise FileNotFoundError("The data source file does not exist.")
         self.file_path = os.getenv("DATA_SOURCE_FILE")
         self.df = pd.read_csv(self.file_path, dtype={"id": str})
-        try:
-            self.df["keywordDescriptions"] = self.df["keywordDescriptions"].apply(
-                lambda x: x.split(", ") if pd.notna(x) else [""]
-            )
-        except:
-            pass
+        self.df["keywordDescriptions"] = self.df["keywordDescriptions"].apply(
+            lambda x: x.split(", ") if pd.notna(x) else [""]
+        )
 
     def get_data_frame(
         self
@@ -264,7 +261,8 @@ class Database:
         """
         new_row['id'] = str(uuid.uuid4())
         print(new_row)
-        new_row['keywordDescriptions'] = dc.normalize_dense_caption_response(dc.create_dense_captions(new_row['imageUrl']))
+        keywords = dc.normalize_dense_caption_response(dc.create_dense_captions(new_row['imageUrl']))
+        new_row['keywordDescriptions'] = keywords if keywords is not None else [""]
         self.df.loc[len(self.df)] = new_row
         self.write_to_csv()
         return new_row
@@ -311,7 +309,8 @@ class Database:
         """
         self.delete_row(id)
         new_row['id'] = id
-        new_row['keywordDescriptions'] = dc.normalize_dense_caption_response(dc.create_dense_captions(new_row['imageUrl']))
+        keywords = dc.normalize_dense_caption_response(dc.create_dense_captions(new_row['imageUrl']))
+        new_row['keywordDescriptions'] = keywords if keywords is not None else [""]
         self.df.loc[len(self.df)] = new_row
         self.write_to_csv()
         return new_row
