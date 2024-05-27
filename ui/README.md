@@ -1,11 +1,12 @@
+# Swagger UI
 This folder contains the UI assets for the Swagger API documentation.
 
 The files in this folder are served by the flask server.
 
-#### File Explanations
+## File Explanations
 - ```static/swagger.yaml```
 
-    YAML file that represents the Swagger API definition for the server's API endpoints.
+    YAML file that contains the Swagger API definition for the server's API endpoints. Modify this file if changes to the API are made to ensure that the API documentation is always up to date. In particular, the ```server``` section should be updated if the API server is hosted on a different URL in the future.
 
 - ```static/dist/swagger-initializer.js```
 
