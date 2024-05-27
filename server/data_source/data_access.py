@@ -219,11 +219,7 @@ class Database:
             return False
         else:
             self.df.reset_index(drop=True, inplace=True)
-            df_to_write = self.df.copy(deep=True)
-            df_to_write["keywordDescriptions"] = df_to_write["keywordDescriptions"].apply(
-                lambda x: ", ".join(x)
-            )
-            df_to_write.to_csv(self.file_path, index=False)
+            self.write_to_csv()
             return True
 
     def add_row(
@@ -270,11 +266,7 @@ class Database:
         print(new_row)
         new_row['keywordDescriptions'] = dc.normalize_dense_caption_response(dc.create_dense_captions(new_row['imageUrl']))
         self.df.loc[len(self.df)] = new_row
-        df_to_write = self.df.copy(deep=True)
-        df_to_write["keywordDescriptions"] = df_to_write["keywordDescriptions"].apply(
-            lambda x: ", ".join(x)
-        )
-        df_to_write.to_csv(self.file_path, index=False)
+        self.write_to_csv()
         return new_row
 
     def edit_row(
@@ -321,12 +313,37 @@ class Database:
         new_row['id'] = id
         new_row['keywordDescriptions'] = dc.normalize_dense_caption_response(dc.create_dense_captions(new_row['imageUrl']))
         self.df.loc[len(self.df)] = new_row
+        self.write_to_csv()
+        return new_row
+    
+    def write_to_csv(
+        self
+    ) -> None:
+        """
+        Writes the current dataframe to the CSV file.
+
+        Args:
+        -----
+        None.
+
+        Returns:
+        --------
+        None.
+
+        Notes:
+        ------
+        1. The method writes the current data to the CSV file.
+
+        Example:
+        --------
+        >>> db = Database()
+        >>> db.write_to_csv()
+        """
         df_to_write = self.df.copy(deep=True)
         df_to_write["keywordDescriptions"] = df_to_write["keywordDescriptions"].apply(
             lambda x: ", ".join(x)
         )
         df_to_write.to_csv(self.file_path, index=False)
-        return new_row
 
 
 def main(
