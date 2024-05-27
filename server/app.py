@@ -8,6 +8,8 @@ The API provides endpoints for searching garments by image and keywords, adding 
 
 Requirements:
 This script requires the installation of the flask and flask_cors libraries.
+This script requires the installation of the marshmallow library for data validation.
+This script requires the installation of the torch library for error handling.
 The GarmentRecognizer class is defined in the garment_recognizer module.
 
 Usage:
@@ -16,6 +18,8 @@ To execute this module from the root directory, run the following command:
 """
 
 from flask import Flask, jsonify, request, abort, render_template
+from werkzeug.exceptions import BadRequest
+from marshmallow import Schema, fields, ValidationError
 from flask_cors import CORS
 from garment_recognizer import GarmentRecognizer
 from torch.cuda import OutOfMemoryError
@@ -25,6 +29,15 @@ app = Flask(__name__, template_folder="../ui/templates", static_folder="../ui/st
 CORS(app)
 
 garment_recognizer = GarmentRecognizer()
+
+# JSON VALIDATION SCHEMAS
+class SemanticSearchSchema(Schema):
+    url = fields.Str(required=True)
+    size = fields.Int(required=True)
+
+class KeywordSearchSchema(Schema):
+    keywords = fields.List(fields.Str(), required=True)
+    size = fields.Int(required=True)
 
 
 # ERROR HANDLERS
@@ -231,19 +244,24 @@ def search_items(
     Author: ``@cc-dev-65535``
     """
     try:
-        image_url = request.json["url"]
-        results_size = request.json["size"]
-        response = garment_recognizer.get_item_by_semantic_search(image_url, results_size)
-    except KeyError:
+        data = SemanticSearchSchema().load(request.json)
+        response = garment_recognizer.get_item_by_semantic_search(
+            data["url"], data["size"]
+        )
+    except BadRequest:
+        abort(
+            400,
+            description="Invalid request format. Request body is not valid JSON.",
+        )
+    except ValidationError:
         abort(
             400,
             description="Invalid request format. Please provide 'url' and 'size' in the request body.",
         )
     except OutOfMemoryError:
-        abort(
-            500,
-            description="Out of memory error."
-        )
+        abort(500, description="Out of memory error.")
+    except Exception:
+        abort(500, description="Internal server error.")
     return jsonify(response), 200
 
 
@@ -320,19 +338,24 @@ def search_items_by_keywords(
     Author: ``@ChinaiArman``
     """
     try:
-        keywords = request.json["keywords"]
-        results_size = request.json["size"]
-        response = garment_recognizer.get_items_by_keywords(keywords, results_size)
-    except KeyError:
+        data = KeywordSearchSchema().load(request.json)
+        response = garment_recognizer.get_items_by_keywords(
+            data["keywords"], data["size"]
+        )
+    except BadRequest:
+        abort(
+            400,
+            description="Invalid request format. Request body is not valid JSON.",
+        )
+    except ValidationError:
         abort(
             400,
             description="Invalid request format. Please provide 'keywords' and 'size' in the request body.",
         )
     except OutOfMemoryError:
-        abort(
-            500,
-            description="Out of memory error."
-        )
+        abort(500, description="Out of memory error.")
+    except Exception:
+        abort(500, description="Internal server error.")
     return jsonify(response), 200
 
 
