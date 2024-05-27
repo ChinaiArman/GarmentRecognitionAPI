@@ -33,22 +33,130 @@ garment_recognizer = GarmentRecognizer()
 
 # JSON VALIDATION SCHEMAS
 class SemanticSearchSchema(Schema):
+    """
+    Class to validate the request body for the semantic search endpoint.
+
+    Args:
+    -----
+    None.
+
+    Attributes:
+    -----------
+    url : ``str``
+        The URL of the image to search for garments.
+    size : ``int``
+        The maximum number of items to return in the list.
+
+    Methods:
+    --------
+    >>> load(request.json)
+    ... # Validates the request body for the semantic search endpoint.
+
+    Notes:
+    ------
+    1. The class provides a schema to validate the request body for the semantic search endpoint.
+    2. The schema validates the request body to ensure it contains the required fields.
+
+    Author: ``@cc-dev-65535``
+    """
+
     url = fields.Str(required=True)
     size = fields.Int(required=True)
 
 
 class KeywordSearchSchema(Schema):
+    """
+    Class to validate the request body for the keyword search endpoint.
+
+    Args:
+    -----
+    None.
+
+    Attributes:
+    -----------
+    keywords : ``list``
+        A list of keywords to search for garments.
+    size : ``int``
+        The maximum number of items to return in the list.
+
+    Methods:
+    --------
+    >>> load(request.json)
+    ... # Validates the request body for the keyword search endpoint.
+
+    Notes:
+    ------
+    1. The class provides a schema to validate the request body for the keyword search endpoint.
+    2. The schema validates the request body to ensure it contains the required fields.
+
+    Author: ``@cc-dev-65535``
+    """
+
     keywords = fields.List(fields.Str(), required=True)
     size = fields.Int(required=True)
 
 
 class AddGarmentSchema(Schema):
+    """
+    Class to validate the request body for adding a new garment.
+
+    Args:
+    -----
+    None.
+
+    Attributes:
+    -----------
+    name : ``str``
+        The name of the garment.
+    description : ``str``
+        The description of the garment.
+    imageUrl : ``str``
+        The URL of the image of the garment.
+
+    Methods:
+    --------
+    >>> load(request.json)
+    ... # Validates the request body for adding a new garment.
+
+    Notes:
+    ------
+    1. The class provides a schema to validate the request body for adding a new garment.
+    2. The schema validates the request body to ensure it contains the required fields.
+
+    Author: ``@cc-dev-65535``
+    """
+
     name = fields.Str(required=True)
     description = fields.Str(required=True)
     imageUrl = fields.Str(required=True)
 
 
 class EditGarmentSchema(AddGarmentSchema):
+    """
+    Class to validate the request body for editing a garment.
+
+    Args:
+    -----
+    None.
+
+    Attributes:
+    -----------
+    id : ``str``
+        The ID of the garment to edit.
+
+    Methods:
+    --------
+    >>> load(request.json)
+    ... # Validates the request body for editing a garment.
+
+    Notes:
+    ------
+    1. The class provides a schema to validate the request body for editing a garment.
+    2. The schema validates the request body to ensure it contains the required fields.
+
+    Author: ``@cc-dev-65535``
+    """
+
     id = fields.Str(required=True)
 
 
