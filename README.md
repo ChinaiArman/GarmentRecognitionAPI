@@ -181,6 +181,8 @@ Ehsan Emadi:
 
 Collin Chan:
 
+[![LinkedIn][linkedin-shield]][collin-linkedin] [![GitHub][github-shield]][collin-github]
+
 Project Link: [https://github.com/ChinaiArman/GarmentRecognitionAPI](https://github.com/ChinaiArman/GarmentRecognitionAPI)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -233,3 +235,5 @@ Project Link: [https://github.com/ChinaiArman/GarmentRecognitionAPI](https://git
 [lex-github]: https://github.com/levxxvi/
 [ehsan-linkedin]: https://www.linkedin.com/in/ehsan-emadi
 [ehsan-github]: https://github.com/Ehsan138
+[collin-linkedin]: https://www.linkedin.com/in/collin-c-94539a224/
+[collin-github]: https://github.com/cc-dev-65535
