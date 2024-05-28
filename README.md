@@ -61,7 +61,7 @@
 
 ![Product Name Screen Shot][product-screenshot]
 
-lorem ipsum
+Write project summary here.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
