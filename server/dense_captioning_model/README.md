@@ -12,12 +12,23 @@ Ensure you have the required Python libraries and environment variables set up:
 
 ### Libraries
 ```sh
-pip install azure-ai-vision requests python-dotenv
+pip install -r requirements.txt
 ```
 
-## Environment Variables
+### Environment Variables
 Ensure the following environment variables are set in a .env file:
 ```sh
 AZURE_VISION_ENDPOINT=your_azure_vision_endpoint
 AZURE_VISION_KEY_1=your_azure_vision_key
+AZURE_VISION_KEY_2=your_azure_vision_key
+RAPID_API_KEY=your_rapid_api_key
+EMBEDDED_MODEL=your_embedded_model
+DATA_SOURCE_FILE=your_data_source_file
+PYTHONPATH=server
+```
+
+## Usage
+1. Run the following command to generate keyword captions for an image:
+```sh
+python server/dense_captioning_model/main.py <image_path>
 ```
