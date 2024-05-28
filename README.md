@@ -115,7 +115,7 @@ The following instructions will guide you through setting up the project on your
     2.1 Create a virtual environment using the following commands:
     ```sh
     cd GarmentRecognitionAPI            # Change to the project directory
-    python -m venv venv                 # Create a virtual environment
+    python -m venv .venv                 # Create a virtual environment
     ```
     2.2 Activate the virtual environment:
     - Mac:

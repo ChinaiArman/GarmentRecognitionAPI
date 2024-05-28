@@ -6,7 +6,7 @@ This folder contains the data files and modules for accessing, aggregating, merg
     
     This folder contains the CSV files that have data pulled from clothing data API's. It includes `asos.csv`, `free_clothes.csv`, and `hm.csv`. 
 
-- ```data_acess.py```
+- ```data_access.py```
 
     This file contains the Database class along with its methods to interact with the CSV data source. 
    
