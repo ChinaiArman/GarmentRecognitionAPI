@@ -48,5 +48,18 @@ python server/app.py    # Start the server
 ```
 2. Access the API documentation at `http://localhost:5000/` to view the available endpoints and interact with the API.
 
-## Deployment
-The API server can be deployed to a cloud platform such as Azure, AWS, or Google Cloud. Ensure that the required environment variables are set in the deployment environment.
+### Flask Server Deployment (only for the server)
+The API server can be deployed to a cloud platform such as Azure or AWS with minimal changes.
+1. Ensure that the required environment variables are set in the deployment environment.
+
+2. In app.py, change the initialization of the Flask app (line 29 in `server/app.py`) to the following:
+    ```python
+    app = Flask(__name__)
+    ```
+
+3. In app.py, change the root route of the Flask server (line 330 in `server/app.py`) to the following:
+    ```python
+    return jsonify("Hello World")
+    ```
+
+4. Deploy the server to the cloud platform of your choice.

@@ -61,3 +61,13 @@ PYTHONPATH="server"         # Set the PYTHONPATH to "server"
 cd ..                   # Return to the root directory
 python server/app.py    # Start the server
 ```
+
+## Deployment
+
+The Swagger frontend can be deployed to GitHub Pages or any other static site hosting service.
+- A guide to deploying the Swagger UI to GitHub can be found [here](https://github.com/peter-evans/swagger-github-pages).
+- Swagger can also be deployed on any major cloud platform such as Azure or AWS.
+    - A guide to deploying Swagger on AWS can be found [here](https://aws.amazon.com/blogs/devops/deploy-and-manage-openapi-swagger-restful-apis-with-the-aws-cloud-development-kit/).
+    - A guide to deploying Swagger on Azure can be found [here](https://blog.cellenza.com/en/cloud/how-to-quickly-deploy-swagger-documentation-for-your-api-in-azure/).
+
+The Swagger YAML file can be found [here](https://github.com/ChinaiArman/GarmentRecognitionAPI/blob/main/ui/static/swagger.yaml). Ensure that all references to the server are updated to the deployed server URL.
