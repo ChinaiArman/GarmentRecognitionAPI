@@ -121,20 +121,20 @@ The following instructions will guide you through setting up the project on your
     - Mac:
         - Activation command: 
             ```sh
-            source bin/activate     # Activate the virtual environment
+            source .venv/bin/activate     # Activate the virtual environment
             ```
         - Deactivation command: 
             ```sh
-            source bin/deactivate       # Deactivate the virtual environment
+            source .venv/bin/deactivate       # Deactivate the virtual environment
             ```
     - Windows:
         - Activation command:
             ```sh
-            Scripts\activate.bat        # Activate the virtual environment
+            .venv\Scripts\activate.bat        # Activate the virtual environment
             ```
         - Deactivation command:
             ```sh
-            Scripts\deactivate.bat      # Deactivate the virtual environment
+            .venv\Scripts\deactivate.bat      # Deactivate the virtual environment
             ```
         Your interpreter should now be set to the Virtual Environment instance of python.
 
