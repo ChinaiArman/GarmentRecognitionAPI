@@ -205,7 +205,7 @@ The API server can be deployed to a cloud platform such as Azure or AWS with min
     return jsonify("Hello World")
     ```
 
-4. Deploy the server to the cloud platform of your choice.
+4. Deploy the server folder to the cloud platform of your choice.
 
 ### Swagger UI Deployment (only for the UI)
 
