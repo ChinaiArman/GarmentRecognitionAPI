@@ -84,7 +84,7 @@ The following instructions will guide you through setting up the project on your
 
 ### Prerequisites
 
-1. Python (version 3.11)
+1. Python (version 3.11 or higher)
     - Download and install Python from [here](https://www.python.org/downloads/).
         - Ensure that you check the box that says "Add Python to PATH" during installation.
         - Ensure that you check the box that says "Install pip" during installation.
