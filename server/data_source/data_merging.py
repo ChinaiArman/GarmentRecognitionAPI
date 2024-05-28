@@ -73,7 +73,30 @@ def merge_datasets(
     print(f"Merged dataset saved to {output_csv_path}")
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """
+    Runs the data merging process.
+
+    Args:
+    -----
+    None
+
+    Returns:
+    --------
+    None
+
+    Notes:
+    ------
+    1. This function calls the merge_datasets function with the paths to the CSV files containing image URLs and styles information.
+    2. The merged dataset is saved to a new CSV file.
+
+    Example:
+    --------
+    >>> main()
+    ... # Merged dataset saved to ./data-files/initial_data.csv
+
+    Author: ``@nataliecly``
+    """
     # Paths to your CSV files (please change this to your own absolute paths if needed to run again)
     images_csv_path = './data-files/images.csv'
     styles_csv_path = './data-files/styles.csv'
@@ -81,3 +104,7 @@ if __name__ == "__main__":
 
     # Call the merge function
     merge_datasets(images_csv_path, styles_csv_path, output_csv_path)
+
+
+if __name__ == "__main__":
+    main()
