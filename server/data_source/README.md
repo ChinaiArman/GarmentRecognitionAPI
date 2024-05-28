@@ -42,6 +42,31 @@ This folder contains the data files and modules for accessing, aggregating, merg
 
     This main file runs the processes for data aggregation and normalization.
 
-<br>
 
-Each module file contains a `main` function to demonstrate the usage of the module and to serve as the entry point of the program/module.
+## Requirements
+
+### Libraries
+Ensure you have the required Python libraries installed:
+```sh
+pip install -r requirements.txt
+```
+
+### Environment Variables
+Ensure the following environment variables are set in a .env file:
+```sh
+AZURE_VISION_ENDPOINT=your_azure_vision_endpoint
+AZURE_VISION_KEY_1=your_azure_vision_key
+AZURE_VISION_KEY_2=your_azure_vision_key
+RAPID_API_KEY=your_rapid_api_key
+EMBEDDED_MODEL=your_embedded_model
+DATA_SOURCE_FILE=your_data_source_file
+PYTHONPATH=server
+```
+
+## Usage
+This file <b>should NOT be run after the initial setup</b>. The data aggregation and normalization processes should be run only once to generate the main data source file.
+
+To run the data aggregation and normalization processes, execute the following command:
+```sh
+python server/data_source/main.py
+```
