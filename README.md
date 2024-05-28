@@ -145,12 +145,12 @@ The following instructions will guide you through setting up the project on your
 
 3. Install required Python libraries
     ```sh
-    cd GarmentRecognitionAPI            # Change to the project directory
+    cd server                           # Change to the server directory
     pip install -r requirements.txt     # Install the required libraries
     ```
 
 4. Set up environment variables
-    - Create a `.env` file in the root directory of the project.
+    - Create a `.env` file in the server directory of the project.
     - Add the following environment variables to the `.env` file:
     ```sh
     AZURE_VISION_ENDPOINT=""        # your_azure_vision_endpoint
@@ -170,9 +170,13 @@ The following instructions will guide you through setting up the project on your
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+1. Start the server by running the following command:
+    ```sh
+    cd ..                       # Return to the root directory
+    python server/app.py        # Start the server
+    ```
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+2. Access the API documentation at `http://localhost:5000/` to view the available endpoints and interact with the API.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -181,7 +185,37 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- DEPLOYMENT EXAMPLES -->
 ## Deployment
 
-Write deployment guide here.
+### Full Deployment (server and UI)
+The full API can be deployed to a cloud platform such as Azure or AWS directly.
+1. Ensure that the required environment variables are set in the deployment environment.
+2. Set the entry point of the server to `server/app.py`.
+3. Deploy the server to the cloud platform of your choice. The server will serve the Swagger UI at the root URL, and will respond to all other API requests as a RESTful API.
+
+### Flask Server Deployment (only for the server)
+The API server can be deployed to a cloud platform such as Azure or AWS with minimal changes.
+1. Ensure that the required environment variables are set in the deployment environment.
+
+2. In app.py, change the initialization of the Flask app (line 29 in `server/app.py`) to the following:
+    ```python
+    app = Flask(__name__)
+    ```
+
+3. In app.py, change the root route of the Flask server (line 330 in `server/app.py`) to the following:
+    ```python
+    return jsonify("Hello World")
+    ```
+
+4. Deploy the server to the cloud platform of your choice.
+
+### Swagger UI Deployment (only for the UI)
+
+The Swagger frontend can be deployed to GitHub Pages or any other static site hosting service.
+- A guide to deploying the Swagger UI to GitHub can be found [here](https://github.com/peter-evans/swagger-github-pages).
+- Swagger can also be deployed on any major cloud platform such as Azure or AWS.
+    - A guide to deploying Swagger on AWS can be found [here](https://aws.amazon.com/blogs/devops/deploy-and-manage-openapi-swagger-restful-apis-with-the-aws-cloud-development-kit/).
+    - A guide to deploying Swagger on Azure can be found [here](https://blog.cellenza.com/en/cloud/how-to-quickly-deploy-swagger-documentation-for-your-api-in-azure/).
+
+The Swagger YAML file can be found [here](https://github.com/ChinaiArman/GarmentRecognitionAPI/blob/main/ui/static/swagger.yaml). Ensure that all references to the server are updated to the deployed server URL.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
