@@ -20,39 +20,31 @@ This project provides an API for recognizing garments from images and keywords. 
   - `main.py`: Main entry point to demonstrate the usage of the embedded model.
 
 ## Requirements
+
+### Libraries
 Ensure you have the required Python libraries installed:
 ```sh
-pip install pandas aiohttp python-dotenv flask flask_cors marshmallow torch transformers
+pip install -r requirements.txt
 ```
 
-## Environment Variables
+### Environment Variables
 Ensure the following environment variables are set in a .env file:
 ```sh
 AZURE_VISION_ENDPOINT=your_azure_vision_endpoint
 AZURE_VISION_KEY_1=your_azure_vision_key
+AZURE_VISION_KEY_2=your_azure_vision_key
+RAPID_API_KEY=your_rapid_api_key
 EMBEDDED_MODEL=your_embedded_model
-DATA_SOURCE_FILE=server/data_source/data_files/initial_data.csv
+DATA_SOURCE_FILE=your_data_source_file
 PYTHONPATH=server
 ```
 
+## Usage
+1. Start the server by running the following command:
+```sh
+python server/app.py
+```
+2. Access the API documentation at `http://localhost:5000/` to view the available endpoints and interact with the API.
 
-# VENV Installation Instructions
-Start from ```root``` directory.
-1. Install VENV
-    - ```python3 -m venv .venv```
-    - ```cd .venv```
-2. Activate VENV Instance:
-    - Mac:
-        - Activation command: ```source bin/activate```
-        - Deactivation command: ```source bin/deactivate```
-    - Windows:
-        - Activation command: ```Scripts\activate.bat```
-        - Deactivation command: ```Scripts\deactivate.bat```
-    Your interpreter should now be set to the Virtual Environment instance of python.
-    - ```cd ..```
-3. Install Packages:
-    - ```cd server```
-    - Installation command: ```pip install -r requirements.txt```
-    - Update command: ```pip freeze > requirements.txt```
-4. Test: 
-    - ```python app.py``` > Visit port 5000
+## Deployment
+The API server can be deployed to a cloud platform such as Azure, AWS, or Google Cloud. Ensure that the required environment variables are set in the deployment environment.
