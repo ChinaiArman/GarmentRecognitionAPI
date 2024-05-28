@@ -91,13 +91,13 @@ The following instructions will guide you through setting up the project on your
         - Ensure that you check the box that says "Install pip" during installation.
     - Verify installation by running the following command in your terminal:
     ```sh
-    python --version
+    python --version        # Check the version of Python
     ```
 
 2. Pip (Python package installer)
     - Verify installation by running the following command in your terminal:
     ```sh
-    pip --version
+    pip --version       # Check the version of pip
     ```
 
 3. VSCode (or any other code editor).
@@ -110,26 +110,58 @@ The following instructions will guide you through setting up the project on your
 
 ### Installation
 
-### VENV Installation Instructions
-Start from ```root``` directory.
-1. Install VENV
-    - ```python3 -m venv .venv```
-    - ```cd .venv```
-2. Activate VENV Instance:
+1. Clone the repo
+   ```sh
+   git clone https://github.com/ChinaiArman/GarmentRecognitionAPI.git       # Clone the repository
+    ```
+
+2.  Create a virtual environment
+
+    2.1 Create a virtual environment using the following commands:
+    ```sh
+    cd GarmentRecognitionAPI            # Change to the project directory
+    python -m venv venv                 # Create a virtual environment
+    ```
+    2.2 Activate the virtual environment:
     - Mac:
-        - Activation command: ```source bin/activate```
-        - Deactivation command: ```source bin/deactivate```
+        - Activation command: 
+            ```sh
+            source bin/activate     # Activate the virtual environment
+            ```
+        - Deactivation command: 
+            ```sh
+            source bin/deactivate       # Deactivate the virtual environment
+            ```
     - Windows:
-        - Activation command: ```Scripts\activate.bat```
-        - Deactivation command: ```Scripts\deactivate.bat```
-    Your interpreter should now be set to the Virtual Environment instance of python.
-    - ```cd ..```
-3. Install Packages:
-    - ```cd server```
-    - Installation command: ```pip install -r requirements.txt```
-    - Update command: ```pip freeze > requirements.txt```
-4. Test: 
-    - ```python app.py``` > Visit port 5000
+        - Activation command:
+            ```sh
+            Scripts\activate.bat        # Activate the virtual environment
+            ```
+        - Deactivation command:
+            ```sh
+            Scripts\deactivate.bat      # Deactivate the virtual environment
+            ```
+        Your interpreter should now be set to the Virtual Environment instance of python.
+
+3. Install required Python libraries
+    ```sh
+    cd GarmentRecognitionAPI            # Change to the project directory
+    pip install -r requirements.txt     # Install the required libraries
+    ```
+
+4. Set up environment variables
+    - Create a `.env` file in the root directory of the project.
+    - Add the following environment variables to the `.env` file:
+    ```sh
+    AZURE_VISION_ENDPOINT=""        # your_azure_vision_endpoint
+    AZURE_VISION_KEY_1=""           # your_azure_vision_key
+    AZURE_VISION_KEY_2=""           # your_azure_vision_key
+    RAPID_API_KEY=""                # your_rapid_api_key
+    EMBEDDED_MODEL=""               # your_embedded_model
+    DATA_SOURCE_FILE=""             # your_data_source_file
+    PYTHONPATH="server"             # Set the PYTHONPATH to "server"
+    ```
+    - Replace the placeholder values with your own API keys and file paths.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
