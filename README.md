@@ -253,6 +253,8 @@ Project Link: [https://github.com/ChinaiArman/GarmentRecognitionAPI](https://git
 * Chris Thompson - Project Supervisor
 * Farnaz Dargahi - COMP 3800 Instructor
 
+Thank you for your support throughout the project!
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
