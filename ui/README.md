@@ -27,3 +27,11 @@ The files in this folder are served by the flask server.
 - ```templates/index.html```
 
     HTML file that is initially served by the flask server. Used as a template to link to all the other static assets in this folder.
+
+
+
+## Additional Notes
+- Ensure the swagger.yaml file is always up-to-date with the latest API changes to provide accurate documentation.
+- Customize the swagger-custom.js file to enhance the functionality of the Swagger UI with additional plugins.
+- Adjust the swagger-custom.css and swagger-custom-dark.css files to fit the desired look and feel of the Swagger UI, including support for both light and dark modes.
+- The index.html file is essential for integrating all the custom styles and scripts into the Swagger UI.
