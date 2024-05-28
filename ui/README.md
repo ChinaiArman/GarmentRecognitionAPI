@@ -28,6 +28,10 @@ The files in this folder are served by the flask server.
 
     HTML file that is initially served by the flask server. Used as a template to link to all the other static assets in this folder.
 
+- the ```dist``` folder
+    
+    This folder contains all the UI assets and bundles distributed by Swagger UI from their repo [here](https://github.com/swagger-api/swagger-ui).
+
 ## Additional Notes
 - Ensure the swagger.yaml file is always up-to-date with the latest API changes to provide accurate documentation.
 - Customize the swagger-custom.js file to enhance the functionality of the Swagger UI with additional plugins.
