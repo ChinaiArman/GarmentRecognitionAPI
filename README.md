@@ -81,16 +81,32 @@ The Garment Recognition API is a RESTful API that uses computer vision and seman
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+The following instructions will guide you through setting up the project on your local machine.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+1. Python (version 3.11)
+    - Download and install Python from [here](https://www.python.org/downloads/).
+        - Ensure that you check the box that says "Add Python to PATH" during installation.
+        - Ensure that you check the box that says "Install pip" during installation.
+    - Verify installation by running the following command in your terminal:
+    ```sh
+    python --version
+    ```
+
+2. Pip (Python package installer)
+    - Verify installation by running the following command in your terminal:
+    ```sh
+    pip --version
+    ```
+
+3. VSCode (or any other code editor).
+    - Download and install VSCode from [here](https://code.visualstudio.com/).
+
+4. An Azure Dense Captioning model API Key.
+
+5. An NVIDIA GPU (optional, but recommended for faster processing).
+    
 
 ### Installation
 
