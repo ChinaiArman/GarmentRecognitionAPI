@@ -155,6 +155,8 @@ Arman Chinai:
 
 Lex Wong:
 
+[![LinkedIn][linkedin-shield]][lex-linkedin] [![GitHub][github-shield]][lex-github]
+
 Natalie Yu:
 
 Ehsan Emadi:
@@ -209,3 +211,5 @@ Project Link: [https://github.com/ChinaiArman/GarmentRecognitionAPI](https://git
 [HuggingFace-url]: https://huggingface.co/
 [arman-linkedin]: https://www.linkedin.com/in/armanchinai/
 [arman-github]: https://github.com/ChinaiArman/
+[lex-linkedin]: https://www.linkedin.com/in/alexandra-wong-8188a122a/
+[lex-github]: https://github.com/levxxvi/
