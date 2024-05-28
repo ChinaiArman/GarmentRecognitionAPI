@@ -7,7 +7,12 @@ window.onload = function () {
     dom_id: "#swagger-ui",
     deepLinking: true,
     presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
-    plugins: [SwaggerUIBundle.plugins.DownloadUrl, MyLogoPlugin, AdvancedFilterPlugin],
+    plugins: [
+      SwaggerUIBundle.plugins.DownloadUrl,
+      MyLogoPlugin,
+      AdvancedFilterPlugin,
+      NewFilterPlugin,
+    ],
     layout: "StandaloneLayout",
     filter: true,
   });

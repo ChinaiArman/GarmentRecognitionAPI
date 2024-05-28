@@ -1,3 +1,4 @@
+// Change logo of Swagger UI
 const MyLogoPlugin = function (system) {
   return {
     components: {
@@ -11,6 +12,7 @@ const MyLogoPlugin = function (system) {
   };
 };
 
+// Make filter bar search for endpoint keywords
 const AdvancedFilterPlugin = function (system) {
   return {
     fn: {
@@ -49,6 +51,64 @@ const AdvancedFilterPlugin = function (system) {
           return tagObj._root.entries[1][1].size > 0;
         });
       },
+    },
+  };
+};
+
+// Add a filter bar with new placeholder text
+const NewFilterPlugin = function (system) {
+  return {
+    wrapComponents: {
+      FilterContainer: (Original, system) =>
+        class NewFilterContainer extends system.React.Component {
+          // static propTypes = {
+          //   specSelectors: PropTypes.object.isRequired,
+          //   layoutSelectors: PropTypes.object.isRequired,
+          //   layoutActions: PropTypes.object.isRequired,
+          //   getComponent: PropTypes.func.isRequired,
+          // }
+
+          onFilterChange = (e) => {
+            const {
+              target: { value },
+            } = e;
+            this.props.layoutActions.updateFilter(value);
+          };
+
+          render() {
+            const { specSelectors, layoutSelectors, getComponent } = this.props;
+            const Col = getComponent("Col");
+
+            const isLoading = specSelectors.loadingStatus() === "loading";
+            const isFailed = specSelectors.loadingStatus() === "failed";
+            const filter = layoutSelectors.currentFilter();
+
+            const classNames = ["operation-filter-input"];
+            if (isFailed) classNames.push("failed");
+            if (isLoading) classNames.push("loading");
+
+            return system.React.createElement(
+              "div",
+              null,
+              system.React.createElement(
+                "div",
+                { className: "filter-container" },
+                system.React.createElement(
+                  Col,
+                  { className: "filter wrapper", mobile: 12 },
+                  system.React.createElement("input", {
+                    className: classNames.join(" "),
+                    placeholder: "Filter by endpoint keywords",
+                    type: "text",
+                    onChange: this.onFilterChange,
+                    value: typeof filter === "string" ? filter : "",
+                    disabled: isLoading,
+                  })
+                )
+              )
+            );
+          }
+        },
     },
   };
 };
