@@ -26,7 +26,7 @@ This folder contains the data files and modules for accessing, aggregating, merg
 
 - ```data_normalization.py```
 
-    This file is the data normalization module which normalizes data from multiple  sources into one common format and writes them to a new CSV file.
+    This file is the data normalization module which normalizes data from multiple sources into one common format and writes them to a new CSV file.
 
     Functions in this module include `merge_description_columns`, `rename_columns`, `drop_columns`, `normalize_dataframe`, `merge_dataframes`, `generate_keywords`, and `write_dataframe_to_csv`.
 
@@ -36,7 +36,7 @@ This folder contains the data files and modules for accessing, aggregating, merg
 
 - ```data_small.csv```
 
-    This is a smaller CSV file which contains about less than half of the data in the main `data.csv` file. Its purpose was to test the running of the API on slower, less-powerful machines.
+    This is a smaller CSV file containing about less than half of the data in the main `data.csv` file. Its purpose was to test the running of the API on slower, less-powerful machines.
 
 - ```main.py```
 
