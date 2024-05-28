@@ -242,7 +242,7 @@ Collin Chan:
 
 [![LinkedIn][linkedin-shield]][collin-linkedin] [![GitHub][github-shield]][collin-github]
 
-Project Link: [https://github.com/ChinaiArman/GarmentRecognitionAPI](https://github.com/ChinaiArman/GarmentRecognitionAPI)
+Project Link: [![GitHub][github-shield]][project-github]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -299,3 +299,4 @@ Thank you for your support throughout the project!
 [collin-github]: https://github.com/cc-dev-65535
 [natalie-linkedin]: https://www.linkedin.com/in/natalieyu74/
 [natalie-github]: https://github.com/nataliecly
+[project-github]: https://github.com/ChinaiArman/GarmentRecognitionAPI
