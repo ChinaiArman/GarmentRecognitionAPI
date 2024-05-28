@@ -44,4 +44,4 @@ This folder contains the data files and modules for accessing, aggregating, merg
 
 <br>
 
-Each module file contains a `main` function to demonstrate the usage the module and serves as the entry point of the program/module.
+Each module file contains a `main` function to demonstrate the usage of the module and to serve as the entry point of the program/module.
