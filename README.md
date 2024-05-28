@@ -45,7 +45,6 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#deployment">Deployment</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Developer Team</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -58,11 +57,9 @@
 
 ![Product Name Screen Shot][product-screenshot]
 
-The Garment Recognition API is a RESTful API that uses computer vision and semantic textual analysis to recognize clothing items through images. The project was developed by a team of 5 students as part of BCIT's COMP 3800 course. The API leverages Azure's Dense Captioning model to generate textual descriptions of images, which are then processed by a custom-built NLP model to extract relevant information about the clothing items. The server is built using Flask and the API is documented using Swagger. 
+The Garment Recognition API is a RESTful API that uses computer vision and semantic textual analysis to recognize clothing items through images. The project was developed by a team of 5 students as part of BCIT's COMP 3800 course. The API leverages Azure's Dense Captioning model to generate textual descriptions of images, which are then processed by a custom-built NLP model to extract relevant information about the clothing items. The server is built using Flask and the API is documented using Swagger.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ### Built With
 
@@ -72,7 +69,6 @@ The Garment Recognition API is a RESTful API that uses computer vision and seman
 * [![Azure][Azure]][Azure-url]
 * [![HuggingFace][HuggingFace]][HuggingFace-url]
 * [![Swagger][Swagger]][Swagger-url]
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -85,7 +81,7 @@ The following instructions will guide you through setting up the project on your
 
 ### Prerequisites
 
-1. Python (version 3.11)
+1. Python (version 3.11 or higher)
     - Download and install Python from [here](https://www.python.org/downloads/).
         - Ensure that you check the box that says "Add Python to PATH" during installation.
         - Ensure that you check the box that says "Install pip" during installation.
@@ -107,7 +103,6 @@ The following instructions will guide you through setting up the project on your
 
 5. An NVIDIA GPU (optional, but recommended for faster processing).
     
-
 ### Installation
 
 1. Clone the repo
@@ -221,20 +216,6 @@ The Swagger YAML file can be found [here](https://github.com/ChinaiArman/Garment
 
 
 
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/ChinaiArman/GarmentRecognitionAPI/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
 ## Developer Team
 
@@ -247,6 +228,7 @@ Lex Wong:
 [![LinkedIn][linkedin-shield]][lex-linkedin] [![GitHub][github-shield]][lex-github]
 
 Natalie Yu:
+[![LinkedIn][linkedin-shield]][natalie-linkedin] [![GitHub][github-shield]][natalie-github]
 
 Ehsan Emadi:
 
@@ -256,7 +238,7 @@ Collin Chan:
 
 [![LinkedIn][linkedin-shield]][collin-linkedin] [![GitHub][github-shield]][collin-github]
 
-Project Link: [https://github.com/ChinaiArman/GarmentRecognitionAPI](https://github.com/ChinaiArman/GarmentRecognitionAPI)
+Project Link: [![GitHub][github-shield]][project-github]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -265,9 +247,10 @@ Project Link: [https://github.com/ChinaiArman/GarmentRecognitionAPI](https://git
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* Chris Thompson - Project Supervisor
+* Farnaz Dargahi - COMP 3800 Instructor
+
+Thank you for your continued support throughout the project!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -310,3 +293,6 @@ Project Link: [https://github.com/ChinaiArman/GarmentRecognitionAPI](https://git
 [ehsan-github]: https://github.com/Ehsan138
 [collin-linkedin]: https://www.linkedin.com/in/collin-c-94539a224/
 [collin-github]: https://github.com/cc-dev-65535
+[natalie-linkedin]: https://www.linkedin.com/in/natalieyu74/
+[natalie-github]: https://github.com/nataliecly
+[project-github]: https://github.com/ChinaiArman/GarmentRecognitionAPI
