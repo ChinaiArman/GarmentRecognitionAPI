@@ -58,7 +58,7 @@
 
 ![Product Name Screen Shot][product-screenshot]
 
-Write project summary here.
+The Garment Recognition API is a RESTful API that uses computer vision and semantic textual analysis to recognize clothing items through images. The project was developed by a team of 5 students as part of BCIT's COMP 3800 course. The API leverages Azure's Dense Captioning model to generate textual descriptions of images, which are then processed by a custom-built NLP model to extract relevant information about the clothing items. The server is built using Flask and the API is documented using Swagger. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
