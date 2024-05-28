@@ -12,22 +12,24 @@ Ensure you have the required Python libraries and environment variables set up:
 
 ### Libraries
 ```sh
-pip install -r requirements.txt
+cd server                           # Change to the server directory
+pip install -r requirements.txt     # Install the required libraries
 ```
 
 ### Environment Variables
 Ensure the following environment variables are set in a .env file:
 ```sh
-AZURE_VISION_ENDPOINT=your_azure_vision_endpoint
-AZURE_VISION_KEY_1=your_azure_vision_key
-AZURE_VISION_KEY_2=your_azure_vision_key
-EMBEDDED_MODEL=your_embedded_model
-PYTHONPATH=server
-DATA_SOURCE_FILE=your_data_source_file
+AZURE_VISION_ENDPOINT=""        # your_azure_vision_endpoint        
+AZURE_VISION_KEY_1=""           # your_azure_vision_key
+AZURE_VISION_KEY_2=""           # your_azure_vision_key
+EMBEDDED_MODEL=""               # your_embedded_model
+PYTHONPATH="server"             # Set the PYTHONPATH to "server"
+DATA_SOURCE_FILE=""             # your_data_source_file
 ```
 
 ## Usage
 1. Run the following command to demonstrate the usage of the embedded model:
 ```sh
-python server/embedded_model/main.py
+cd ..                                       # Return to the root directory
+python server/embedded_model/main.py        # Run the embedded model#
 ```

@@ -48,18 +48,19 @@ This folder contains the data files and modules for accessing, aggregating, merg
 ### Libraries
 Ensure you have the required Python libraries installed:
 ```sh
-pip install -r requirements.txt
+cd server                           # Change to the server directory
+pip install -r requirements.txt     # Install the required libraries
 ```
 
 ### Environment Variables
 Ensure the following environment variables are set in a .env file:
 ```sh
-AZURE_VISION_ENDPOINT=your_azure_vision_endpoint
-AZURE_VISION_KEY_1=your_azure_vision_key
-AZURE_VISION_KEY_2=your_azure_vision_key
-RAPID_API_KEY=your_rapid_api_key
-DATA_SOURCE_FILE=your_data_source_file
-PYTHONPATH=server
+AZURE_VISION_ENDPOINT=""        # your_azure_vision_endpoint
+AZURE_VISION_KEY_1=""           # your_azure_vision_key
+AZURE_VISION_KEY_2=""           # your_azure_vision_key
+RAPID_API_KEY=""                # your_rapid_api_key
+DATA_SOURCE_FILE=""             # your_data_source_file
+PYTHONPATH="server"             # Set the PYTHONPATH to "server
 ```
 
 ## Usage
@@ -67,5 +68,6 @@ This file <b>should NOT be run after the initial setup</b>. The data aggregation
 
 To run the data aggregation and normalization processes, execute the following command:
 ```sh
-python server/data_source/main.py
+cd ..                                   # Return to the root directory
+python server/data_source/main.py       # Run the data aggregation and normalization processes
 ```

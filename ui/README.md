@@ -28,10 +28,36 @@ The files in this folder are served by the flask server.
 
     HTML file that is initially served by the flask server. Used as a template to link to all the other static assets in this folder.
 
-
-
 ## Additional Notes
 - Ensure the swagger.yaml file is always up-to-date with the latest API changes to provide accurate documentation.
 - Customize the swagger-custom.js file to enhance the functionality of the Swagger UI with additional plugins.
 - Adjust the swagger-custom.css and swagger-custom-dark.css files to fit the desired look and feel of the Swagger UI, including support for both light and dark modes.
 - The index.html file is essential for integrating all the custom styles and scripts into the Swagger UI.
+
+## Requirements
+
+### Libraries
+Ensure you have the required Python libraries installed:
+```sh
+cd server                           # Change to the server directory
+pip install -r requirements.txt     # Install the required libraries
+```
+
+### Environment Variables
+Ensure the following environment variables are set in a .env file:
+```sh
+AZURE_VISION_ENDPOINT= ""   # your_azure_vision_endpoint
+AZURE_VISION_KEY_1=""       # your_azure_vision_key
+AZURE_VISION_KEY_2=""       # your_azure_vision_key
+RAPID_API_KEY=""            # your_rapid_api_key
+EMBEDDED_MODEL=""           # your_embedded_model
+DATA_SOURCE_FILE=""         # your_data_source_file
+PYTHONPATH="server"         # Set the PYTHONPATH to "server"
+```
+
+## Usage
+1. Start the server by running the following command:
+```sh
+cd ..                   # Return to the root directory
+python server/app.py    # Start the server
+```

@@ -24,25 +24,27 @@ This project provides an API for recognizing garments from images and keywords. 
 ### Libraries
 Ensure you have the required Python libraries installed:
 ```sh
-pip install -r requirements.txt
+cd server                         # Change to the server directory
+pip install -r requirements.txt   # Install the required libraries
 ```
 
 ### Environment Variables
 Ensure the following environment variables are set in a .env file:
 ```sh
-AZURE_VISION_ENDPOINT=your_azure_vision_endpoint
-AZURE_VISION_KEY_1=your_azure_vision_key
-AZURE_VISION_KEY_2=your_azure_vision_key
-RAPID_API_KEY=your_rapid_api_key
-EMBEDDED_MODEL=your_embedded_model
-DATA_SOURCE_FILE=your_data_source_file
-PYTHONPATH=server
+AZURE_VISION_ENDPOINT=""    # your_azure_vision_endpoint    
+AZURE_VISION_KEY_1=""       # your_azure_vision_key    
+AZURE_VISION_KEY_2=""       # your_azure_vision_key
+RAPID_API_KEY=""            # your_rapid_api_key
+EMBEDDED_MODEL=""           # your_embedded_model
+DATA_SOURCE_FILE=""         # your_data_source_file
+PYTHONPATH="server"         # Set the PYTHONPATH to "server"
 ```
 
 ## Usage
 1. Start the server by running the following command:
 ```sh
-python server/app.py
+cd ..                   # Return to the root directory
+python server/app.py    # Start the server
 ```
 2. Access the API documentation at `http://localhost:5000/` to view the available endpoints and interact with the API.
 

@@ -12,20 +12,22 @@ Ensure you have the required Python libraries and environment variables set up:
 
 ### Libraries
 ```sh
-pip install -r requirements.txt
+cd server                           # Change to the server directory
+pip install -r requirements.txt     # Install the required libraries
 ```
 
 ### Environment Variables
 Ensure the following environment variables are set in a .env file:
 ```sh
-AZURE_VISION_ENDPOINT=your_azure_vision_endpoint
-AZURE_VISION_KEY_1=your_azure_vision_key
-AZURE_VISION_KEY_2=your_azure_vision_key
-PYTHONPATH=server
+AZURE_VISION_ENDPOINT=""        # your_azure_vision_endpoint
+AZURE_VISION_KEY_1=""           # your_azure_vision_key
+AZURE_VISION_KEY_2=""           # your_azure_vision_key
+PYTHONPATH="server"             # Set the PYTHONPATH to "server"
 ```
 
 ## Usage
 1. Run the following command to generate keyword captions for an image:
 ```sh
-python server/dense_captioning_model/main.py <image_path>
+cd ..       # Return to the root directory
+python server/dense_captioning_model/main.py <image_path>       # Run the dense captioning model on the specified image
 ```
