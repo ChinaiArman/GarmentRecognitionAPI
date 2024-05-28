@@ -21,9 +21,6 @@ Ensure the following environment variables are set in a .env file:
 AZURE_VISION_ENDPOINT=your_azure_vision_endpoint
 AZURE_VISION_KEY_1=your_azure_vision_key
 AZURE_VISION_KEY_2=your_azure_vision_key
-RAPID_API_KEY=your_rapid_api_key
-EMBEDDED_MODEL=your_embedded_model
-DATA_SOURCE_FILE=your_data_source_file
 PYTHONPATH=server
 ```
 
