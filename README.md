@@ -45,7 +45,6 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#deployment">Deployment</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Developer Team</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -221,20 +220,6 @@ The Swagger YAML file can be found [here](https://github.com/ChinaiArman/Garment
 
 
 
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/ChinaiArman/GarmentRecognitionAPI/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
 ## Developer Team
 
@@ -265,9 +250,8 @@ Project Link: [https://github.com/ChinaiArman/GarmentRecognitionAPI](https://git
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* Chris Thompson - Project Supervisor
+* Farnaz Dargahi - COMP 3800 Instructor
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
