@@ -28,6 +28,6 @@ PYTHONPATH="server"             # Set the PYTHONPATH to "server"
 ## Usage
 1. Run the following command to generate keyword captions for an image:
 ```sh
-cd ..       # Return to the root directory
+cd ..                                                           # Return to the root directory
 python server/dense_captioning_model/main.py <image_path>       # Run the dense captioning model on the specified image
 ```
