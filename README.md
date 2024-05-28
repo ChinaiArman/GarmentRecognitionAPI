@@ -232,6 +232,7 @@ Lex Wong:
 [![LinkedIn][linkedin-shield]][lex-linkedin] [![GitHub][github-shield]][lex-github]
 
 Natalie Yu:
+[![LinkedIn][linkedin-shield]][natalie-linkedin] [![GitHub][github-shield]][natalie-github]
 
 Ehsan Emadi:
 
@@ -296,3 +297,5 @@ Thank you for your support throughout the project!
 [ehsan-github]: https://github.com/Ehsan138
 [collin-linkedin]: https://www.linkedin.com/in/collin-c-94539a224/
 [collin-github]: https://github.com/cc-dev-65535
+[natalie-linkedin]: https://www.linkedin.com/in/natalieyu74/
+[natalie-github]: https://github.com/nataliecly
