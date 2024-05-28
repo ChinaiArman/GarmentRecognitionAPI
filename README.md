@@ -161,6 +161,8 @@ Natalie Yu:
 
 Ehsan Emadi:
 
+[![LinkedIn][linkedin-shield]][ehsan-linkedin] [![GitHub][github-shield]][ehsan-github]
+
 Collin Chan:
 
 Project Link: [https://github.com/ChinaiArman/GarmentRecognitionAPI](https://github.com/ChinaiArman/GarmentRecognitionAPI)
@@ -213,3 +215,5 @@ Project Link: [https://github.com/ChinaiArman/GarmentRecognitionAPI](https://git
 [arman-github]: https://github.com/ChinaiArman/
 [lex-linkedin]: https://www.linkedin.com/in/alexandra-wong-8188a122a/
 [lex-github]: https://github.com/levxxvi/
+[ehsan-linkedin]: https://www.linkedin.com/in/ehsan-emadi
+[ehsan-github]: https://github.com/Ehsan138
