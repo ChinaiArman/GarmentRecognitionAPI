@@ -228,6 +228,7 @@ Lex Wong:
 [![LinkedIn][linkedin-shield]][lex-linkedin] [![GitHub][github-shield]][lex-github]
 
 Natalie Yu:
+
 [![LinkedIn][linkedin-shield]][natalie-linkedin] [![GitHub][github-shield]][natalie-github]
 
 Ehsan Emadi:
