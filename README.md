@@ -46,7 +46,7 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#deployment">Deployment</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact">Developer Team</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -147,7 +147,7 @@ See the [open issues](https://github.com/ChinaiArman/GarmentRecognitionAPI/issue
 
 
 <!-- CONTACT -->
-## Contact
+## Developer Team
 
 Arman Chinai:
 
