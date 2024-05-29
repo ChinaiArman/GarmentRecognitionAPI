@@ -30,8 +30,6 @@ class GarmentRecognizer:
 
     Attributes:
     -----------
-    db : ``Database``
-        An instance of the Database class
     tokenizer: ``Tokenizer``
         The tokenizer used to tokenize the text data.
     model: ``Model``
@@ -64,7 +62,6 @@ class GarmentRecognizer:
         """
         Initializes the Database class.
         """
-        self.db = Database()
         self.tokenizer, self.model = load_embedded_model()
 
     def insert_row(
@@ -97,7 +94,8 @@ class GarmentRecognizer:
 
         Author: ``@nataliecly``
         """
-        return self.db.add_row(data)
+        db = Database()
+        return db.add_row(data)
     
     def delete_row(
         self,
@@ -128,7 +126,8 @@ class GarmentRecognizer:
 
         Author: ``@levxxvi``
         """
-        return self.db.delete_row(id)
+        db = Database()
+        return db.delete_row(id)
 
     def get_item_by_semantic_search(
         self,
@@ -164,6 +163,7 @@ class GarmentRecognizer:
 
         Author: ``@cc-dev-65535``
         """
+        db = Database()
         item_ids = image_model_wrapper(
             file_path_or_url,
             size,
@@ -171,7 +171,7 @@ class GarmentRecognizer:
             self.tokenizer
         )
         return [
-            self.db.get_item_by_id(item_id).fillna("").to_dict("records")[0]
+            db.get_item_by_id(item_id).fillna("").to_dict("records")[0]
             for item_id in item_ids
         ]
     
@@ -205,7 +205,11 @@ class GarmentRecognizer:
 
         Author: ``@Ehsan138``
         """
-        item = self.db.get_item_by_id(id)
+        db = Database()
+        item = db.get_item_by_id(id)
+        if len(item) == 0:
+            print("in here")
+            return None
         return item.fillna("").to_dict("records")[0] if not item.empty else None
     
     def get_items_by_keywords(
@@ -241,6 +245,7 @@ class GarmentRecognizer:
 
         Author: ``@ChinaiArman``    
         """
+        db = Database()
         items = keyword_model_wrapper(
             keywords,
             size,
@@ -248,7 +253,7 @@ class GarmentRecognizer:
             self.tokenizer
         )
         return [
-            self.db.get_item_by_id(item_id).fillna("").to_dict("records")[0]
+            db.get_item_by_id(item_id).fillna("").to_dict("records")[0]
             for item_id in items
         ]
     
@@ -284,10 +289,10 @@ class GarmentRecognizer:
 
         Author: ``@levxxvi``
         """
-        # ensure data has all keys
+        db = Database()
         if not all(key in data for key in ['name', 'description', 'imageUrl', 'id']):
             raise ValueError()
-        return self.db.edit_row(id, data)
+        return db.edit_row(id, data)
 
 
 def main(
