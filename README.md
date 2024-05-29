@@ -253,6 +253,9 @@ Project Link:
 ## Acknowledgments
 
 * Chris Thompson - Project Supervisor
+    
+    - [![GitHub][github-shield]][chris-github]
+
 * Farnaz Dargahi - COMP 3800 Instructor
 * Laura Aslan - Founder and CEO of Odd Fabric, owner of this product
 * Will Stahl - Laura’s business partner, co-owner of this product
@@ -303,3 +306,4 @@ Thank you for your continued support throughout the project!
 [natalie-linkedin]: https://www.linkedin.com/in/natalieyu74/
 [natalie-github]: https://github.com/nataliecly
 [project-github]: https://github.com/ChinaiArman/GarmentRecognitionAPI
+[chris-github]: https://github.com/chris-thompson/
