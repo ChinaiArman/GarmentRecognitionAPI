@@ -241,7 +241,9 @@ Collin Chan:
 
 [![LinkedIn][linkedin-shield]][collin-linkedin] [![GitHub][github-shield]][collin-github]
 
-Project Link: [![GitHub][github-shield]][project-github]
+Project Link:
+
+[![GitHub][github-shield]][project-github]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
