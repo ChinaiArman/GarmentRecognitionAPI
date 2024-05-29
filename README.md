@@ -173,6 +173,8 @@ The following instructions will guide you through setting up the project on your
 
 2. Access the API documentation at `http://localhost:5000/` to view the available endpoints and interact with the API.
 
+3. You can also use client software of your choice (cURL, Postman, etc.) to send HTTP requests to the endpoints. The API documentation will guide you in how to format any request bodies and path parameters for the HTTP requests.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
