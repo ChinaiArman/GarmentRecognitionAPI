@@ -254,6 +254,8 @@ Project Link:
 
 * Chris Thompson - Project Supervisor
 * Farnaz Dargahi - COMP 3800 Instructor
+* Laura Aslan - Founder and CEO of Odd Fabric, owner of this product
+* Will Stahl - Laura’s business partner, co-owner of this product
 
 Thank you for your continued support throughout the project!
 
