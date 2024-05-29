@@ -45,7 +45,7 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#deployment">Deployment</a></li>
-    <li><a href="#contact">Developer Team</a></li>
+    <li><a href="#developer-team">Developer Team</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
