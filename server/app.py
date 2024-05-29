@@ -382,8 +382,8 @@ def search_items(
         )
     except OutOfMemoryError:
         abort(500, description="Out of memory error.")
-    except Exception:
-        abort(500, description="Internal server error.")
+    except Exception as e:
+        abort(500, description=str(e))
     return jsonify(response), 200
 
 
@@ -421,8 +421,8 @@ def get_item_by_id(
         response = garment_recognizer.get_item_by_id(id)
         if response is None:
             abort(404, description="Garment not found.")
-    except Exception:
-        abort(500, description="Internal server error.")
+    except Exception as e:
+        abort(500, description=str(e))
     return jsonify(response), 200
 
 
@@ -476,8 +476,8 @@ def search_items_by_keywords(
         )
     except OutOfMemoryError:
         abort(500, description="Out of memory error.")
-    except Exception:
-        abort(500, description="Internal server error.")
+    except Exception as e:
+        abort(500, description=str(e))
     return jsonify(response), 200
 
 
@@ -532,8 +532,8 @@ def add_item(
             400,
             description="Invalid request format. Please provide the new item details in the request body.",
         )
-    except Exception:
-        abort(500, description="Internal server error.")
+    except Exception as e:
+        abort(500, description=str(e))
     return jsonify(response), 201
 
 
@@ -572,8 +572,8 @@ def delete_item(
         response = garment_recognizer.delete_row(id)
         if not response:
             abort(400, description="Garment not found.")
-    except Exception:
-        abort(500, description="Internal server error.")
+    except Exception as e:
+        abort(500, description=str(e))
     return jsonify({"message": "Garment deleted successfully"}), 204
 
 @app.route("/edit_item", methods=["PUT"])
@@ -628,8 +628,8 @@ def edit_item(
             400,
             description="Invalid request format. Please provide the item details in the request body.",
         )
-    except Exception:
-        abort(500, description="Internal server error.")
+    except Exception as e:
+        abort(500, description=str(e))
     return jsonify(response), 201
 
 
