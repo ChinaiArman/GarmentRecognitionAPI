@@ -157,6 +157,7 @@ The following instructions will guide you through setting up the project on your
     PYTHONPATH="server"             # Set the PYTHONPATH to "server"
     ```
     - Replace the placeholder values with your own API keys and file paths.
+    - Note: `RAPID_API_KEY` is only used within the data aggregation module. You can obtain an API key by creating an account [here](https://rapidapi.com/). If you do not plan to use that module for gathering clothing data then this can be left empty.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
