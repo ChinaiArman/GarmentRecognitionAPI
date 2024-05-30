@@ -420,9 +420,9 @@ def get_item_by_id(
     try:
         response = garment_recognizer.get_item_by_id(id)
         if response is None:
-            abort(404, description="Garment not found.")
+            raise Exception("Garment not found.")
     except Exception as e:
-        abort(500, description=str(e))
+        abort(404, description=str(e))
     return jsonify(response), 200
 
 
