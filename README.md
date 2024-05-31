@@ -19,8 +19,10 @@
 
   <p align="center">
     An API that uses computer vision and semantic textual analysis to recognize clothing items through images.
-    <br />
+    <br>
     <a href="https://github.com/ChinaiArman/GarmentRecognitionAPI/blob/main/ui/static/swagger.yaml"><strong>Explore the docs »</strong></a>
+    <br>
+    <a href="https://www.youtube.com/watch?v=OTU3p0szgaA&ab_channel=ArmanChinai"><strong>Watch a demo »</strong></a>
   </p>
 </div>
 
