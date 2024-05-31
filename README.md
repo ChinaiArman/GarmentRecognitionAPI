@@ -165,6 +165,8 @@ The following instructions will guide you through setting up the project on your
     ```
     - Replace the placeholder values with your own API keys and file paths.
     - Note: `RAPID_API_KEY` is only used within the data aggregation module. You can obtain an API key by creating an account [here](https://rapidapi.com/). If you do not plan to use that module for gathering clothing data then this can be left empty.
+    - Note: `DATA_SOURCE_FILE` is the path to the data source file. This file can be modified to point to any CSV file with the appropriate columns.
+    - Note: `EMBEDDED_MODEL` is the name of the HuggingFace model that you want to use for the NLP processing. The model can be substituted with any other model from the HuggingFace model hub, but we suggest using `gte-small` for optimal results.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
