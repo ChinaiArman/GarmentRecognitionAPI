@@ -336,7 +336,6 @@ def semantic_textual_analysis(
     device = "cuda:0" if cuda.is_available() else "cpu"
     print(f"Device: {device}")
     model.to(device)
-    print(f"Memory allocated: {cuda.memory_allocated()}")
 
     # Tokenize the input texts
     input_sentence = ", ".join(keywords)
@@ -351,9 +350,12 @@ def semantic_textual_analysis(
 
     # Pass input to model to get text embeddings
     print("Begin embedded model processing...")
+    start_time = pd.Timestamp.now()
     with no_grad():
         outputs = model(**batch_dict)
     embeddings = average_pool(outputs.last_hidden_state, batch_dict["attention_mask"])
+    end_time = pd.Timestamp.now()
+    print(f"Time taken for processing in seconds: {(end_time - start_time).seconds}")
 
     # Normalize the embeddings
     normalized_embeddings = normalize_embeddings(embeddings)

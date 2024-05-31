@@ -96,16 +96,23 @@ The following instructions will guide you through setting up the project on your
     pip --version       # Check the version of pip
     ```
 
-3. VSCode (or any other code editor).
+3. Git (optional, but recommended)
+    - Download and install Git from [here](https://git-scm.com/downloads).
+    - Verify installation by running the following command in your terminal:
+    ```sh
+    git --version       # Check the version of Git
+    ```
+
+4. VSCode (or any other code editor).
     - Download and install VSCode from [here](https://code.visualstudio.com/).
 
-4. An Azure Dense Captioning model API Key.
+5. An Azure Dense Captioning model API Key.
 
-5. An NVIDIA GPU (optional, but recommended for faster processing).
+6. An NVIDIA GPU (optional, but recommended for faster processing).
     
 ### Installation
 
-1. Clone the repo
+1. Clone the repo (or download the ZIP file and extract it to a folder on your local machine)
    ```sh
    git clone https://github.com/ChinaiArman/GarmentRecognitionAPI.git       # Clone the repository
     ```
