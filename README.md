@@ -150,6 +150,11 @@ The following instructions will guide you through setting up the project on your
     cd server                           # Change to the server directory
     pip install -r requirements.txt     # Install the required libraries
     ```
+    - If after running the command, none of the packages have installed, restart the terminal and try again, ensuring that the virtual environment is activated.
+    - If a single package fails to install, try installing it separately using the following command:
+    ```sh
+    pip install <package_name>          # Install the package separately
+    ```
 
 4. Set up environment variables
     - Create a `.env` file in the server directory of the project.
